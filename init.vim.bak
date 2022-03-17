@@ -1,0 +1,184 @@
+require("plugins").setup()
+
+" Helpers
+function! Cond(Cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+" Plugins
+call plug#begin('~/.config/nvim/vim-plug')
+" Start
+" Plug 'mhinz/vim-startify'
+" " Navigation
+" Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))
+" Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' })
+" " Search
+" Plug 'jremmen/vim-ripgrep'
+" " Comments
+" Plug 'tpope/vim-commentary'
+" " CTRL+P
+" Plug 'git@github.com:kien/ctrlp.vim.git'
+" " Colorscheme
+" Plug 'morhetz/gruvbox'
+" " Solidity syntax highlighting
+" Plug 'TovarishFin/vim-solidity'
+" " File explorer
+" Plug 'preservim/nerdtree'
+" Plug 'ryanoasis/vim-devicons'
+" " Telescope
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
+" " LSP
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'williamboman/nvim-lsp-installer'
+" " Plug 'jose-elias-alvarez/null-ls.nvim'
+" " LSP Autocomplete
+" Plug 'hrsh7th/cmp-nvim-lua'
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-cmdline'
+" " Plug 'hrsh7th/nvim-cmp'
+" " luasnip
+" Plug 'L3MON4D3/LuaSnip'
+" Plug 'saadparwaiz1/cmp_luasnip'
+call plug#end()
+
+" Plugin Configs
+" ripgrep
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+" CTRL P
+let g:ctrlp_user_command=['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_use_caching=0
+" NERDTree
+let g:NERDTree = ['^node_modules$']
+" Key remappings
+let g:mapleader="\<space>"
+if exists('g:vscode')
+  source $HOME/.config/nvim/vscode-settings.vim
+endif
+" startify
+" returns all modified files of the current git repo
+" `2>/dev/null` makes the command fail quietly, so that when we are not
+" in a git repo, the list will be empty
+function! s:gitModified()
+    let files = systemlist('git ls-files -m 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+
+" same as above, but show untracked files, honouring .gitignore
+function! s:gitUntracked()
+    let files = systemlist('git ls-files -o --exclude-standard 2>/dev/null')
+    return map(files, "{'line': v:val, 'path': v:val}")
+endfunction
+let g:startify_custom_header=[
+            \ '███╗░░██╗██╗░░░██╗██╗███╗░░░███╗',
+            \ '████╗░██║██║░░░██║██║████╗░████║',
+            \ '██╔██╗██║╚██╗░██╔╝██║██╔████╔██║',
+            \ '██║╚████║░╚████╔╝░██║██║╚██╔╝██║',
+            \ '██║░╚███║░░╚██╔╝░░██║██║░╚═╝░██║',
+            \ '╚═╝░░╚══╝░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝',
+            \ ]
+let g:startify_lists = [
+        \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+        \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'commands',  'header': ['   Commands']       },
+        \ ]
+
+" Source Lua files
+lua require('init')
+
+" Colorscheme
+colorscheme gruvbox
+set background=dark
+au! BufWritePost $MYVIMRC source % " Auto source when writing to init.vim alternatively you can run :source $MYVIMRC
+
+" Settings
+syntax on " Enable syntax highlighting
+set signcolumn=yes " Keep gutter even without LSP screaming
+set pumheight=10 " Popup menu
+set cmdheight=1 " More space for displaying messages
+set encoding=utf-8
+set fileencoding=utf-8
+set clipboard=unnamedplus " Share clipboard between Vim and system
+set noerrorbells " Disable annoying sounds
+set expandtab " Tabs to spaces
+set tabstop=4 softtabstop=4 " Number of space for tab
+set shiftwidth=4 " Number of spaces for indentation
+set smartindent
+set smarttab
+set autoindent
+set splitbelow " Horizontal splits will automatically be below
+set splitright " Vertical splits will automatically be to the right
+set iskeyword+=- " Treat dash separated words as a word text object"
+set t_Co=256 " Support 256 colors
+set number
+set nowrap
+set smartcase
+set noswapfile
+set nowritebackup
+set nobackup
+" set undodir=~/.nvim/undodir
+" set undofile
+set incsearch
+set colorcolumn=80 " Show ruler
+" set foldlevelstart=99
+set relativenumber
+set cursorline
+set mouse=a " Enable mouse
+set ruler " Show cursor position all the time
+set scrolloff=5 " Keep X lines above/below cursor when scrolling
+" set updatetime=300 " Faster autocomplete
+" set timeoutlen=500 " Reduce timeoutlen??
+" set formatoptions-=cro " Stop newline continutation of comments
+"
+" Binding CTRL+S, CTRL+Q for save/quit
+nnoremap <c-s> :w<cr>
+nnoremap <c-q> :wq!<cr>
+" Exit insert mode whenever you type 'jk' or 'kj'
+inoremap kj <esc>
+inoremap jk <esc>
+
+" Tab while code selected
+vnoremap < <gv
+vnoremap > >gv
+" D copies highlighted test
+vmap D y'>p
+
+" easymotion
+map <leader><leader> <plug>(easymotion-prefix)
+
+" navigation in...
+"" buffer
+nnoremap <tab> :bnext<cr>
+nnoremap <s-tab> :bprevious<cr>
+"" jump list
+" nnoremap <leader>e <c-i><cr>
+" nnoremap <leader>q <c-o><cr>
+"" splits
+nmap <silent> <c-h> <c-w>h
+nmap <silent> <c-j> <c-w>j
+nmap <silent> <c-k> <c-w>k
+nmap <silent> <c-l> <c-w>l
+"" ripgrep
+nnoremap <leader>ps :Rg<space>
+" NERDTree
+nnoremap <c-n> :NERDTreeToggle<cr>
+"nnoremap <leader>n :NERDTreeFocus<CR>
+"nnoremap <C-n> :NERDTree<CR>
+" Telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>dl <cmd>Telescope diagnostics<cr>
+nnoremap <leader>fa <cmd>Telescope lsp_references<cr>
+" YouCompleteMe
+"nnoremap <silent> <leader>gd :YcmCompleter GoTo<CR>
+"nnoremap <silent> <leader5gd :YcmCompleter FixIt<CR>
