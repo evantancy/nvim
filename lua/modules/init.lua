@@ -14,16 +14,15 @@ local plugins = {
 	},
 	{ -- Finder
 		"nvim-telescope/telescope.nvim",
-		-- config = conf("telescope"),
-		requires = { "nvim-lua/plenary.nvim" },
+		config = conf("telescope"),
+		requires = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
 	},
 	{ -- File tree
 		"kyazdani42/nvim-tree.lua",
-		-- config = conf 'nvim-tree'
+		config = conf("nvim-tree"),
 	},
 	{ -- Icons
 		"kyazdani42/nvim-web-devicons",
-		-- config = conf 'nvim-web-devicons'
 	},
 	{ --Solidity
 		"TovarishFin/vim-solidity",

@@ -27,27 +27,20 @@ vim.api.nvim_set_keymap("n", "<c-h>", "<c-w>h", { silent = false })
 vim.api.nvim_set_keymap("n", "<c-j>", "<c-w>j", { silent = false })
 vim.api.nvim_set_keymap("n", "<c-k>", "<c-w>k", { silent = false })
 vim.api.nvim_set_keymap("n", "<c-l>", "<c-w>l", { silent = false })
--- ---- ripgrep
+-- -- ripgrep
 -- vim.api.nvim_set_keymap("n", "<leader>ps", " :Rg<space>", opts)
--- -- NERDTree
--- vim.api.nvim_set_keymap("n", "<c-n>", " :NERDTreeToggle<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>n", " :NERDTreeFocus<CR>", opts)
--- vim.api.nvim_set_keymap("n", "<C-n>", " :NERDTree<CR>", opts)
--- -- Telescope
--- vim.api.nvim_set_keymap("n", "<leader>ff <cmd>Telescope", " find_files<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fg <cmd>Telescope", " live_grep<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fb <cmd>Telescope", " buffers<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fh <cmd>Telescope", " help_tags<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>dl <cmd>Telescope", " diagnostics<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fa <cmd>Telescope", " lsp_references<cr>", opts)
+-- NVIM Tree
+vim.api.nvim_set_keymap("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
+
+-- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
+-- Telescope | dl -> diagnostics list | fa -> find all
+vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>dl", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fa", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+
 -- -- YouCompleteMe
 -- vim.api.nvim_set_keymap("n", "<silent>", " <leader>gd :YcmCompleter GoTo<CR>", opts)
 -- vim.api.nvim_set_keymap("n", "<silent>", " <leader5gd :YcmCompleter FixIt<CR>", opts)
-
--- -- Telescope
--- vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>dl", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
--- vim.api.nvim_set_keymap("n", "<leader>fa", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)

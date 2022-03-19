@@ -65,7 +65,8 @@ o.formatoptions = o.formatoptions
 -- 		m = true, -- use "[+]" instead of "[Modified]"
 -- 	}
 
--- -- Remove builtin plugins
+-- Remove builtin plugins
+g.netrw_dirhistmax = 0
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
 -- vim.g.loaded_zipPlugin = 1
