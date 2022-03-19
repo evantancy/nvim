@@ -1,54 +1,84 @@
 local api = vim.api
 local g = vim.g
-local o = vim.opt
+local opt = vim.opt
+
+local function status_line()
+	local mode = "%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}"
+	local file_name = "%-.16t"
+	local buf_nr = "[%n]"
+	local modified = " %-m"
+	local file_type = " %y"
+	local right_align = "%="
+	local line_no = "%10([%l/%L%)]"
+	local pct_thru_file = "%5p%%"
+
+	return string.format(
+		"%s%s%s%s%s%s%s%s",
+		mode,
+		file_name,
+		buf_nr,
+		modified,
+		file_type,
+		right_align,
+		line_no,
+		pct_thru_file
+	)
+end
+
+vim.opt.statusline = status_line()
 
 -- Enable syntax highlighting
-vim.cmd([[ syntax on ]])
+vim.cmd([[
+	syntax on
+]])
 
 -- Aesthetics
-o.signcolumn = "yes" -- Keep gutter even without LSP screaming
-o.pumheight = 8 -- Popup menu height
-o.pumblend = 20 -- Popup menu transparency
-o.cmdheight = 1
-o.colorcolumn = "80"
-o.ruler = true
-o.number = true
-o.relativenumber = true
-o.wrap = false
-o.termguicolors = true
-o.splitbelow = true -- Horizontal splits will automatically be below
-o.splitright = true -- Vertical splits will automatically be to the right
-o.scrolloff = 5 -- Keep X lines above/below cursor when scrolling
-o.cursorline = true -- Show cursor position all the time
+opt.signcolumn = "yes" -- Keep gutter even without LSP screaming
+opt.pumheight = 8 -- Popup menu height
+opt.pumblend = 20 -- Popup menu transparency
+opt.cmdheight = 1
+opt.wrap = true -- Wrap lines
+opt.wrapmargin = 0 -- Margin space when wrapping
+opt.textwidth = 0 -- Wrap lines at column 80
+opt.colorcolumn = "80" -- Show column
+opt.linebreak = true -- Break by word, not character
+opt.ruler = true
+opt.number = true -- Line numbers
+opt.relativenumber = true -- Relative line numbers
+opt.termguicolors = true
+opt.splitbelow = true -- Horizontal splits will automatically be below
+opt.splitright = true -- Vertical splits will automatically be to the right
+opt.scrolloff = 5 -- Keep X lines above/below cursor when scrolling
+opt.cursorline = true -- Show cursor position all the time
 
 -- Backups
-o.swapfile = false
-o.writebackup = false
-o.backup = false
+opt.swapfile = false
+opt.writebackup = false
+opt.backup = false
 
 -- Tabs and Indentation
-o.smarttab = true
-o.autoindent = true
-o.smartcase = true
-o.smartindent = true
-o.expandtab = true -- Tabs to spaces
-o.tabstop = 4 -- Number of spaces for tab
-o.softtabstop = 4
-o.shiftwidth = 4 -- Number of spaces for indentation
+opt.smarttab = true
+opt.autoindent = true
+opt.smartcase = true
+opt.smartindent = true
+opt.expandtab = true -- Tabs to spaces
+opt.tabstop = 4 -- Number of spaces for tab
+opt.softtabstop = 4
+opt.shiftwidth = 4 -- Number of spaces for indentation
 
 -- Utility
-o.clipboard = "unnamedplus" -- Share clipboard between Vim and system
-o.mouse = "a" -- Enable mouse
-o.errorbells = false -- Disable annoying sounds
-o.iskeyword = o.iskeyword + "-" -- Treat dash separated words as a word text object
-o.incsearch = true -- Searching
+opt.clipboard = "unnamedplus" -- Share clipboard between Vim and system
+opt.mouse = "a" -- Enable mouse
+opt.errorbells = false -- Disable annoying sounds
+opt.iskeyword = opt.iskeyword + "-" -- Treat dash separated words as a word text object
+opt.incsearch = true -- Searching
 
 -- Speed
-o.updatetime = 300 -- Faster autocomplete
-o.timeoutlen = 500 -- Reduce timeoutlen??
+opt.updatetime = 300 -- Faster autocomplete
+opt.timeoutlen = 1000 -- Reduce timeoutlen
 
 -- Format options
-o.formatoptions = o.formatoptions
+opt.formatoptions = opt.formatoptions
 	+ {
 		c = false,
 		o = false, -- O and o, don't continue comments

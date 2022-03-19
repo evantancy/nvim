@@ -1,7 +1,9 @@
 -- Leader
 vim.g.mapleader = " "
 
-local opts = { noremap = true }
+local opts = { noremap = true, silent = true }
+local expr_opts = { noremap = true, expr = true, silent = true }
+
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
 -- binding ctrl+s, ctrl+q for save/quit
 vim.api.nvim_set_keymap("n", "<c-s>", "<cmd>w<cr>", opts)
@@ -9,9 +11,18 @@ vim.api.nvim_set_keymap("n", "<c-q>", "<cmd>wq!<cr>", opts)
 -- exit insert mode whenever you type 'jk' or 'kj'
 vim.api.nvim_set_keymap("i", "kj", "<esc>", opts)
 vim.api.nvim_set_keymap("i", "jk", "<esc>", opts)
+-- allow single line travel when lines visually wrap
+vim.api.nvim_set_keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
+vim.api.nvim_set_keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
+-- delete without yanking
+vim.api.nvim_set_keymap("n", "<leader>d", '"_d', { noremap = true })
+--  replace currently selected text with default register without yanking
+vim.api.nvim_set_keymap("v", "p", '"_dP', { noremap = true })
+
 -- MAGIC
 -- D copies highlighted test
 vim.api.nvim_set_keymap("v", "D", "y'>p", opts)
+
 -- tab while code selected
 vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
 vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
@@ -27,9 +38,8 @@ vim.api.nvim_set_keymap("n", "<c-h>", "<c-w>h", { silent = false })
 vim.api.nvim_set_keymap("n", "<c-j>", "<c-w>j", { silent = false })
 vim.api.nvim_set_keymap("n", "<c-k>", "<c-w>k", { silent = false })
 vim.api.nvim_set_keymap("n", "<c-l>", "<c-w>l", { silent = false })
--- -- ripgrep
--- vim.api.nvim_set_keymap("n", "<leader>ps", " :Rg<space>", opts)
--- NVIM Tree
+
+-- nvim-tree
 vim.api.nvim_set_keymap("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
 
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
@@ -40,6 +50,9 @@ vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>dl", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>fa", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+
+-- -- ripgrep
+-- vim.api.nvim_set_keymap("n", "<leader>ps", " :Rg<space>", opts)
 
 -- -- YouCompleteMe
 -- vim.api.nvim_set_keymap("n", "<silent>", " <leader>gd :YcmCompleter GoTo<CR>", opts)

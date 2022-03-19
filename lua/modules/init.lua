@@ -15,21 +15,48 @@ local plugins = {
 	{ -- Finder
 		"nvim-telescope/telescope.nvim",
 		config = conf("telescope"),
-		requires = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", run = "make" } },
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+		},
 	},
-	{ -- File tree
-		"kyazdani42/nvim-tree.lua",
-		config = conf("nvim-tree"),
+	{ -- whichkey
+		"folke/which-key.nvim",
 	},
 	{ -- Icons
 		"kyazdani42/nvim-web-devicons",
 	},
-	{ --Solidity
+	{ -- Solidity
 		"TovarishFin/vim-solidity",
+	},
+	{ "vim-syntastic/syntastic" },
+	{ -- Formatters
+		"jose-elias-alvarez/null-ls.nvim",
+		config = conf("null-ls"),
+	},
+	{ -- Autocompletion plugin
+		"hrsh7th/nvim-cmp",
+		requires = {
+			"hrsh7th/cmp-nvim-lua",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
+			"onsails/lspkind-nvim",
+		},
+	},
+	{ -- AI Autocompletion
+		"tzachar/cmp-tabnine",
+		-- config = conf("tabnine"),
+		run = "./install.sh",
+		requires = "hrsh7th/nvim-cmp",
 	},
 	{ -- Lsp
 		"neovim/nvim-lspconfig",
-		-- config = conf 'lsp',
+		config = conf("lsp"),
 		requires = {
 			"williamboman/nvim-lsp-installer",
 			"jose-elias-alvarez/null-ls.nvim",
@@ -37,65 +64,60 @@ local plugins = {
 			"RRethy/vim-illuminate",
 		},
 	},
-	{ -- Autocompletion plugin
-		"hrsh7th/nvim-cmp",
-		-- config = conf 'nvim-cmp',
-		requires = {
-			"hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-		},
-	},
 	{ -- Git related
 		"lewis6991/gitsigns.nvim",
-		-- config = conf 'gitsigns',
+		config = conf("gitsigns"),
 		requires = { "nvim-lua/plenary.nvim" },
-	},
-
-	{ -- Like magit
-		"TimUntersberger/neogit",
-		-- config = conf 'neogit',
-		requires = {
-			"nvim-lua/plenary.nvim",
-			"sindrets/diffview.nvim",
-		},
 	},
 	{ -- Comments
 		{ "tpope/vim-commentary" },
-		{
-			"tpope/vim-surround",
-			requires = { "tpope/vim-repeat" },
-		},
+		{ "tpope/vim-surround", requires = { "tpope/vim-repeat" } },
+	},
+	{ "tpope/vim-endwise" },
+	{ -- File tree
+		"kyazdani42/nvim-tree.lua",
+		config = conf("nvim-tree"),
+	},
+	{ -- Highlighter
+		"nvim-treesitter/nvim-treesitter",
+		config = conf("nvim-treesitter"),
+	},
+	{ -- Highlighter
+		"windwp/nvim-ts-autotag",
+		config = conf("nvim-ts-autotag"),
 	},
 	{ -- Autopairs
 		"windwp/nvim-autopairs",
-		-- config = conf 'nvim-autopairs'
+		config = conf("nvim-autopairs"),
 	},
 	{ -- Indent guides
 		"lukas-reineke/indent-blankline.nvim",
-		-- config = conf 'indent-blankline'
+		config = conf("indent-blankline"),
 	},
 	{ -- Bufferline
 		"akinsho/nvim-bufferline.lua",
-		-- config = conf 'nvim-bufferline'
+		config = conf("bufferline"),
 	},
 	{ -- Statusline
 		"nvim-lualine/lualine.nvim",
-		-- config = conf 'lualine'
+		config = conf("lualine"),
 	},
-	{ -- Colorizer
-		"norcalli/nvim-colorizer.lua",
-		-- config = conf 'nvim-colorizer'
+	{ -- Terminal
+		"akinsho/toggleterm.nvim",
+		config = conf("toggleterm"),
 	},
 }
 
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	vim.fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	})
 	vim.cmd("packadd packer.nvim")
 end
 
@@ -106,9 +128,7 @@ if packer then
 		package_root = vim.fn.stdpath("data") .. "/site/pack",
 		display = {
 			open_fn = function()
-				return require("packer.util").float({
-					border = "rounded",
-				})
+				return require("packer.util").float({ border = "rounded" })
 			end,
 		},
 	})
