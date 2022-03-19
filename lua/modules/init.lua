@@ -29,7 +29,6 @@ local plugins = {
 	{ -- Solidity
 		"TovarishFin/vim-solidity",
 	},
-	{ "vim-syntastic/syntastic" },
 	{ -- Formatters
 		"jose-elias-alvarez/null-ls.nvim",
 		config = conf("null-ls"),

@@ -16,7 +16,15 @@ augroup end
 vim.cmd([[
 augroup format_on_save
   au!
-  au BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 2000)
+  au BufWritePre * lua vim.lsp.buf.formatting(nil, 2000)
+augroup end
+]])
+
+-- Recognise solidity files
+vim.cmd([[
+augroup set_solidity_file
+  au!
+  au BufNewFile,BufRead *.sol setfiletype solidity
 augroup end
 ]])
 --[[ " when running at every change you may want to disable quickfix

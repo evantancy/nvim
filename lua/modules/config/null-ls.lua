@@ -6,9 +6,9 @@ return function()
 	local b = null_ls.builtins
 	null_ls.setup({
 		sources = {
+			b.formatting.prettierd.with({ filetypes = { "solidity" } }),
 			b.formatting.prettier.with({
 				filetypes = {
-					-- "solidity",
 					"javascript",
 					"javascriptreact",
 					"typescript",
