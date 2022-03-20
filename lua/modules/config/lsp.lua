@@ -59,7 +59,7 @@ return function()
 		"pyright",
 		"sumneko_lua",
 		-- "solc",
-		-- "solang",
+		"solang",
 		"solidity_ls",
 		"tsserver",
 		"clangd",
@@ -77,15 +77,33 @@ return function()
 		if server_found and not server_instance:is_installed() then
 			server_instance:install()
 		end
-
-		--  require('lspconfig')[lsp].setup {
-		--    on_attach = on_attach,
-		--    cmd_env = server_instance:get_default_options().cmd_env
-		--  }
-		server_instance:setup_lsp({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
+		if server_instance.name == "tsserver" then
+			server_instance:setup_lsp({
+				on_attach = function(client, bufnr)
+					local ts_utils = safe_require("nvim-lsp-ts-utils")
+					if not ts_utils then
+						return
+					end
+					ts_utils.setup({})
+					ts_utils.setup_client(client)
+					vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", "<cmd>TSLspOrganize<cr>", { silent = true })
+					vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>TSLspRenameFile<cr>", { silent = true })
+					vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", "<cmd>TSLspImportAll<cr>", { silent = true })
+					client.resolved_capabilities.document_formatting = false
+					client.resolved_capabilities.document_range_formatting = false
+				end,
+				capabilities = capabilities,
+			})
+		else
+			--  require('lspconfig')[lsp].setup {
+			--    on_attach = on_attach,
+			--    cmd_env = server_instance:get_default_options().cmd_env
+			--  }
+			server_instance:setup_lsp({
+				on_attach = on_attach,
+				capabilities = capabilities,
+			})
+		end
 	end
 
 	-- Setup nvim-cmp.

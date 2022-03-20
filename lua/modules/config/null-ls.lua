@@ -4,11 +4,14 @@ return function()
 		return
 	end
 	local b = null_ls.builtins
+	local format = null_ls.builtins.formatting
+	local diagnostics = null_ls.builtins.diagnostics
+	local ca = null_ls.builtins.code_actions
 	null_ls.setup({
 		sources = {
-			b.formatting.prettierd.with({ filetypes = { "solidity" } }),
-			b.formatting.prettier.with({
+			format.prettier.with({
 				filetypes = {
+					"solidity",
 					"javascript",
 					"javascriptreact",
 					"typescript",
@@ -24,21 +27,20 @@ return function()
 					"markdown",
 					"graphql",
 				},
-				extra_args = { "" },
 			}),
-			b.formatting.black.with({ extra_args = { "--fast" } }),
-			b.formatting.gofmt,
-			b.formatting.shfmt,
-			b.formatting.clang_format,
-			b.formatting.cmake_format,
-			b.formatting.rustywind,
-			b.formatting.stylua,
-			b.formatting.isort,
-			b.diagnostics.tsc,
-			b.diagnostics.flake8,
-			b.diagnostics.markdownlint,
-			b.diagnostics.shellcheck,
-			b.code_actions.gitsigns,
+			format.black.with({ extra_args = { "--fast" } }),
+			format.gofmt,
+			format.shfmt,
+			format.clang_format,
+			format.cmake_format,
+			format.rustywind,
+			format.stylua,
+			format.isort,
+			diagnostics.tsc,
+			diagnostics.flake8,
+			diagnostics.markdownlint,
+			diagnostics.shellcheck,
+			ca.gitsigns,
 		},
 		on_attach = function(client)
 			if client.resolved_capabilities.document_formatting then
