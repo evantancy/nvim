@@ -6,5 +6,4 @@ else
 	require("core.keymaps")
 	require("core.autocmd")
 	require("core.options")
-	-- vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
 end

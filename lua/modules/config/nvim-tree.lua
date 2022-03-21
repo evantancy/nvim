@@ -33,7 +33,7 @@ return function()
 					{ key = "d", action = "remove" },
 					{ key = "<bs>", action = "close_node" },
 					{ key = "<cr>", action = "edit" },
-					{ key = "r", action = "rename" },
+					{ key = "<space>r", action = "rename" },
 					{ key = "s", action = "split" },
 					{ key = "v", action = "vsplit" },
 					{ key = "x", action = "cut" },

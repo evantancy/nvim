@@ -38,16 +38,16 @@ return function()
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-		vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+		vim.api.nvim_buf_set_keymap(bufnr, "n", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>r", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-		vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-		vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
+		vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+		vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
 		-- vim.api.nvim_buf_set_keymap(
 		-- 	bufnr,
 		-- 	"n",
-		-- 	"<leader>wl",
+		-- 	"<space>wl",
 		-- 	"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
 		-- 	opts
 		-- )
@@ -84,13 +84,13 @@ return function()
 					if not ts_utils then
 						return
 					end
-					ts_utils.setup({})
-					ts_utils.setup_client(client)
-					vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", "<cmd>TSLspOrganize<cr>", { silent = true })
-					vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>TSLspRenameFile<cr>", { silent = true })
-					vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", "<cmd>TSLspImportAll<cr>", { silent = true })
 					client.resolved_capabilities.document_formatting = false
 					client.resolved_capabilities.document_range_formatting = false
+					ts_utils.setup({})
+					ts_utils.setup_client(client)
+					buf_map(bufnr, "n", "gs", "<cmd>TSLspOrganize<cr>")
+					buf_map(bufnr, "n", "gi", "<cmd>TSLspRenameFile<cr>")
+					buf_map(bufnr, "n", "gs", "<cmd>TSLspImportAll<cr>")
 				end,
 				capabilities = capabilities,
 			})

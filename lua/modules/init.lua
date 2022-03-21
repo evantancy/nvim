@@ -7,8 +7,7 @@ local plugins = {
 		"ellisonleao/gruvbox.nvim",
 		config = conf("colors"),
 	},
-	{
-		-- Startup screen
+	{ -- Startup screen
 		"goolord/alpha-nvim",
 		config = conf("alpha-nvim"),
 	},
@@ -68,11 +67,17 @@ local plugins = {
 		config = conf("gitsigns"),
 		requires = { "nvim-lua/plenary.nvim" },
 	},
-	{ -- Comments
-		{ "tpope/vim-commentary" },
-		{ "tpope/vim-surround", requires = { "tpope/vim-repeat" } },
+	{ -- Surround comments/tags/brackets
+		"tpope/vim-surround",
+		requires = { "tpope/vim-repeat" },
 	},
-	{ "tpope/vim-endwise" },
+	{ -- Auto complete functions etc
+		"tpope/vim-endwise",
+	},
+	{ -- Comments
+		"numToStr/Comment.nvim",
+		config = conf("comment"),
+	},
 	{ -- File tree
 		"kyazdani42/nvim-tree.lua",
 		config = conf("nvim-tree"),

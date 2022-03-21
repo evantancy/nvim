@@ -27,6 +27,12 @@ return function()
 					"markdown",
 					"graphql",
 				},
+				extra_args = {
+					"--print-width",
+					"80",
+					"--trailing-comma",
+					"es5",
+				},
 			}),
 			format.black.with({ extra_args = { "--fast" } }),
 			format.gofmt,
@@ -40,7 +46,6 @@ return function()
 			diagnostics.flake8,
 			diagnostics.markdownlint,
 			diagnostics.shellcheck,
-			ca.gitsigns,
 		},
 		on_attach = function(client)
 			if client.resolved_capabilities.document_formatting then

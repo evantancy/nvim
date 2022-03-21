@@ -1,4 +1,4 @@
--- local M = {}
+local M = {}
 
 -- function P(cmd)
 -- 	print(vim.inspect(cmd))
@@ -16,29 +16,22 @@ function _G.safe_require(module)
 	end
 	return result
 end
+-- map keys
+function _G.map(mode, shortcut, action, opts)
+	vim.api.nvim_set_keymap(mode, shortcut, action, opts or { silent = True })
+end
 
--- local is_transparent = true
--- function M.toggle_background()
--- 	if is_transparent == true then
--- 		vim.cmd([[ hi Normal guibg=NONE ctermbg=NONE ]])
--- 		is_transparent = false
--- 	else
--- 		vim.cmd([[ set background=dark ]])
--- 		is_transparent = true
--- 	end
--- end
+-- buf map keys
+function _G.buf_map(bufnr, mode, shortcut, action, opts)
+	vim.api.nvim_buf_set_keymap(bufnr, mode, shortcut, action, opts or { silent = True })
+end
 
--- -- Mappings
--- M.keymap = {}
+-- custom functions
+M.search_dotfiles = function()
+	require("telescope.builtin").find_files({
+		prompt_title = "< VimRC >",
+		cwd = "~/.config/nvim",
+	})
+end
 
--- local options = { noremap = true, silent = true }
-
--- function M.keymap.buf_map(mode, key, cmd, opts)
--- 	vim.api.nvim_buf_set_keymap(0, mode, key, cmd, opts or options)
--- end
-
--- function M.keymap.map(mode, key, cmd, opts)
--- 	vim.api.nvim_set_keymap(mode, key, cmd, opts or options)
--- end
-
--- return M
+return M

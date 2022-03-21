@@ -20,7 +20,7 @@ augroup format_on_save
 augroup end
 ]])
 
--- Recognise solidity files
+-- Recognise solidity files for Prettier
 vim.cmd([[
   au BufNewFile,BufRead *.sol set filetype=solidity
 ]])

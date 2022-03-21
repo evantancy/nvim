@@ -1,59 +1,62 @@
 -- Leader
 vim.g.mapleader = " "
 
-local opts = { noremap = true, silent = true }
-local expr_opts = { noremap = true, expr = true, silent = true }
+local opts = { noremap = true }
+local expr_opts = { noremap = true, expr = true }
 
-vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+map("n", "<c-c>", "<esc>", opts)
 -- binding ctrl+s, ctrl+q for save/quit
-vim.api.nvim_set_keymap("n", "<c-s>", "<cmd>w<cr>", opts)
-vim.api.nvim_set_keymap("n", "<c-q>", "<cmd>wq!<cr>", opts)
+map("n", "<c-s>", "<cmd>w<cr>", opts)
+map("n", "<c-q>", "<cmd>q!<cr>", opts)
+map("n", "<c-w>", "<cmd>bw<cr>", opts)
 -- exit insert mode whenever you type 'jk' or 'kj'
-vim.api.nvim_set_keymap("i", "kj", "<esc>", opts)
-vim.api.nvim_set_keymap("i", "jk", "<esc>", opts)
+map("i", "kj", "<esc>", opts)
+map("i", "jk", "<esc>", opts)
 -- allow single line travel when lines visually wrap
-vim.api.nvim_set_keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
-vim.api.nvim_set_keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
+map("n", "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
+map("n", "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
 -- delete without yanking
-vim.api.nvim_set_keymap("n", "<leader>d", '"_d', { noremap = true })
+map("n", "<space>d", '"_d', opts)
+map("v", "<space>d", '"_d', opts)
 --  replace currently selected text with default register without yanking
-vim.api.nvim_set_keymap("v", "p", '"_dP', { noremap = true })
+map("v", "p", '"_dP', opts)
 
+map("v", "<c-_>", "<cmd> lua require('Comment.api').toggle_current_linewise()")
 -- MAGIC
--- D copies highlighted test
-vim.api.nvim_set_keymap("v", "D", "y'>p", opts)
-
+-- D copies highlighted text
+map("v", "D", "y'>p", opts)
 -- tab while code selected
-vim.api.nvim_set_keymap("v", "<", "<gv", { noremap = true })
-vim.api.nvim_set_keymap("v", ">", ">gv", { noremap = true })
+map("v", "<", "<gv", opts)
+map("v", ">", ">gv", opts)
+-- move hightlighted text up/down
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
+-- map("v", "K", ":co '><CR>V'[=gv", opts)
 
 -- navigate buffer
-vim.api.nvim_set_keymap("n", "<tab>", "<cmd>bnext<cr>", opts)
-vim.api.nvim_set_keymap("n", "<s-tab>", "<cmd>bprevious<cr>", opts)
----- jump list
-vim.api.nvim_set_keymap("n", "<leader>e", " <c-i><cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>q", " <c-o><cr>", opts)
----- splits
-vim.api.nvim_set_keymap("n", "<c-h>", "<c-w>h", { silent = false })
-vim.api.nvim_set_keymap("n", "<c-j>", "<c-w>j", { silent = false })
-vim.api.nvim_set_keymap("n", "<c-k>", "<c-w>k", { silent = false })
-vim.api.nvim_set_keymap("n", "<c-l>", "<c-w>l", { silent = false })
+map("n", "<tab>", "<cmd>bnext<cr>", opts)
+map("n", "<s-tab>", "<cmd>bprevious<cr>", opts)
+-- map("n", "<space>b", "<cmd>b <c-d>", opts)
+-- map("n", "<space>b", "<cmd>ls<cr>:b<space>", opts)
+
+-- splits
+map("n", "<c-h>", "<c-w>h")
+map("n", "<c-j>", "<c-w>j")
+map("n", "<c-k>", "<c-w>k")
+map("n", "<c-l>", "<c-w>l")
 
 -- nvim-tree
-vim.api.nvim_set_keymap("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
+map("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
 
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
-vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>dl", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fa", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+map("n", "<space>vrc", "<cmd>lua require('core.utils').search_dotfiles()<cr>")
+map("n", "<space>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+map("n", "<space>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+map("n", "<space>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
+map("n", "<space>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+map("n", "<space>fd", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
+map("n", "<space>fa", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 
 -- -- ripgrep
--- vim.api.nvim_set_keymap("n", "<leader>ps", " :Rg<space>", opts)
-
--- -- YouCompleteMe
--- vim.api.nvim_set_keymap("n", "<silent>", " <leader>gd :YcmCompleter GoTo<CR>", opts)
--- vim.api.nvim_set_keymap("n", "<silent>", " <leader5gd :YcmCompleter FixIt<CR>", opts)
+-- map("n", "<space>ps", " :Rg<space>", opts)

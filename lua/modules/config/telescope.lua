@@ -25,11 +25,12 @@ return function()
 			grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 			qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 
-			file_ignore_patterns = { "node_modules/.*", "%.env" },
+			file_ignore_patterns = { "node_modules/.*" },
 			mappings = {
 				i = {
 					["<C-j>"] = actions.move_selection_next,
 					["<C-k>"] = actions.move_selection_previous,
+					["<C-q>"] = actions.send_to_qflist,
 				},
 				n = { ["<C-c>"] = actions.close },
 			},
@@ -44,4 +45,18 @@ return function()
 			},
 		},
 	})
+	-- To get fzf loaded and working with telescope, you need to call
+	-- load_extension, somewhere after setup function:
+	telescope.load_extension("fzf")
 end
+
+-- local M = {}
+--
+-- M.search_dotfiles = function()
+--     require("telescope.builtin").find_files({
+--         prompt_title = "< VimRC >",
+--         cwd = "~/.config/nvim/",
+--     })
+-- end
+--
+-- return M

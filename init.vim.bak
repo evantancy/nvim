@@ -179,6 +179,3 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>dl <cmd>Telescope diagnostics<cr>
 nnoremap <leader>fa <cmd>Telescope lsp_references<cr>
-" YouCompleteMe
-"nnoremap <silent> <leader>gd :YcmCompleter GoTo<CR>
-"nnoremap <silent> <leader5gd :YcmCompleter FixIt<CR>
