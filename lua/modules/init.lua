@@ -5,11 +5,39 @@ end
 local plugins = {
 	{ -- Colorschemes
 		"ellisonleao/gruvbox.nvim",
+		requires = { "folke/lsp-colors.nvim" },
 		config = conf("colors"),
+	},
+	{ -- Color nvim-cmp
+		"tjdevries/colorbuddy.nvim",
+		config = conf("colorbuddy"),
+	},
+	{ -- Color LSP diagnostics
+		"folke/lsp-colors.nvim",
+	},
+	{ -- Icons
+		"ryanoasis/vim-devicons",
+		-- "kyazdani42/nvim-web-devicons",
+		"evantancy/nvim-web-devicons",
+		-- config = conf("icons")
+	},
+	{ -- File tree
+		"kyazdani42/nvim-tree.lua",
+		requires = {
+			-- "kyazdani42/nvim-web-devicons",
+			"evantancy/nvim-web-devicons",
+		},
+		config = conf("nvim-tree"),
 	},
 	{ -- Startup screen
 		"goolord/alpha-nvim",
 		config = conf("alpha-nvim"),
+	},
+	{ -- Jump around quickly
+		"easymotion/vim-easymotion",
+	},
+	{ -- whichkey
+		"folke/which-key.nvim",
 	},
 	{ -- Finder
 		"nvim-telescope/telescope.nvim",
@@ -19,18 +47,22 @@ local plugins = {
 			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
 		},
 	},
-	{ -- whichkey
-		"folke/which-key.nvim",
-	},
-	{ -- Icons
-		"kyazdani42/nvim-web-devicons",
-	},
 	{ -- Solidity
 		"TovarishFin/vim-solidity",
 	},
 	{ -- Formatters
 		"jose-elias-alvarez/null-ls.nvim",
 		config = conf("null-ls"),
+	},
+	{ -- LSP
+		"neovim/nvim-lspconfig",
+		config = conf("lsp"),
+		requires = {
+			"williamboman/nvim-lsp-installer",
+			"jose-elias-alvarez/null-ls.nvim",
+			"jose-elias-alvarez/nvim-lsp-ts-utils",
+			"RRethy/vim-illuminate",
+		},
 	},
 	{ -- Autocompletion plugin
 		"hrsh7th/nvim-cmp",
@@ -48,55 +80,41 @@ local plugins = {
 	},
 	{ -- AI Autocompletion
 		"tzachar/cmp-tabnine",
-		-- config = conf("tabnine"),
+		config = conf("tabnine"),
 		run = "./install.sh",
 		requires = "hrsh7th/nvim-cmp",
 	},
-	{ -- Lsp
-		"neovim/nvim-lspconfig",
-		config = conf("lsp"),
-		requires = {
-			"williamboman/nvim-lsp-installer",
-			"jose-elias-alvarez/null-ls.nvim",
-			"jose-elias-alvarez/nvim-lsp-ts-utils",
-			"RRethy/vim-illuminate",
-		},
+	{ -- Autocomplete comments/tags/brackets
+		"tpope/vim-surround",
+		requires = { "tpope/vim-repeat" },
+	},
+	{ -- Autocomplete functions
+		"tpope/vim-endwise",
+	},
+	{ -- Autocomplete HTML tags
+		"windwp/nvim-ts-autotag",
+		config = conf("nvim-ts-autotag"),
+	},
+	{ -- Autocomplete bracket pairs
+		"windwp/nvim-autopairs",
+		config = conf("nvim-autopairs"),
+	},
+	{ -- Auto indent blanklines
+		"lukas-reineke/indent-blankline.nvim",
+		config = conf("indent-blankline"),
 	},
 	{ -- Git related
 		"lewis6991/gitsigns.nvim",
 		config = conf("gitsigns"),
 		requires = { "nvim-lua/plenary.nvim" },
 	},
-	{ -- Surround comments/tags/brackets
-		"tpope/vim-surround",
-		requires = { "tpope/vim-repeat" },
-	},
-	{ -- Auto complete functions etc
-		"tpope/vim-endwise",
-	},
 	{ -- Comments
 		"numToStr/Comment.nvim",
 		config = conf("comment"),
 	},
-	{ -- File tree
-		"kyazdani42/nvim-tree.lua",
-		config = conf("nvim-tree"),
-	},
 	{ -- Highlighter
 		"nvim-treesitter/nvim-treesitter",
 		config = conf("nvim-treesitter"),
-	},
-	{ -- Highlighter
-		"windwp/nvim-ts-autotag",
-		config = conf("nvim-ts-autotag"),
-	},
-	{ -- Autopairs
-		"windwp/nvim-autopairs",
-		config = conf("nvim-autopairs"),
-	},
-	{ -- Indent guides
-		"lukas-reineke/indent-blankline.nvim",
-		config = conf("indent-blankline"),
 	},
 	{ -- Bufferline
 		"akinsho/nvim-bufferline.lua",

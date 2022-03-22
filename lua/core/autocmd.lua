@@ -6,26 +6,30 @@ vim.cmd([[
 
 -- Highlight text on yank
 vim.cmd([[
-augroup highlight_yank
+augroup HighlightYank
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank({timeout = 200})
 augroup end
 ]])
 
--- Autoformat
+-- Autoformat see `null-ls.lua`
+-- vim.cmd([[
+-- augroup LspFormat
+--   autocmd! * <buffer>
+--   autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
+-- augroup end
+-- ]])
+
+-- Show diagnostics on hover
 vim.cmd([[
-augroup format_on_save
-  au!
-  au BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 2000)
-augroup end
+  autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
 ]])
 
--- Recognise solidity files for Prettier
+-- Recognise solidity files for prettier's solidity plugin
 vim.cmd([[
   au BufNewFile,BufRead *.sol set filetype=solidity
 ]])
---[[ " when running at every change you may want to disable quickfix
-let g:prettier#quickfix_enabled = 0
-
-let g:prettier#autoformat = 0
-autocmd BufWritePre,TextChanged,InsertLeave *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync ]]
+-- Automatically change working directory
+-- vim.cmd([[
+--   autocmd BufEnter * silent! lcd %:p:h
+-- ]])

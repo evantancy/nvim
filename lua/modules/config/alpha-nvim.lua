@@ -23,23 +23,31 @@ return function()
 	}
 	-- Shift buttons to only top_buttons
 	theme.section.bottom_buttons.val = {}
-	theme.section.footer = {}
+	-- use as bookmarks
+	local main = "~/.config/nvim/init.lua"
+	local modules = "~/.config/nvim/lua/modules/init.lua"
+	local null_ls = "~/.config/nvim/lua/modules/config/null-ls.lua"
+	local lsp = "~/.config/nvim/lua/modules/config/lsp.lua"
+	theme.section.footer.val = {
+		theme.button("i", main, ":e " .. main .. "<cr>"),
+		theme.button("m", modules, ":e " .. modules .. "<cr>"),
+		theme.button("n", null_ls, ":e " .. null_ls .. "<cr>"),
+		theme.button("l", lsp, ":e " .. lsp .. "<cr>"),
+	}
 
 	theme.nvim_web_devicons.enabled = true
-	-- options: true, 'Keyword'
 	theme.nvim_web_devicons.highlight = true
 
 	-- https://github.com/goolord/alpha-nvim/issues/14
-	-- theme.opts.layout = {
-	-- 	{ type = "padding", val = 1 },
-	-- 	theme.section.header,
-	-- 	{ type = "padding", val = 1 },
-	-- 	theme.section.top_buttons,
-	-- 	theme.section.mru_cwd,
-	-- 	theme.section.mru,
-	-- 	theme.section.bottom_buttons,
-	-- 	theme.section.footer,
-	-- }
+	theme.opts.layout = {
+		theme.section.header,
+		{ type = "padding", val = 1 },
+		theme.section.top_buttons,
+		theme.section.mru,
+		theme.section.mru_cwd,
+		{ type = "padding", val = 1 },
+		theme.section.footer,
+	}
 
 	alpha.setup(theme.config)
 end

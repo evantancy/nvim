@@ -28,6 +28,10 @@ return function()
 	vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 
 	local on_attach = function(client, bufnr)
+		if client.name ~= "null-ls" then
+			client.resolved_capabilities.document_formatting = false
+			-- client.resolved_capabilities.document_range_formatting = false
+		end
 		-- Enable completion triggered by <c-x><c-o>
 		vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 		vim.api.nvim_buf_set_option(0, "formatexpr", "v:lua.vim.lsp.formatexpr()")
@@ -58,9 +62,9 @@ return function()
 	local servers = {
 		"pyright",
 		"sumneko_lua",
-		-- "solc",
-		"solang",
-		"solidity_ls",
+		"solc",
+		-- "solang",
+		-- "solidity_ls",
 		"tsserver",
 		"clangd",
 		"zk",
@@ -77,31 +81,38 @@ return function()
 		if server_found and not server_instance:is_installed() then
 			server_instance:install()
 		end
+
 		if server_instance.name == "tsserver" then
-			server_instance:setup_lsp({
-				on_attach = function(client, bufnr)
-					local ts_utils = safe_require("nvim-lsp-ts-utils")
-					if not ts_utils then
-						return
-					end
-					client.resolved_capabilities.document_formatting = false
-					client.resolved_capabilities.document_range_formatting = false
-					ts_utils.setup({})
-					ts_utils.setup_client(client)
-					buf_map(bufnr, "n", "gs", "<cmd>TSLspOrganize<cr>")
-					buf_map(bufnr, "n", "gi", "<cmd>TSLspRenameFile<cr>")
-					buf_map(bufnr, "n", "gs", "<cmd>TSLspImportAll<cr>")
-				end,
+			-- local ts_utils = safe_require("nvim-lsp-ts-utils")
+			-- if not ts_utils then
+			-- 	return
+			-- end
+			-- ts_utils.setup({})
+			-- ts_utils.setup_client(client)
+			-- buf_map(bufnr, "n", "gs", "<cmd>TSLspOrganize<cr>")
+			-- buf_map(bufnr, "n", "gi", "<cmd>TSLspRenameFile<cr>")
+			-- buf_map(bufnr, "n", "gs", "<cmd>TSLspImportAll<cr>")
+		elseif server_instance.name == "solc" then
+			local cmd = { "solc", "--lsp" }
+			server_instance:setup({
+				cmd = cmd,
+				on_attach = on_attach,
 				capabilities = capabilities,
+				flags = {
+					debounce_text_changes = 150,
+				},
 			})
 		else
 			--  require('lspconfig')[lsp].setup {
 			--    on_attach = on_attach,
 			--    cmd_env = server_instance:get_default_options().cmd_env
 			--  }
-			server_instance:setup_lsp({
+			server_instance:setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
+				flags = {
+					debounce_text_changes = 150,
+				},
 			})
 		end
 	end
@@ -109,6 +120,13 @@ return function()
 	-- Setup nvim-cmp.
 	vim.opt.completeopt = { "menu", "menuone", "noselect" }
 	local lspkind = safe_require("lspkind")
+	local source_mapping = {
+		buffer = "[Buf]",
+		nvim_lsp = "[LSP]",
+		nvim_lua = "[Lua]",
+		cmp_tabnine = "[TN]",
+		path = "[Path]",
+	}
 	cmp.setup({
 		snippet = {
 			-- REQUIRED - you must specify a snippet engine
@@ -136,22 +154,31 @@ return function()
 		-- order determines the priority
 		sources = cmp.config.sources({
 			{ name = "nvim_lsp" },
-			{ name = "nvim_lsp_signature_help" },
+			{ name = "nvim_lua" }, -- only for Lua
 			{ name = "cmp_tabnine" },
 			{ name = "buffer", keyword_length = 5 },
-			{ name = "luasnip" }, -- For luasnip users.
-			{ name = "treesitter" },
-			{ name = "nvim_lua" },
+			{ name = "luasnip" }, -- snippets
+			-- { name = "treesitter" },
 			{ name = "path" },
 		}),
 		formatting = {
 			format = lspkind.cmp_format({
-				mode = "symbol", -- show only symbol annotations
-				maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+				with_text = true,
+				menu = {
+					nvim_lsp = "[LSP]",
+					nvim_lua = "[api]",
+					buffer = "[buf]",
+					luasnip = "[snip]",
+					cmp_tabnine = "[TN]",
+					path = "[path]",
+				},
 			}),
 		},
+		experimental = {
+			-- preview text to be inserted
+			ghost_text = true,
+		},
 	})
-
 	-- Set configuration for specific filetype.
 	cmp.setup.filetype("gitcommit", {
 		sources = cmp.config.sources({

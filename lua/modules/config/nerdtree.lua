@@ -1,26 +1,23 @@
 return function()
-	local nvim_tree = safe_require("nvim-tree")
+	local nerdtree = safe_require("nerdtree")
 	if not nvim_tree then
 		return
 	end
+	-- local map = require("nvim-tree.config").nvim_tree_callback
+
 	vim.g.nvim_tree_indent_markers = 0
-	vim.g.nvim_tree_respect_buf_cwd = 1
 	nvim_tree.setup({
-		disable_netrw = true,
-		hijack_netrw = true,
-		-- update_cwd = true,
 		update_focused_file = {
 			enable = true,
-			update_cwd = true,
+			update_cwd = false,
 			ignore_list = {},
 		},
 		filters = {
 			dotfiles = false,
 			-- Files to hide
-			custom = { ".git", ".vscode" },
+			custom = { ".git" },
 			exclude = { ".env*", ".*rc", ".config" },
 		},
-
 		view = {
 			width = 30,
 			height = 30,
@@ -38,7 +35,7 @@ return function()
 					{ key = "<bs>", action = "close_node" },
 					{ key = "<cr>", action = "edit" },
 					{ key = "<space>r", action = "rename" },
-					{ key = "h", action = "split" },
+					{ key = "s", action = "split" },
 					{ key = "v", action = "vsplit" },
 					{ key = "x", action = "cut" },
 					{ key = "c", action = "copy" },
@@ -47,10 +44,6 @@ return function()
 					{ key = "y", action = "copy_name" },
 					{ key = "I", action = "toggle_ignored" },
 					{ key = "H", action = "toggle_dotfiles" },
-					{ key = "s", action = "system_open" },
-					{ key = "S", action = "search_node" },
-					{ key = "-", action = "dir_up" },
-					{ key = "w", action = "collapse_all" },
 				},
 			},
 		},

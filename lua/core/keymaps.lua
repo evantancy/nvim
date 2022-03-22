@@ -20,8 +20,9 @@ map("n", "<space>d", '"_d', opts)
 map("v", "<space>d", '"_d', opts)
 --  replace currently selected text with default register without yanking
 map("v", "p", '"_dP', opts)
-
-map("v", "<c-_>", "<cmd> lua require('Comment.api').toggle_current_linewise()")
+-- ctrl+/ or ctrl+\ to line/block comment
+map("n", "<c-_>", "<cmd> lua require('Comment.api').toggle_current_linewise()<cr>")
+map("n", "<c-bslash>", "<cmd> lua require('Comment.api').toggle_current_blockwise()<cr>")
 -- MAGIC
 -- D copies highlighted text
 map("v", "D", "y'>p", opts)

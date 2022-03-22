@@ -18,12 +18,12 @@ function _G.safe_require(module)
 end
 -- map keys
 function _G.map(mode, shortcut, action, opts)
-	vim.api.nvim_set_keymap(mode, shortcut, action, opts or { silent = True })
+	vim.api.nvim_set_keymap(mode, shortcut, action, opts or { silent = False })
 end
 
 -- buf map keys
 function _G.buf_map(bufnr, mode, shortcut, action, opts)
-	vim.api.nvim_buf_set_keymap(bufnr, mode, shortcut, action, opts or { silent = True })
+	vim.api.nvim_buf_set_keymap(bufnr, mode, shortcut, action, opts or { silent = False })
 end
 
 -- custom functions

@@ -7,6 +7,11 @@ return function()
 	local format = null_ls.builtins.formatting
 	local diagnostics = null_ls.builtins.diagnostics
 	local ca = null_ls.builtins.code_actions
+	-- Disable inline diagnostics
+	vim.diagnostic.config({
+		virtual_text = false,
+	})
+
 	null_ls.setup({
 		sources = {
 			format.prettier.with({
@@ -27,11 +32,14 @@ return function()
 					"markdown",
 					"graphql",
 				},
+				-- https://prettier.io/docs/en/options.html
 				extra_args = {
 					"--print-width",
 					"80",
 					"--trailing-comma",
-					"es5",
+					"e",
+					"--tab-width",
+					"2",
 				},
 			}),
 			format.black.with({ extra_args = { "--fast" } }),
@@ -39,7 +47,6 @@ return function()
 			format.shfmt,
 			format.clang_format,
 			format.cmake_format,
-			format.rustywind,
 			format.stylua,
 			format.isort,
 			diagnostics.tsc,
@@ -50,11 +57,11 @@ return function()
 		on_attach = function(client)
 			if client.resolved_capabilities.document_formatting then
 				vim.cmd([[
-                    augroup LspFormatting
-                        autocmd! * <buffer>
-                        autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
-                    augroup END
-                ]])
+		                  augroup LspFormatting
+		                      autocmd! * <buffer>
+		                      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+		                  augroup END
+		              ]])
 			end
 			-- vim.cmd([[
 			--   augroup document_highlight

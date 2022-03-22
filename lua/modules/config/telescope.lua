@@ -10,8 +10,8 @@ return function()
 			layout_config = {
 				horizontal = {
 					height = 0.95,
-					preview_cutoff = 120,
-					preview_width = 120,
+					preview_cutoff = 60,
+					preview_width = 90,
 					prompt_position = "bottom",
 					width = 0.95,
 				},
@@ -31,8 +31,17 @@ return function()
 					["<C-j>"] = actions.move_selection_next,
 					["<C-k>"] = actions.move_selection_previous,
 					["<C-q>"] = actions.send_to_qflist,
+					["<esc>"] = actions.close,
+					-- alt+p
+					-- doesn't work atm
+					-- ["<M-p>"] = action_layout.toggle_preview,
 				},
-				n = { ["<C-c>"] = actions.close },
+				n = {
+					["<C-c>"] = actions.close,
+					-- alt+p
+					-- doesn't work atm
+					-- ["<M-p>"] = action_layout.toggle_preview,
+				},
 			},
 		},
 		extensions = {

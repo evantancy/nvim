@@ -1,6 +1,7 @@
 local api = vim.api
 local g = vim.g
 local opt = vim.opt
+local o = vim.o
 
 local function status_line()
 	local mode = "%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}"
@@ -50,6 +51,7 @@ opt.splitbelow = true -- Horizontal splits will automatically be below
 opt.splitright = true -- Vertical splits will automatically be to the right
 opt.scrolloff = 5 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
+opt.cursorlineopt = "number"
 
 -- Backups
 opt.swapfile = false
@@ -74,16 +76,8 @@ opt.iskeyword = opt.iskeyword + "-" -- Treat dash separated words as a word text
 opt.incsearch = true -- Searching
 
 -- Speed
-opt.updatetime = 300 -- Faster autocomplete
+opt.updatetime = 200 -- Faster autocomplete
 opt.timeoutlen = 1000 -- Reduce timeoutlen
-
--- Format options
-opt.formatoptions = opt.formatoptions
-	+ {
-		c = false,
-		o = false, -- O and o, don't continue comments
-		r = true, -- Pressing Enter will continue comments
-	}
 
 -- -- Shortmess
 -- o.shortmess = o.shortmess
@@ -95,9 +89,11 @@ opt.formatoptions = opt.formatoptions
 -- 		m = true, -- use "[+]" instead of "[Modified]"
 -- 	}
 
+-- Format options
+vim.cmd([[set formatoptions-=cro]])
+
 -- Remove builtin plugins
 g.netrw_dirhistmax = 0
-
 g.loaded_2html_plugin = 1
 g.loaded_getscript = 1
 g.loaded_getscriptPlugin = 1
