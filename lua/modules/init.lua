@@ -4,28 +4,23 @@ end
 
 local plugins = {
 	{ -- Colorschemes
-		"ellisonleao/gruvbox.nvim",
+		"folke/tokyonight.nvim",
 		requires = { "folke/lsp-colors.nvim" },
 		config = conf("colors"),
 	},
-	{ -- Color nvim-cmp
-		"tjdevries/colorbuddy.nvim",
-		config = conf("colorbuddy"),
-	},
+	{ "rebelot/kanagawa.nvim" },
+	{ "ellisonleao/gruvbox.nvim" },
 	{ -- Color LSP diagnostics
 		"folke/lsp-colors.nvim",
 	},
 	{ -- Icons
 		"ryanoasis/vim-devicons",
-		-- "kyazdani42/nvim-web-devicons",
-		"evantancy/nvim-web-devicons",
-		-- config = conf("icons")
+		"kyazdani42/nvim-web-devicons",
 	},
 	{ -- File tree
 		"kyazdani42/nvim-tree.lua",
 		requires = {
-			-- "kyazdani42/nvim-web-devicons",
-			"evantancy/nvim-web-devicons",
+			"kyazdani42/nvim-web-devicons",
 		},
 		config = conf("nvim-tree"),
 	},
@@ -50,19 +45,21 @@ local plugins = {
 	{ -- Solidity
 		"TovarishFin/vim-solidity",
 	},
-	{ -- Formatters
-		"jose-elias-alvarez/null-ls.nvim",
-		config = conf("null-ls"),
-	},
 	{ -- LSP
 		"neovim/nvim-lspconfig",
 		config = conf("lsp"),
 		requires = {
 			"williamboman/nvim-lsp-installer",
 			"jose-elias-alvarez/null-ls.nvim",
-			"jose-elias-alvarez/nvim-lsp-ts-utils",
+			{ "jose-elias-alvarez/nvim-lsp-ts-utils", branch = "main" },
 			"RRethy/vim-illuminate",
 		},
+	},
+	-- https://jose-elias-alvarez.medium.com/configuring-neovims-lsp-client-for-typescript-development-5789d58ea9c
+	{ -- Formatters
+		"jose-elias-alvarez/null-ls.nvim",
+		branch = "main",
+		config = conf("null-ls"),
 	},
 	{ -- Autocompletion plugin
 		"hrsh7th/nvim-cmp",
@@ -103,7 +100,15 @@ local plugins = {
 		"lukas-reineke/indent-blankline.nvim",
 		config = conf("indent-blankline"),
 	},
-	{ -- Git related
+	{ -- I love you tpope <3
+		"tpope/vim-fugitive",
+	},
+	{ -- Diff files
+		"sindrets/diffview.nvim",
+		-- config = conf("diffview"),
+		requires = "nvim-lua/plenary.nvim",
+	},
+	{ -- Git in signcolumn
 		"lewis6991/gitsigns.nvim",
 		config = conf("gitsigns"),
 		requires = { "nvim-lua/plenary.nvim" },
@@ -124,9 +129,9 @@ local plugins = {
 		"nvim-lualine/lualine.nvim",
 		config = conf("lualine"),
 	},
-	{ -- Terminal
-		"akinsho/toggleterm.nvim",
-		config = conf("toggleterm"),
+	{
+		"ThePrimeagen/harpoon",
+		requires = { "nvim-lua/plenary.nvim" },
 	},
 }
 

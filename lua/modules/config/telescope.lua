@@ -58,14 +58,3 @@ return function()
 	-- load_extension, somewhere after setup function:
 	telescope.load_extension("fzf")
 end
-
--- local M = {}
---
--- M.search_dotfiles = function()
---     require("telescope.builtin").find_files({
---         prompt_title = "< VimRC >",
---         cwd = "~/.config/nvim/",
---     })
--- end
---
--- return M

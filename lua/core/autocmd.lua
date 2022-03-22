@@ -13,12 +13,12 @@ augroup end
 ]])
 
 -- Autoformat see `null-ls.lua`
--- vim.cmd([[
--- augroup LspFormat
---   autocmd! * <buffer>
---   autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
--- augroup end
--- ]])
+vim.cmd([[
+augroup LspFormat
+  autocmd! * <buffer>
+  autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
+augroup end
+]])
 
 -- Show diagnostics on hover
 vim.cmd([[
@@ -29,6 +29,7 @@ vim.cmd([[
 vim.cmd([[
   au BufNewFile,BufRead *.sol set filetype=solidity
 ]])
+
 -- Automatically change working directory
 -- vim.cmd([[
 --   autocmd BufEnter * silent! lcd %:p:h

@@ -4,12 +4,6 @@ return function()
 		return
 	end
 
-	local function info()
-		local version = vim.version()
-		local nvim_version_info = " v" .. version.major .. "." .. version.minor .. "." .. version.patch
-		return nvim_version_info
-	end
-
 	local theme = require("alpha.themes.startify")
 
 	theme.section.header.val = {

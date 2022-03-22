@@ -32,15 +32,6 @@ return function()
 					"markdown",
 					"graphql",
 				},
-				-- https://prettier.io/docs/en/options.html
-				extra_args = {
-					"--print-width",
-					"80",
-					"--trailing-comma",
-					"e",
-					"--tab-width",
-					"2",
-				},
 			}),
 			format.black.with({ extra_args = { "--fast" } }),
 			format.gofmt,
@@ -59,17 +50,10 @@ return function()
 				vim.cmd([[
 		                  augroup LspFormatting
 		                      autocmd! * <buffer>
-		                      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()
+		                      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
 		                  augroup END
 		              ]])
 			end
-			-- vim.cmd([[
-			--   augroup document_highlight
-			--     autocmd! * <buffer>
-			--     autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-			--     autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-			--   augroup END
-			-- ]])
 		end,
 	})
 end

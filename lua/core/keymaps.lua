@@ -5,10 +5,6 @@ local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
 map("n", "<c-c>", "<esc>", opts)
--- binding ctrl+s, ctrl+q for save/quit
-map("n", "<c-s>", "<cmd>w<cr>", opts)
-map("n", "<c-q>", "<cmd>q!<cr>", opts)
-map("n", "<c-w>", "<cmd>bw<cr>", opts)
 -- exit insert mode whenever you type 'jk' or 'kj'
 map("i", "kj", "<esc>", opts)
 map("i", "jk", "<esc>", opts)
@@ -59,5 +55,14 @@ map("n", "<space>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", o
 map("n", "<space>fd", "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
 map("n", "<space>fa", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 
+-- Harpoon
+map("n", "<leader>a", "<cmd>lua require('harpoon.mark').add_file()<cr>")
+map("n", "<leader>h", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>")
+map("n", "<leader>tc", "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>")
+map("n", "<A-1>", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
+map("n", "<A-2>", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
+map("n", "<A-3>", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
+map("n", "<A-4>", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
+--
 -- -- ripgrep
 -- map("n", "<space>ps", " :Rg<space>", opts)

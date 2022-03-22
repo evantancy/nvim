@@ -7,7 +7,7 @@ return function()
 	lualine.setup({
 		options = {
 			icons_enabled = true,
-			theme = "gruvbox_dark",
+			theme = "auto",
 			component_separators = { left = "", right = "" },
 			section_separators = { left = "", right = "" },
 			disabled_filetypes = {},

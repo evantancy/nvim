@@ -1,5 +1,6 @@
 -- Configure nvim-lspconfig and nvim-cmp
 return function()
+	-- ############################ IMPORTS ###################################
 	local lspconfig = safe_require("lspconfig")
 	if not lspconfig then
 		return
@@ -9,18 +10,23 @@ return function()
 	if not cmp_nvim_lsp then
 		return
 	end
+	local capabilities = vim.lsp.protocol.make_client_capabilities()
+	if cmp_nvim_lsp then
+		capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+	end
 
 	local cmp = safe_require("cmp")
 	if not cmp then
 		return
 	end
+
 	local cmp_autopairs = safe_require("nvim-autopairs.completion.cmp")
+	if not cmp_autopairs then
+		return
+	end
 	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
-	-- This has to be at the top
-	local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-	-- Use an `on_attach` function to only map the following keys
-	-- after the language server attaches to the current buffer
+	-- ######################## STANDARD KEYMAPS ##############################
 	local opts = { noremap = true }
 	vim.api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
@@ -28,9 +34,23 @@ return function()
 	vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 
 	local on_attach = function(client, bufnr)
+		-- only allow null-ls to format
 		if client.name ~= "null-ls" then
 			client.resolved_capabilities.document_formatting = false
 			-- client.resolved_capabilities.document_range_formatting = false
+		end
+
+		if client.name == "tsserver" then
+			local ts_utils = safe_require("nvim-lsp-ts-utils")
+			if not ts_utils then
+				return
+			end
+			ts_utils.setup({})
+			ts_utils.setup_client(client)
+			-- TODO: fix keymaps that clash
+			buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+			buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+			buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
 		end
 		-- Enable completion triggered by <c-x><c-o>
 		vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -46,15 +66,6 @@ return function()
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>r", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 		vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-		-- vim.api.nvim_buf_set_keymap(
-		-- 	bufnr,
-		-- 	"n",
-		-- 	"<space>wl",
-		-- 	"<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-		-- 	opts
-		-- )
 	end
 
 	-- Use a loop to conveniently call 'setup' on multiple servers and
@@ -62,9 +73,9 @@ return function()
 	local servers = {
 		"pyright",
 		"sumneko_lua",
-		"solc",
+		-- "solc"
 		-- "solang",
-		-- "solidity_ls",
+		"solidity_ls",
 		"tsserver",
 		"clangd",
 		"zk",
@@ -82,18 +93,36 @@ return function()
 			server_instance:install()
 		end
 
-		if server_instance.name == "tsserver" then
-			-- local ts_utils = safe_require("nvim-lsp-ts-utils")
-			-- if not ts_utils then
-			-- 	return
-			-- end
-			-- ts_utils.setup({})
-			-- ts_utils.setup_client(client)
-			-- buf_map(bufnr, "n", "gs", "<cmd>TSLspOrganize<cr>")
-			-- buf_map(bufnr, "n", "gi", "<cmd>TSLspRenameFile<cr>")
-			-- buf_map(bufnr, "n", "gs", "<cmd>TSLspImportAll<cr>")
-		elseif server_instance.name == "solc" then
-			local cmd = { "solc", "--lsp" }
+		-- TODO: config solang
+		if server_instance.name == "solc" then
+			-- rely on proper configuration from remappings
+			local remappings = get_lines_from("remappings.txt")
+			local cmd = { "solc", "--lsp", unpack(remappings) }
+			server_instance:setup({
+				cmd = cmd,
+				on_attach = on_attach,
+				capabilities = capabilities,
+				flags = {
+					debounce_text_changes = 150,
+				},
+			})
+		elseif server_instance.name == "solang" then
+			-- `-m` for linking imports (lib)
+			-- `-I` for where your contracts live (src)
+			-- https://github.com/hyperledger-labs/solang/issues/705
+			-- https://github.com/hyperledger-labs/solang/issues/591
+			-- https://github.com/hyperledger-labs/solang/issues/493
+			local remappings = get_lines_from("remappings.txt")
+			local cmd = {
+				"solang",
+				"--language-server",
+				"--target",
+				"ewasm",
+				"-m",
+				"@openzeppelin/=lib/openzeppelin-contracts/",
+				"-I",
+				vim.fn.getcwd() .. "src",
+			}
 			server_instance:setup({
 				cmd = cmd,
 				on_attach = on_attach,
