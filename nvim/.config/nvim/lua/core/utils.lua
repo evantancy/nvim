@@ -59,7 +59,16 @@ end
 M.search_dotfiles = function()
 	require("telescope.builtin").find_files({
 		prompt_title = "< VimRC >",
-		cwd = "~/.config/nvim",
+		cwd = "~/.dotfiles/",
+		hidden = true,
+	})
+end
+
+M.grep_dotfiles = function()
+	require("telescope.builtin").live_grep({
+		prompt_title = "< VimRC Live Grep >",
+		cwd = "~/.dotfiles/",
+		hidden = true,
 	})
 end
 

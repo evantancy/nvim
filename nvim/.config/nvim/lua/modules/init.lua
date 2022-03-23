@@ -81,6 +81,10 @@ local plugins = {
 		run = "./install.sh",
 		requires = "hrsh7th/nvim-cmp",
 	},
+	-- { -- Copilot
+	-- 	"github/copilot.vim",
+	-- config = conf("copilot")
+	-- },
 	{ -- Autocomplete comments/tags/brackets
 		"tpope/vim-surround",
 		requires = { "tpope/vim-repeat" },

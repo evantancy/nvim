@@ -1,5 +1,6 @@
 -- Recursively source changed .lua files in `&runtimepath` <- this is not a typo
 -- https://stackoverflow.com/questions/71186816/how-to-set-a-vim-autocmd-for-any-file-in-packpath
+-- TODO allow from anywhere
 vim.cmd([[
   execute 'autocmd BufWritePost {' .. &packpath .. '}/**/*.lua source <afile> | PackerCompile'
 ]])
@@ -34,3 +35,14 @@ vim.cmd([[
 -- vim.cmd([[
 --   autocmd BufEnter * silent! lcd %:p:h
 -- ]])
+vim.cmd([[
+  function! s:ftplugin_fugitive() abort
+    nnoremap <buffer> <silent> cc :Git commit --quiet<CR>
+    nnoremap <buffer> <silent> ca :Git commit --quiet --amend<CR>
+    nnoremap <buffer> <silent> ce :Git commit --quiet --amend --no-edit<CR>
+  endfunction
+  augroup nhooyr_fugitive
+    autocmd!
+    autocmd FileType fugitive call s:ftplugin_fugitive()
+  augroup END
+]])
