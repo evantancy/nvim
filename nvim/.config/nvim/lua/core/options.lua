@@ -31,6 +31,8 @@ end
 -- Enable syntax highlighting
 vim.cmd([[
 	syntax on
+    set undodir=~/.vim/undodir
+    set undofile 
 ]])
 
 -- Aesthetics
@@ -49,7 +51,7 @@ opt.relativenumber = true -- Relative line numbers
 opt.termguicolors = true
 opt.splitbelow = true -- Horizontal splits will automatically be below
 opt.splitright = true -- Vertical splits will automatically be to the right
-opt.scrolloff = 5 -- Keep X lines above/below cursor when scrolling
+opt.scrolloff = 10 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
 opt.cursorlineopt = "number"
 

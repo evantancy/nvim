@@ -7,15 +7,15 @@ return function()
 	local actions = require("telescope.actions")
 	telescope.setup({
 		defaults = {
-			layout_config = {
-				horizontal = {
-					height = 0.9,
-					preview_cutoff = 60,
-					preview_width = 90,
-					prompt_position = "bottom",
-					width = 0.9,
-				},
-			},
+			-- layout_config = {
+			-- 	horizontal = {
+			-- 		height = 0.9,
+			-- 		preview_cutoff = 60,
+			-- 		preview_width = 90,
+			-- 		prompt_position = "bottom",
+			-- 		width = 0.9,
+			-- 	},
+			-- },
 			sorting_strategy = "ascending",
 			prompt_prefix = "> ",
 			selection_caret = ">> ",

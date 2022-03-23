@@ -141,6 +141,7 @@ local plugins = {
 		"iamcco/markdown-preview.nvim",
 		run = "cd app && yarn install",
 	},
+	{ "mbbill/undotree" },
 }
 
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"

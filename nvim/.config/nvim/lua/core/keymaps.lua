@@ -64,6 +64,7 @@ map("n", "<A-1>", "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
 map("n", "<A-2>", "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
 map("n", "<A-3>", "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
 map("n", "<A-4>", "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
---
+-- undotree
+map("n", "<F5>", "<cmd>UndotreeToggle<cr>")
 -- -- ripgrep
 -- map("n", "<space>ps", " :Rg<space>", opts)
