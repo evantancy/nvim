@@ -48,7 +48,7 @@ map("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
 map("n", "<space>vrc", "<cmd>lua require('core.utils').search_dotfiles()<cr>")
-map("n", "<space>vrg", "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
+-- map("n", "<space>vrg", "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
 map("n", "<space>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
 map("n", "<space>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 map("n", "<space>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)

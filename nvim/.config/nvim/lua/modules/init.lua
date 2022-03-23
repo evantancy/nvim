@@ -137,6 +137,10 @@ local plugins = {
 		"ThePrimeagen/harpoon",
 		requires = { "nvim-lua/plenary.nvim" },
 	},
+	{
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && yarn install",
+	},
 }
 
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"

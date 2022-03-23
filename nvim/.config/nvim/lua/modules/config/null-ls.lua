@@ -42,7 +42,6 @@ return function()
 			format.isort,
 			diagnostics.tsc,
 			diagnostics.flake8,
-			diagnostics.markdownlint,
 			diagnostics.shellcheck,
 		},
 		on_attach = function(client)

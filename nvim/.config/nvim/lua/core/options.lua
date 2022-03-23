@@ -26,7 +26,7 @@ local function status_line()
 	)
 end
 
-vim.opt.statusline = status_line()
+-- vim.opt.statusline = status_line()
 
 -- Enable syntax highlighting
 vim.cmd([[
@@ -76,8 +76,8 @@ opt.iskeyword = opt.iskeyword + "-" -- Treat dash separated words as a word text
 opt.incsearch = true -- Searching
 
 -- Speed
-opt.updatetime = 200 -- Faster autocomplete
-opt.timeoutlen = 1000 -- Reduce timeoutlen
+opt.updatetime = 50 -- Faster autocomplete
+opt.timeoutlen = 500 -- Reduce timeoutlen
 
 -- -- Shortmess
 -- o.shortmess = o.shortmess

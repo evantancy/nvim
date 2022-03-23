@@ -78,7 +78,6 @@ return function()
 		"solidity_ls",
 		"tsserver",
 		"clangd",
-		"zk",
 		"bashls",
 		"ansiblels",
 		"cmake",
