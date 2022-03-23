@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 source ./ubuntu
 for loc in "${STOW_FOLDERS[@]}"; do
-	stow -vD $folder
-	stow -v $folder
+	stow -vD $loc
+	stow -v $loc
 done
