@@ -18,20 +18,37 @@ map("n", "<space>d", '"_d', opts)
 map("v", "<space>d", '"_d', opts)
 --  replace currently selected text with default register without yanking
 map("v", "p", '"_dP', opts)
+
+-- wtf?????????????????????????????????????????????????????????????????????
+map("n", "Y", "y$", opts)
+map("n", "n", "nzzzv", opts)
+map("n", "N", "Nzzzv", opts)
+map("n", "<space>J", "mzJ`z", opts)
+map("i", ",", ",<c-g>u", opts)
+map("i", ".", ".<c-g>u", opts)
+map("i", "!", "!<c-g>u", opts)
+map("i", "?", "?<c-g>u", opts)
+-- vim.cmd([[
+-- nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
+-- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
+-- ]])
+
 -- ctrl+/ or ctrl+\ to line/block comment
 map("n", "<c-_>", "<cmd> lua require('Comment.api').toggle_current_linewise()<cr>")
 map("n", "<c-bslash>", "<cmd> lua require('Comment.api').toggle_current_blockwise()<cr>")
--- MAGIC
+-- make vim behave
 -- D copies highlighted text
 map("v", "D", "y'>p", opts)
 -- tab while code selected
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 -- move hightlighted text up/down
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
--- map("v", "K", ":co '><CR>V'[=gv", opts)
-
+map("n", "<space>j", ":m .+1<CR>==", opts)
+map("n", "<space>k", ":m .-2<CR>==", opts)
+map("i", "<c-j>", "<esc>:m .+1<CR>==gi", opts)
+map("i", "<c-k>", "<esc>:m .-2<CR>==gi", opts)
+map("v", "J", ":m '>+1<CR>gv=gv", opts)
+map("v", "K", ":m '<-2<CR>gv=gv", opts)
 -- navigate buffer
 map("n", "<tab>", "<cmd>bnext<cr>", opts)
 map("n", "<s-tab>", "<cmd>bprevious<cr>", opts)

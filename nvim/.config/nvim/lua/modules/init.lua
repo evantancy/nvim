@@ -3,13 +3,13 @@ local function conf(name)
 end
 
 local plugins = {
+	{ "rebelot/kanagawa.nvim" },
+	{ "ellisonleao/gruvbox.nvim" },
 	{ -- Colorschemes
 		"folke/tokyonight.nvim",
 		requires = { "folke/lsp-colors.nvim" },
 		config = conf("colors"),
 	},
-	{ "rebelot/kanagawa.nvim" },
-	{ "ellisonleao/gruvbox.nvim" },
 	{ -- Color LSP diagnostics
 		"folke/lsp-colors.nvim",
 	},
@@ -55,7 +55,6 @@ local plugins = {
 			"RRethy/vim-illuminate",
 		},
 	},
-	-- https://jose-elias-alvarez.medium.com/configuring-neovims-lsp-client-for-typescript-development-5789d58ea9c
 	{ -- Formatters
 		"jose-elias-alvarez/null-ls.nvim",
 		branch = "main",
@@ -133,26 +132,18 @@ local plugins = {
 		"nvim-lualine/lualine.nvim",
 		config = conf("lualine"),
 	},
-	{
+	{ -- Speed
 		"ThePrimeagen/harpoon",
 		requires = { "nvim-lua/plenary.nvim" },
 	},
-	-- { -- builtin
-	-- 	"tpope/vim-markdown",
-	-- },
-	{
-		-- https://www.reddit.com/r/neovim/comments/ncf32b/how_to_setup_markdown_preview_with_packer/
-		-- https://github.com/wbthomason/packer.nvim/issues/620
+	{ -- Markdown
 		"iamcco/markdown-preview.nvim",
-		run = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-		ft = { "markdown" },
-		config = function()
-			vim.cmd([[autocmd mkdp_init BufEnter]])
-		end,
+		run = "cd app && yarn install",
+		config = conf("markdown-preview"),
 	},
-	{ "mbbill/undotree" },
+	{ -- Visualize undo trees
+		"mbbill/undotree",
+	},
 }
 
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"

@@ -5,6 +5,7 @@ return function()
 		"cpp",
 		"bash=sh",
 		"javascript",
-		"yaml=yml",
 	}
+
+	vim.g.markdown_syntax_conceal = 0
 end
