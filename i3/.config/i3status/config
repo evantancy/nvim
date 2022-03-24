@@ -14,9 +14,9 @@ general {
 order += "path_exists VPN"
 order += "wireless _first_"
 order += "ethernet _first_"
-order += "battery all"
-order += "disk /"
 order += "load"
+order += "disk /"
+order += "battery all"
 order += "tztime local"
 
 wireless _first_ {
