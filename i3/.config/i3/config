@@ -185,7 +185,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        position bottom
+        position top
 }
 
 ######################## CUSTOM SETTINGS ##################################### 
