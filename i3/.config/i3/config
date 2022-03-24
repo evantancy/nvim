@@ -222,12 +222,16 @@ bindsym XF86AudioPrev exec playerctl previous
 # `exec_always` for everytime desktop launches
 # [Basic Autostart]
 exec --no-startup-id gnome-terminal
-exec --no-startup-id google-chrome --password-store=gnome
+exec --no-startup-id firefox
 exec --no-startup-id spotify
 exec --no-startup-id discord
+
+# grab settings from Ubuntu (gnome)
+exec --no-startup-id /usr/libexec/gsd-xsettings
+
 # [Assign apps to workspaces]
 for_window [class="Gnome-Terminal"] move to workspace $ws1
-for_window [class="Google-chrome"] move to workspace $ws2
+for_window [class="Firefox"] move to workspace $ws2
 for_window [class="Spotify"] move to workspace $ws4
 for_window [class="discord"] move to workspace $ws5
 

@@ -11,43 +11,43 @@ general {
         interval = 5
 }
 
-order += "ipv6"
+order += "path_exists VPN"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
 order += "disk /"
 order += "load"
-order += "memory"
 order += "tztime local"
 
 wireless _first_ {
-        format_up = "W: (%quality at %essid) "
-        format_down = "W: down"
+        format_up = "W:%quality"
+        format_down = "W:0"
 }
 
 ethernet _first_ {
-        format_up = "E: (%speed)"
-        format_down = "E: down"
+        format_up = "E:%speed"
+        format_down = "E:0"
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+        format = "B:%percentage"
+        format_down = "B:0"
 }
 
 disk "/" {
-        format = "%avail"
+        format = "df:%avail"
 }
 
 load {
         format = "%1min"
 }
 
-memory {
-        format = "%used | %available"
-        threshold_degraded = "1G"
-        format_degraded = "MEMORY < %available"
-}
-
 tztime local {
         format = "%Y-%m-%d %H:%M:%S"
+}
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+        format = "VPN:%status"
 }
