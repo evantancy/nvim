@@ -35,6 +35,8 @@ vim.cmd([[
 -- vim.cmd([[
 --   autocmd BufEnter * silent! lcd %:p:h
 -- ]])
+
+-- silence `Press Enter ...` confirmations for fugitive
 vim.cmd([[
   function! s:ftplugin_fugitive() abort
     nnoremap <buffer> <silent> cc :Git commit --quiet<CR>

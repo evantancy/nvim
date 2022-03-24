@@ -221,15 +221,28 @@ bindsym XF86AudioPrev exec playerctl previous
 # `exec_always` for everytime desktop launches
 # [Basic Autostart]
 exec --no-startup-id gnome-terminal
-exec --no-startup-id google-chrome
+exec --no-startup-id google-chrome --password-store=gnome
 exec --no-startup-id spotify
 exec --no-startup-id discord
 # [Assign apps to workspaces]
 for_window [class="Gnome-Terminal"] move to workspace $ws1
 for_window [class="Google-chrome"] move to workspace $ws2
-for_window [class="Spotify"] move to workspace $ws6
-for_window [class="discord"] move to workspace $ws7
+for_window [class="Spotify"] move to workspace $ws5
+for_window [class="discord"] move to workspace $ws6
 
+# enable float certain applications
+# file explorer
+for_window [class="Nautilus"] floating enable
+# image viewer, Eye of gnome
+for_window [class="Eog"] floating enable
 # configure key repeat rate
 exec --no-startup-id xset r rate 200 80 # format: delay, repeat rate
 
+# https://gist.github.com/dianjuar/ee774561a8bc02b077989bc17424a19f
+# bindsym $mod+Shift+w exec --no-startup-id maim "/home/$USER/Desktop/Screenshot-$(date)"
+bindsym $mod+Shift+w exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Desktop/screenshot-$(date)"
+bindsym $mod+Shift+s exec --no-startup-id maim --select "/home/$USER/Desktop/screenshot-$(date)"
+# Clipboard Screenshots
+# bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+# bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+# bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png

@@ -4,6 +4,8 @@ vim.g.mapleader = " "
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
+-- toggle ignorecase
+map("n", "<F2>", "<cmd>set ignorecase! ignorecase?<cr>")
 map("n", "<c-c>", "<esc>", opts)
 -- exit insert mode whenever you type 'jk' or 'kj'
 map("i", "kj", "<esc>", opts)

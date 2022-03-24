@@ -137,9 +137,20 @@ local plugins = {
 		"ThePrimeagen/harpoon",
 		requires = { "nvim-lua/plenary.nvim" },
 	},
+	-- { -- builtin
+	-- 	"tpope/vim-markdown",
+	-- },
 	{
+		-- https://www.reddit.com/r/neovim/comments/ncf32b/how_to_setup_markdown_preview_with_packer/
+		-- https://github.com/wbthomason/packer.nvim/issues/620
 		"iamcco/markdown-preview.nvim",
-		run = "cd app && yarn install",
+		run = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+		ft = { "markdown" },
+		config = function()
+			vim.cmd([[autocmd mkdp_init BufEnter]])
+		end,
 	},
 	{ "mbbill/undotree" },
 }

@@ -7,6 +7,6 @@ return function()
     " This line enables the true color support.
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
     set t_Co=256
-    colorscheme kanagawa
+    colorscheme gruvbox
     ]])
 end
