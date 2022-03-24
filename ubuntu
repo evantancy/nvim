@@ -3,7 +3,7 @@
 # environment variables
 if [[ -z $STOW_FOLDERS ]]; then
 	# STOW_FOLDERS="bin,i3,netflix,nvim,personal,tmux,uwuntu,xkb,zsh"
-	STOW_FOLDERS=("nvim" "tmux" "i3")
+	STOW_FOLDERS=("nvim" "tmux" "i3" "i3status")
 fi
 
 if [[ -z $DOTFILES ]]; then

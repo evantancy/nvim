@@ -185,6 +185,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
+        position bottom
 }
 
 ######################## CUSTOM SETTINGS ##################################### 
@@ -227,8 +228,8 @@ exec --no-startup-id discord
 # [Assign apps to workspaces]
 for_window [class="Gnome-Terminal"] move to workspace $ws1
 for_window [class="Google-chrome"] move to workspace $ws2
-for_window [class="Spotify"] move to workspace $ws5
-for_window [class="discord"] move to workspace $ws6
+for_window [class="Spotify"] move to workspace $ws4
+for_window [class="discord"] move to workspace $ws5
 
 # enable float certain applications
 # file explorer
@@ -246,3 +247,5 @@ bindsym $mod+Shift+s exec --no-startup-id maim --select "/home/$USER/Desktop/scr
 # bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
 # bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 # bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
+#
+#
