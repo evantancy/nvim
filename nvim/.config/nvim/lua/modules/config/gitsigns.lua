@@ -3,21 +3,26 @@ return function()
 	if not gitsigns then
 		return
 	end
-
+	-- define colors
+	vim.cmd([[
+    highlight GitSignsAdd    guifg=#2ecc71 
+    highlight GitSignsChange guifg=#2980b9
+    highlight GitSignsDelete guifg=#e74c3c 
+    ]])
 	gitsigns.setup({
 		signs = {
-			add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-			change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-			delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+			add = { hl = "GitSignsAdd", text = " ▍", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+			change = { hl = "GitSignsChange", text = " ▍", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+			delete = { hl = "GitSignsDelete", text = " ▍", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
 			topdelete = {
 				hl = "GitSignsDelete",
-				text = "‾",
+				text = "▍",
 				numhl = "GitSignsDeleteNr",
 				linehl = "GitSignsDeleteLn",
 			},
 			changedelete = {
 				hl = "GitSignsChange",
-				text = "~",
+				text = " ▍",
 				numhl = "GitSignsChangeNr",
 				linehl = "GitSignsChangeLn",
 			},
@@ -35,7 +40,7 @@ return function()
 		current_line_blame_opts = {
 			virt_text = true,
 			virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-			delay = 250,
+			delay = 1000,
 			ignore_whitespace = false,
 		},
 		current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",

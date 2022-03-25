@@ -225,10 +225,12 @@ exec --no-startup-id gnome-terminal
 exec --no-startup-id firefox
 exec --no-startup-id spotify
 exec --no-startup-id discord
+# single monitor
+exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 74.97
+
 
 # grab settings from Ubuntu (gnome)
 exec --no-startup-id /usr/libexec/gsd-xsettings
-
 # [Assign apps to workspaces]
 for_window [class="Gnome-Terminal"] move to workspace $ws1
 for_window [class="Firefox"] move to workspace $ws2
