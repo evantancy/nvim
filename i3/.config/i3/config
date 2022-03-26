@@ -228,7 +228,6 @@ exec --no-startup-id firefox
 exec --no-startup-id spotify
 exec --no-startup-id discord
 exec --no-startup-id insync start
-# for_window [class="Insync"] floating enable
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc 
 # single monitor
 exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 74.97
