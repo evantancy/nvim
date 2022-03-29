@@ -5,6 +5,7 @@ return function()
 	end
 
 	local actions = require("telescope.actions")
+	local sorters = require("telescope.sorters")
 	telescope.setup({
 		defaults = {
 			-- layout_config = {
@@ -16,17 +17,28 @@ return function()
 			-- 		width = 0.9,
 			-- 	},
 			-- },
-			sorting_strategy = "ascending",
+			vimgrep_arguments = {
+				"rg",
+				"--color=never",
+				"--no-heading",
+				"--with-filename",
+				"--line-number",
+				"--column",
+				"--hidden",
+				"--smart-case",
+			},
 			prompt_prefix = "> ",
 			selection_caret = ">> ",
 			color_devicons = true,
-
+			path_display = {
+				shorten = { len = 2, exclude = { 1, 2, -2, -1 } },
+			},
+			file_ignore_patterns = { "node_modules/.*", "%.git/.*", "%.idea/.*", "%.vscode/.*" },
+			-- sorting_strategy = "ascending",
+			file_sorter = sorters.get_fzf_sorter,
 			file_previewer = require("telescope.previewers").vim_buffer_cat.new,
 			grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
 			qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-
-			file_ignore_patterns = { "node_modules", ".git" },
-
 			mappings = {
 				i = {
 					["<C-j>"] = actions.move_selection_next,
@@ -52,9 +64,16 @@ return function()
 				-- the default case_mode is "smart_case"
 				case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 			},
+			media_files = {
+				-- filetypes whitelist
+				-- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+				filetypes = { "png", "webp", "jpg", "jpeg", "pdf" },
+				find_cmd = "rg", -- find command (defaults to `fd`)
+			},
 		},
 	})
 	-- To get fzf loaded and working with telescope, you need to call
 	-- load_extension, somewhere after setup function:
 	telescope.load_extension("fzf")
+	telescope.load_extension("media_files")
 end
