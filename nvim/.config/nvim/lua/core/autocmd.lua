@@ -31,6 +31,14 @@ vim.cmd([[
   au BufNewFile,BufRead *.sol set filetype=solidity
 ]])
 
+-- Only enable highlights during search
+vim.cmd([[
+augroup vimrc-incsearch-highlight
+    autocmd!
+    autocmd CmdlineEnter /,\? :set hlsearch
+    autocmd CmdlineLeave /,\? :set nohlsearch
+augroup END
+]])
 -- Automatically change working directory
 -- vim.cmd([[
 --   autocmd BufEnter * silent! lcd %:p:h
