@@ -289,7 +289,7 @@
 [urgency_normal]
     background = "#285577"
     foreground = "#ffffff"
-    timeout = 6
+    timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
 
@@ -431,6 +431,9 @@
     appname=Spotify
     # background = "#013A61"
     # foreground = "#ffffff"
+[Discord]
+    appname = Discord
+    urgency = normal
 [usb]
     summary = Automount
     format = "<b> %s</b>\n%b"
