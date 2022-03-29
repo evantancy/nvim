@@ -4,6 +4,57 @@ vim.g.mapleader = " "
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
+if vim.g.vscode then
+	-- inside vscode
+
+	-- navigate buffer
+	map("n", "<tab>", '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>')
+	map("n", "<s-tab>", '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>')
+	-- splits
+	map("n", "<C-h>", '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<cr>')
+	map("n", "<C-j>", '<cmd>call VSCodeNotify("workbench.action.navigateDown")<cr>')
+	map("n", "<C-k>", '<cmd>call VSCodeNotify("workbench.action.navigateUp")<cr>')
+	map("n", "<C-l>", '<cmd>call VSCodeNotify("workbench.action.navigateRight")<cr>')
+	-- nvim-tree
+	map("n", "<c-n>", "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<cr>", opts)
+
+	-- see `lsp.lua`
+	map("n", "K", '<cmd>call VSCodeNotify("editor.action.showHover")<cr>')
+	map("n", "gd", '<cmd>call VSCodeNotify("editor.action.revealDefinition")<cr>')
+	map("n", "gr", '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
+
+	-- Comment.nvim
+	-- ctrl+/ or ctrl+\ to line/block comment
+	-- map("n", "gcc", '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>')
+	-- map("n", "<c-_>", '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>')
+	-- VISUAL MODE COMMENTS
+	map("x", "<c-_>", '<cmd>call VSCodeCallVisual("editor.action.commentLine", 1)<cr>')
+
+	-- move hightlighted text up/down
+	map()("editor.action.moveLinesUpAction")("editor.action.moveLinesDownAction")
+else
+	-- inside vim
+
+	-- navigate buffer
+	map("n", "<tab>", "<cmd>bnext<cr>", opts)
+	map("n", "<s-tab>", "<cmd>bprevious<cr>", opts)
+	-- splits
+	map("n", "<c-h>", "<c-w>h")
+	map("n", "<c-j>", "<c-w>j")
+	map("n", "<c-k>", "<c-w>k")
+	map("n", "<c-l>", "<c-w>l")
+	-- nvim-tree
+	map("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
+
+	-- Comment.nvim
+	-- ctrl+/ or ctrl+\ to line/block comment
+	map("n", "<c-_>", "<cmd> lua require('Comment.api').toggle_current_linewise()<cr>")
+	map("n", "<c-bslash>", "<cmd> lua require('Comment.api').toggle_current_blockwise()<cr>")
+	-- VISUAL MODE COMMENTS
+	map("x", "<c-_>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
+	map("x", "<c-bslash>", '<ESC><CMD>lua require("Comment.api").toggle_blockwise_op(vim.fn.visualmode())<CR>')
+end
+
 -- toggle ignorecase
 map("n", "<F2>", "<cmd>set ignorecase! ignorecase?<cr>")
 map("n", "<c-c>", "<esc>", opts)
@@ -34,9 +85,6 @@ map("i", "?", "?<c-g>u", opts)
 -- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
 -- ]])
 
--- ctrl+/ or ctrl+\ to line/block comment
-map("n", "<c-_>", "<cmd> lua require('Comment.api').toggle_current_linewise()<cr>")
-map("n", "<c-bslash>", "<cmd> lua require('Comment.api').toggle_current_blockwise()<cr>")
 -- make vim behave
 -- D copies highlighted text
 map("v", "D", "y'>p", opts)
@@ -50,26 +98,14 @@ map("i", "<c-j>", "<esc>:m .+1<CR>==gi", opts)
 map("i", "<c-k>", "<esc>:m .-2<CR>==gi", opts)
 map("v", "J", ":m '>+1<CR>gv=gv", opts)
 map("v", "K", ":m '<-2<CR>gv=gv", opts)
--- navigate buffer
-map("n", "<tab>", "<cmd>bnext<cr>", opts)
-map("n", "<s-tab>", "<cmd>bprevious<cr>", opts)
 -- map("n", "<space>b", "<cmd>b <c-d>", opts)
 -- map("n", "<space>b", "<cmd>ls<cr>:b<space>", opts)
-
--- splits
-map("n", "<c-h>", "<c-w>h")
-map("n", "<c-j>", "<c-w>j")
-map("n", "<c-k>", "<c-w>k")
-map("n", "<c-l>", "<c-w>l")
-
--- nvim-tree
-map("n", "<c-n>", "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
 
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
 map("n", "<space>vrc", "<cmd>lua require('core.utils').search_dotfiles()<cr>")
--- map("n", "<space>vrg", "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
-map("n", "<space>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
+map("n", "<space>vrg", "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
+map("n", "<space>ff", "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
 map("n", "<space>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 map("n", "<space>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
 map("n", "<space>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
