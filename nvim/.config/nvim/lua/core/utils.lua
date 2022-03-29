@@ -64,12 +64,11 @@ M.search_dotfiles = function()
 	})
 end
 
--- M.grep_dotfiles = function()
--- 	require("telescope.builtin").live_grep({
--- 		prompt_title = "< VimRC Live Grep >",
--- 		cwd = "~/.dotfiles/",
--- 		search_dirs = "~/.dotfiles/*",
--- 	})
--- end
+M.grep_dotfiles = function()
+	require("telescope.builtin").live_grep({
+		prompt_title = "< VimRC Live Grep >",
+		cwd = "~/.dotfiles/",
+	})
+end
 
 return M

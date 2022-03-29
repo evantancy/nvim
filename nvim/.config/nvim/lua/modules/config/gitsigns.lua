@@ -6,7 +6,7 @@ return function()
 	-- define colors
 	vim.cmd([[
     highlight GitSignsAdd    guifg=#2ecc71 
-    highlight GitSignsChange guifg=#2980b9
+    highlight GitSignsChange guifg=#f1c40f 
     highlight GitSignsDelete guifg=#e74c3c 
     ]])
 	gitsigns.setup({

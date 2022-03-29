@@ -9,7 +9,7 @@ return function()
 	local ca = null_ls.builtins.code_actions
 	-- Disable inline diagnostics
 	vim.diagnostic.config({
-		virtual_text = false,
+		virtual_text = true,
 	})
 
 	null_ls.setup({

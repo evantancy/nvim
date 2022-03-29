@@ -10,7 +10,7 @@ local plugins = {
 		requires = { "folke/lsp-colors.nvim" },
 		config = conf("colors"),
 	},
-	{ -- Color LSP diagnostics
+	{ -- LSP colors
 		"folke/lsp-colors.nvim",
 	},
 	{ -- Icons
@@ -40,6 +40,8 @@ local plugins = {
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+			{ "nvim-lua/popup.nvim" },
+			{ "nvim-telescope/telescope-media-files.nvim" },
 		},
 	},
 	{ -- Solidity
@@ -143,6 +145,11 @@ local plugins = {
 	},
 	{ -- Visualize undo trees
 		"mbbill/undotree",
+	},
+	{ -- Display hex color codes
+		"RRethy/vim-hexokinase",
+		run = "make hexokinase",
+		config = conf("hexokinase"),
 	},
 }
 
