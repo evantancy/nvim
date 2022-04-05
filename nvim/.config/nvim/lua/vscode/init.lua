@@ -1,91 +1,80 @@
--- Leader key
-vim.g.mapleader = " "
-local opts = { noremap = true }
-local expr_opts = { noremap = true, expr = true }
-local opt = vim.opt
+local o = vim.opt
+local map = function(mode, key, cmd, opts)
+	vim.api.nvim_set_keymap(mode, key, cmd, opts or { noremap = true, silent = true })
+end
 
--- ??
-opt.rtp:remove(vim.fn.stdpath("data") .. "/site")
-opt.rtp:remove(vim.fn.stdpath("data") .. "/site/after")
+vim.opt.rtp:remove(vim.fn.stdpath("data") .. "/site")
+vim.opt.rtp:remove(vim.fn.stdpath("data") .. "/site/after")
 vim.cmd([[let &packpath = &runtimepath]])
 -- vim.cmd [[silent! packadd vim-surround]]
+o.backup = false
+o.writebackup = false
+o.swapfile = false
+o.hlsearch = true
+o.ignorecase = true
+o.smartcase = true
+o.virtualedit = "block"
+o.clipboard = "unnamedplus"
+o.iskeyword = o.iskeyword + "-"
 
--- Options
-opt.backup = false
-opt.writebackup = false
-opt.swapfile = false
-opt.hlsearch = true
-opt.ignorecase = true
-opt.smartcase = true
-opt.virtualedit = "block"
-opt.clipboard = "unnamedplus"
-opt.iskeyword = opt.iskeyword + "-"
+vim.g.mapleader = " "
+map("n", "<leader>", "<Nop>")
+map("x", "<leader>", "<Nop>")
 
--- Keymaps
-map("n", "<c-c>", "<esc>", opts)
--- binding ctrl+s, ctrl+q for save/quit
--- map("n", "<c-s>", "<cmd>w<cr>", opts)
--- map("n", "<c-q>", "<cmd>q!<cr>", opts)
-map("n", "<c-w>", '<cmd>call VSCodeNotify("workbench.action.closeActiveEditor")<cr>', opts)
--- exit insert mode whenever you type 'jk' or 'kj'
-map("i", "kj", "<esc>", opts)
-map("i", "jk", "<esc>", opts)
--- allow single line travel when lines visually wrap
-map("n", "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
--- delete without yanking
-map("n", "<space>d", '"_d', opts)
-map("v", "<space>d", '"_d', opts)
---  replace currently selected text with default register without yanking
-map("v", "p", '"_dP', opts)
+map("n", "Q", "<Nop>")
+map("n", "q:", "<Nop>")
+map("n", "<C-c>", "<Esc>")
+map("n", "Y", "y$")
+map("n", "<CR>", '{->v:hlsearch ? ":nohl\\<CR>" : "\\<CR>"}()', { expr = true })
+map("n", "x", '"_x')
+map("n", "X", '"_X')
 
--- MAGIC
--- D copies highlighted text
-map("v", "D", "y'>p", opts)
--- tab while code selected
-map("v", "<", "<gv", opts)
-map("v", ">", ">gv", opts)
--- move hightlighted text up/down
-map("v", "J", ":m '>+1<CR>gv=gv")
-map("v", "K", ":m '<-2<CR>gv=gv")
+map("x", "<", "<gv")
+map("x", ">", ">gv")
+map("x", "K", ":move '<-2<CR>gv-gv")
+map("x", "J", ":move '>+1<CR>gv-gv")
 
--- navigate buffer
-map("n", "<tab>", '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>')
-map("n", "<s-tab>", '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>')
+-- Better navigation
+map("n", "<C-h>", '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<CR>')
+map("n", "<C-j>", '<cmd>call VSCodeNotify("workbench.action.navigateDown")<CR>')
+map("n", "<C-k>", '<cmd>call VSCodeNotify("workbench.action.navigateUp")<CR>')
+map("n", "<C-l>", '<cmd>call VSCodeNotify("workbench.action.navigateRight")<CR>')
 
--- splits
-map("n", "<C-h>", '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<cr>')
-map("n", "<C-j>", '<cmd>call VSCodeNotify("workbench.action.navigateDown")<cr>')
-map("n", "<C-k>", '<cmd>call VSCodeNotify("workbench.action.navigateUp")<cr>')
-map("n", "<C-l>", '<cmd>call VSCodeNotify("workbench.action.navigateRight")<cr>')
+-- map('n', 'K', '<cmd>call VSCodeNotify("editor.action.showHover")<CR>')
+-- map('n', '<space>gr', '<cmd>call VSCodeNotify("editor.action.goToReferences")<CR>')
+-- map('n', '<space>qf', '<cmd>call VSCodeNotify("editor.action.quickFix")<CR>')
+-- map('n', '<space>gd', '<cmd>call VSCodeNotify("editor.action.revealDefinition")<CR>')
+-- map('n', '<C-w>gd', '<cmd>call VSCodeNotify("editor.action.revealDefinitionAside")<CR>')
 
--- nvim-tree
-map("n", "<c-n>", '<cmd>call VSCodeNotify("workbench.action.toggleSidebarVisibility")<cr>', opts)
+-- Buffers
+map("n", "<space>bd", '<cmd>call VSCodeNotify("workbench.action.closeActiveEditor")<CR>')
+map("n", "<space>bu", '<cmd>call VSCodeNotify("workbench.action.reopenClosedEditor")<CR>')
+map("n", "<TAB>", '<cmd>call VSCodeNotify("workbench.action.nextEditor")<CR>')
+map("n", "<S-TAB>", '<cmd>call VSCodeNotify("workbench.action.previousEditor")<CR>')
 
-map("n", "K", '<cmd>call VSCodeNotify("editor.action.showHover")<cr>')
-map("n", "gd", '<cmd>call VSCodeNotify("editor.action.revealDefinition")<cr>')
-map("n", "<C-w>gd", '<cmd>call VSCodeNotify("editor.action.revealDefinitionAside")<cr>')
-map("n", "gr", '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
--- map('n', '<space>qf', '<cmd>call VSCodeNotify("editor.action.quickFix")<cr>')
-
--- Comments
--- comment.nvim
-map("v", "gc", '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>')
-map("n", "gcc", '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>')
-map("v", "gbc", '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>')
+-- Commentary
+map("x", "gc", "<Plug>VSCodeCommentary", { noremap = false })
+map("n", "gc", "<Plug>VSCodeCommentary", { noremap = false })
+map("o", "gc", "<Plug>VSCodeCommentary", { noremap = false })
+map("n", "gcc", "<Plug>VSCodeCommentaryLine", { noremap = false })
 
 -- General
--- map("n", "<space>.", '<cmd>call VSCodeNotify("workbench.action.openSettingsJson")<cr>')
--- map("n", "<space>;", '<cmd>call VSCodeNotify("workbench.action.showCommands")<cr>')
--- map("n", "<space>z", '<cmd>call VSCodeNotify("workbench.action.toggleZenMode")<cr>')
+map("n", "<space>.", '<cmd>call VSCodeNotify("workbench.action.openSettingsJson")<CR>')
+map("n", "<space>;", '<cmd>call VSCodeNotify("workbench.action.showCommands")<CR>')
+map("n", "<space>z", '<cmd>call VSCodeNotify("workbench.action.toggleZenMode")<CR>')
+
+-- Show
+map("n", "<space>sd", '<cmd>call VSCodeNotify("workbench.debug.action.toggleRepl")<CR>')
+map("n", "<space>se", '<cmd>call VSCodeNotify("workbench.view.explorer")<CR>')
+map("n", "<space>sg", '<cmd>call VSCodeNotify("workbench.view.scm")<CR>')
 
 -- Open
--- map("n", "<space>od", '<cmd>call VSCodeNotify("workbench.action.files.openFolder")<cr>')
--- map("n", "<space>or", '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>')
+map("n", "<space>od", '<cmd>call VSCodeNotify("workbench.action.files.openFolder")<CR>')
+map("n", "<space>or", '<cmd>call VSCodeNotify("workbench.action.openRecent")<CR>')
 
 vim.cmd([[
   augroup highlight_yank
-  autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank({timeout = 200})
-augroup end
+    au!
+    au TextYankPost * silent! lua vim.highlight.on_yank { timeout = 100 }
+  augroup END
 ]])

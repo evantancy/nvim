@@ -111,16 +111,14 @@ return function()
 			-- https://github.com/hyperledger-labs/solang/issues/705
 			-- https://github.com/hyperledger-labs/solang/issues/591
 			-- https://github.com/hyperledger-labs/solang/issues/493
-			local remappings = get_lines_from("remappings.txt")
+			-- local remappings = get_lines_from("remappings.txt")
 			local cmd = {
 				"solang",
 				"--language-server",
-				"--target",
-				"ewasm",
-				"-m",
-				"@openzeppelin/=lib/openzeppelin-contracts/",
-				"-I",
-				vim.fn.getcwd() .. "src",
+				-- "--importmap=openzeppelin=lib/openzeppelin-contracts",
+				-- "--importmap base64-sol=base64",
+				-- "-I",
+				-- "./src",
 			}
 			server_instance:setup({
 				cmd = cmd,

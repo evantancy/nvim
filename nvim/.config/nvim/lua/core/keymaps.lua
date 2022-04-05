@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
-if vim.g.vscode then
+if vim.fn.exists("g:vscode") == 1 then
 	-- inside vscode
 
 	-- navigate buffer
@@ -24,14 +24,18 @@ if vim.g.vscode then
 	map("n", "gr", '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
 
 	-- Comment.nvim
-	-- ctrl+/ or ctrl+\ to line/block comment
-	-- map("n", "gcc", '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>')
-	-- map("n", "<c-_>", '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>')
-	-- VISUAL MODE COMMENTS
-	map("x", "<c-_>", '<cmd>call VSCodeCallVisual("editor.action.commentLine", 1)<cr>')
+	-- -- map("x",)
+	-- xmap gc  <Plug>VSCodeCommentary
+	-- nmap gc  <Plug>VSCodeCommentary
+	-- omap gc  <Plug>VSCodeCommentary
+	-- nmap gcc <Plug>VSCodeCommentaryLine
+	--
+	-- xmap <C-/> <Plug>VSCodeCommentarygv
+	-- nmap <C-/> <Plug>VSCodeCommentaryLine
 
 	-- move hightlighted text up/down
-	map()("editor.action.moveLinesUpAction")("editor.action.moveLinesDownAction")
+	map("n", "<space>k", '<cmd>call VSCodeCallVisual("editor.action.moveLinesUpAction, 1)<cr>')
+	map("n", "<space>j", '<cmd>call VSCodeCallVisual("editor.action.moveLinesDownAction, 1)<cr>')
 else
 	-- inside vim
 
@@ -53,6 +57,14 @@ else
 	-- VISUAL MODE COMMENTS
 	map("x", "<c-_>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
 	map("x", "<c-bslash>", '<ESC><CMD>lua require("Comment.api").toggle_blockwise_op(vim.fn.visualmode())<CR>')
+
+	-- move hightlighted text up/down
+	map("n", "<space>j", ":m .+1<CR>==", opts)
+	map("n", "<space>k", ":m .-2<CR>==", opts)
+	map("i", "<c-j>", "<esc>:m .+1<CR>==gi", opts)
+	map("i", "<c-k>", "<esc>:m .-2<CR>==gi", opts)
+	map("v", "J", ":m '>+1<CR>gv=gv", opts)
+	map("v", "K", ":m '<-2<CR>gv=gv", opts)
 end
 
 -- toggle ignorecase
@@ -91,13 +103,6 @@ map("v", "D", "y'>p", opts)
 -- tab while code selected
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
--- move hightlighted text up/down
-map("n", "<space>j", ":m .+1<CR>==", opts)
-map("n", "<space>k", ":m .-2<CR>==", opts)
-map("i", "<c-j>", "<esc>:m .+1<CR>==gi", opts)
-map("i", "<c-k>", "<esc>:m .-2<CR>==gi", opts)
-map("v", "J", ":m '>+1<CR>gv=gv", opts)
-map("v", "K", ":m '<-2<CR>gv=gv", opts)
 -- map("n", "<space>b", "<cmd>b <c-d>", opts)
 -- map("n", "<space>b", "<cmd>ls<cr>:b<space>", opts)
 

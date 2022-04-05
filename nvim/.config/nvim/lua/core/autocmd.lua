@@ -22,9 +22,9 @@ augroup end
 ]])
 
 -- Show diagnostics on hover
-vim.cmd([[
-  autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
-]])
+-- vim.cmd([[
+--   autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
+-- ]])
 
 -- Recognise solidity files for prettier's solidity plugin
 vim.cmd([[
