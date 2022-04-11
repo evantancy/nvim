@@ -4,26 +4,16 @@ local opt = vim.opt
 local o = vim.o
 
 local function status_line()
-	local mode = "%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}"
-	local file_name = "%-.16t"
-	local buf_nr = "[%n]"
-	local modified = " %-m"
-	local file_type = " %y"
-	local right_align = "%="
-	local line_no = "%10([%l/%L%)]"
-	local pct_thru_file = "%5p%%"
+    local mode = '%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}'
+    local file_name = '%-.16t'
+    local buf_nr = '[%n]'
+    local modified = ' %-m'
+    local file_type = ' %y'
+    local right_align = '%='
+    local line_no = '%10([%l/%L%)]'
+    local pct_thru_file = '%5p%%'
 
-	return string.format(
-		"%s%s%s%s%s%s%s%s",
-		mode,
-		file_name,
-		buf_nr,
-		modified,
-		file_type,
-		right_align,
-		line_no,
-		pct_thru_file
-	)
+    return string.format('%s%s%s%s%s%s%s%s', mode, file_name, buf_nr, modified, file_type, right_align, line_no, pct_thru_file)
 end
 
 -- vim.opt.statusline = status_line()
@@ -32,18 +22,18 @@ end
 vim.cmd([[
 	syntax on
     set undodir=~/.vim/undodir
-    set undofile 
+    set undofile
 ]])
 
 -- Aesthetics
-opt.signcolumn = "yes" -- Keep gutter even without LSP screaming
+opt.signcolumn = 'yes' -- Keep gutter even without LSP screaming
 opt.pumheight = 8 -- Popup menu height
 opt.pumblend = 20 -- Popup menu transparency
 opt.cmdheight = 1
 opt.wrap = true -- Wrap lines
 opt.wrapmargin = 0 -- Margin space when wrapping
 opt.textwidth = 0 -- Wrap lines at column 80
-opt.colorcolumn = "80" -- Show column
+opt.colorcolumn = '80' -- Show column
 opt.linebreak = true -- Break by word, not character
 opt.ruler = true
 opt.number = true -- Line numbers
@@ -53,7 +43,7 @@ opt.splitbelow = true -- Horizontal splits will automatically be below
 opt.splitright = true -- Vertical splits will automatically be to the right
 opt.scrolloff = 10 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
-opt.cursorlineopt = "number"
+opt.cursorlineopt = 'number'
 
 -- Backups
 opt.swapfile = false
@@ -71,10 +61,10 @@ opt.softtabstop = 4
 opt.shiftwidth = 4 -- Number of spaces for indentation
 
 -- Utility
-opt.clipboard = "unnamedplus" -- Share clipboard between Vim and system
-opt.mouse = "a" -- Enable mouse
+opt.clipboard = 'unnamedplus' -- Share clipboard between Vim and system
+opt.mouse = 'a' -- Enable mouse
 opt.errorbells = false -- Disable annoying sounds
-opt.iskeyword = opt.iskeyword + "-" -- Treat dash separated words as a word text object
+opt.iskeyword = opt.iskeyword + '-' -- Treat dash separated words as a word text object
 opt.incsearch = true -- Searching
 
 -- Speed

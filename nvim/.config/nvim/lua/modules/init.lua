@@ -121,7 +121,7 @@ local plugins = {
     },
     { -- Comments
         'numToStr/Comment.nvim',
-        -- config = conf('comment'),
+        config = conf('comment'),
     },
     {
         'tpope/vim-commentary',

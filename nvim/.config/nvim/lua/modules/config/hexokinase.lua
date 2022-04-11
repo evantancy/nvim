@@ -23,5 +23,6 @@ return function()
         'html',
         'yaml',
         'markdown',
+        'solidity',
     }
 end
