@@ -96,8 +96,7 @@ return function()
         if server_instance.name == 'solc' then
             -- rely on proper configuration from remappings
             local remappings = get_lines_from('remappings.txt')
-            -- local cmd = { 'solc', '--lsp', unpack(remappings) }
-            local cmd = { 'solc', '--lsp' }
+            local cmd = { 'solc', '--lsp', unpack(remappings) }
             server_instance:setup({
                 cmd = cmd,
                 on_attach = on_attach,

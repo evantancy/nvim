@@ -5,46 +5,27 @@ local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
 if vim.fn.exists('g:vscode') == 1 then
-    -- inside vscode
-
-    -- allow single line travel when lines visually wrap
-    -- not working atm, unless you manually set in vscode neovim
-    map('n', 'k', 'gk', { noremap = false })
-    map('n', 'j', 'gj', { noremap = false })
+    -- Current behaviour in vscode:
+    --     -> buffer navigation w/ tab / s-tab
+    --     -> comments using vim-commentary
+    -- TODO: get keybinds to work inside vscode
     -- navigate buffer
-    map('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>')
-    map('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>')
+    map('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>', opts)
+    map('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>', opts)
     -- splits
     map('n', '<C-h>', '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<cr>')
     map('n', '<C-j>', '<cmd>call VSCodeNotify("workbench.action.navigateDown")<cr>')
     map('n', '<C-k>', '<cmd>call VSCodeNotify("workbench.action.navigateUp")<cr>')
     map('n', '<C-l>', '<cmd>call VSCodeNotify("workbench.action.navigateRight")<cr>')
     -- nvim-tree
-    map('n', '<c-n>', "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<cr>", opts)
+    map('n', '<C-n>', "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<cr>", opts)
 
     -- see `lsp.lua`
     map('n', 'K', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>')
     map('n', 'gd', '<cmd>call VSCodeNotify("editor.action.revealDefinition")<cr>')
     map('n', 'gr', '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
-
-    -- Comment.nvim
-    -- xmap gc  <Plug>VSCodeCommentary
-    -- nmap gc  <Plug>VSCodeCommentary
-    -- omap gc  <Plug>VSCodeCommentary
-    -- nmap gcc <Plug>VSCodeCommentaryLine
-
-    -- xmap <C-/> <Plug>VSCodeCommentarygv
-    -- nmap <C-/> <Plug>VSCodeCommentaryLine
-
-    -- move hightlighted text up/down
-    map('n', '<space>k', '<cmd>call VSCodeCallVisual("editor.action.moveLinesUpAction, 1)<cr>')
-    map('n', '<space>j', '<cmd>call VSCodeCallVisual("editor.action.moveLinesDownAction, 1)<cr>')
 else
     -- inside vim
-
-    -- allow single line travel when lines visually wrap
-    map('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
-    map('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
 
     -- navigate buffer
     map('n', '<tab>', '<cmd>bnext<cr>', opts)
@@ -65,14 +46,6 @@ else
     map('x', '<c-_>', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
     map('x', '<c-bslash>', '<ESC><CMD>lua require("Comment.api").toggle_blockwise_op(vim.fn.visualmode())<CR>')
 
-    -- move hightlighted text up/down
-    map('n', '<space>j', ':m .+1<CR>==', opts)
-    map('n', '<space>k', ':m .-2<CR>==', opts)
-    map('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
-    map('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
-    map('v', 'J', ":m '>+1<CR>gv=gv", opts)
-    map('v', 'K', ":m '<-2<CR>gv=gv", opts)
-
     -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
     -- Telescope | dl -> diagnostics list | fa -> find all
     map('n', '<space>vrc', "<cmd>lua require('core.utils').search_dotfiles()<cr>")
@@ -84,6 +57,18 @@ else
     map('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
     map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 end
+
+-- move hightlighted text up/down
+map('n', '<space>j', ':m .+1<CR>==', opts)
+map('n', '<space>k', ':m .-2<CR>==', opts)
+map('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
+map('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
+map('v', 'J', ":m '>+1<CR>gv=gv", opts)
+map('v', 'K', ":m '<-2<CR>gv=gv", opts)
+
+-- allow single line travel when lines visually wrap
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
 
 -- toggle ignorecase
 map('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
