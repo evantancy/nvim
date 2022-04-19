@@ -123,9 +123,6 @@ local plugins = {
         'numToStr/Comment.nvim',
         config = conf('comment'),
     },
-    {
-        'tpope/vim-commentary',
-    },
     { -- Highlighter
         'nvim-treesitter/nvim-treesitter',
         config = conf('nvim-treesitter'),
@@ -157,35 +154,46 @@ local plugins = {
     },
 }
 
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    vim.fn.system({
-        'git',
-        'clone',
-        '--depth',
-        '1',
-        'https://github.com/wbthomason/packer.nvim',
-        install_path,
-    })
-    vim.cmd('packadd packer.nvim')
+for _, plugin in ipairs(plugins) do
+    if plugin['config'] == nil then
+        return
+    else
+        use(plugin['config'])
+    end
 end
 
-local packer = require('packer')
-if packer then
-    packer.init({
-        compile_path = vim.fn.stdpath('data') .. '/site/plugin/packer_compiled.lua',
-        package_root = vim.fn.stdpath('data') .. '/site/pack',
-        display = {
-            open_fn = function()
-                return require('packer.util').float({ border = 'rounded' })
-            end,
-        },
-    })
+-- Packer config
 
-    return packer.startup(function(use)
-        use('wbthomason/packer.nvim')
-        for _, plugin in ipairs(plugins) do
-            use(plugin)
-        end
-    end)
-end
+-- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+-- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+--     vim.fn.system({
+--         'git',
+--         'clone',
+--         '--depth',
+--         '1',
+--         'https://github.com/wbthomason/packer.nvim',
+--         install_path,
+--     })
+--     vim.cmd('packadd packer.nvim')
+-- end
+
+-- local packer = require('packer')
+-- if packer then
+--     packer.init({
+--         compile_path = vim.fn.stdpath('data') .. '/site/plugin/packer_compiled.lua',
+--         package_root = vim.fn.stdpath('data') .. '/site/pack',
+--         display = {
+--             open_fn = function()
+--                 return require('packer.util').float({ border = 'rounded' })
+--             end,
+--         },
+--     })
+
+--     return packer.startup(function(use)
+--         use('wbthomason/packer.nvim')
+--         for _, plugin in ipairs(plugins) do
+--             TODO: wrap plugin inside function
+--             use(plugin)
+--         end
+--     end)
+-- end
