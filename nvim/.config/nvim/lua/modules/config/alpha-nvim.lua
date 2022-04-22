@@ -17,7 +17,7 @@ theme.section.top_buttons.val = {
 -- Shift buttons to only top_buttons
 theme.section.bottom_buttons.val = {}
 -- use as bookmarks
-local main = '~/.config/nvim/init.lua'
+local main = '~/.config/nvim/init.vim'
 local modules = '~/.config/nvim/lua/modules/init.lua'
 local null_ls = '~/.config/nvim/lua/modules/config/null-ls.lua'
 local lsp = '~/.config/nvim/lua/modules/config/lsp.lua'

@@ -29,6 +29,7 @@ augroup end
 -- Recognise solidity files for prettier's solidity plugin
 vim.cmd([[
   au BufNewFile,BufRead *.sol set filetype=solidity
+  au BufNewFile,BufRead *.json set filetype=jsonc
 ]])
 
 -- Only enable highlights during search

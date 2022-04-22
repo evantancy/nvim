@@ -6,7 +6,7 @@ endfunction
 call plug#begin('~/.vim/plugged')
 " Colorschemes
 Plug 'rebelot/kanagawa.nvim',
-Plug 'ellisonleao/gruvbox.nvim',
+Plug 'ellisonleao/gruvbox.nvim', {'commit': 'f19263ac45b36962b9d86ce8a7b041bed5b4ffc4' }
 Plug 'haishanh/night-owl.vim',
 Plug 'folke/tokyonight.nvim',
 " LSP colors
