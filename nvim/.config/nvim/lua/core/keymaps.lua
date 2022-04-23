@@ -5,9 +5,6 @@ local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
 if vim.g.vscode then
-    vim.cmd([[
-    packadd Comment.nvim
-    ]])
     -- Current behaviour in vscode:
     --     -> buffer navigation w/ tab / s-tab
     --     -> comments using vim-commentary

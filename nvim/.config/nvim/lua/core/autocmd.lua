@@ -1,9 +1,8 @@
 -- Recursively source changed .lua files in `&runtimepath` <- this is not a typo
 -- https://stackoverflow.com/questions/71186816/how-to-set-a-vim-autocmd-for-any-file-in-packpath
--- TODO allow from anywhere
-vim.cmd([[
-  execute 'autocmd BufWritePost {' .. &packpath .. '}/**/*.lua source <afile> | PackerCompile'
-]])
+-- vim.cmd([[
+--   execute 'autocmd BufWritePost {' .. &packpath .. '}/**/*.lua source <afile> | PackerCompile'
+-- ]])
 
 -- Highlight text on yank
 vim.cmd([[

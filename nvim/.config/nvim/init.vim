@@ -19,8 +19,8 @@ Plug 'kyazdani42/nvim-tree.lua',
 " Startup screen
 Plug 'goolord/alpha-nvim',
 " Jump around quickly
-Plug 'easymotion/vim-easymotion',
-Plug 'asvetliakov/vim-easymotion',  { 'as': 'vsc-easymotion' }
+Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))
+Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' })
 Plug 'folke/which-key.nvim',
 " Telescope and deps
 Plug 'nvim-lua/plenary.nvim',
