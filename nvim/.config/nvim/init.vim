@@ -24,7 +24,7 @@ Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymot
 Plug 'folke/which-key.nvim',
 " Telescope and deps
 Plug 'nvim-lua/plenary.nvim',
-Plug 'nvim-telescope/telescope.nvim',
+Plug 'nvim-telescope/telescope.nvim', {'tag': 'nvim-0.6'}
 Plug 'nvim-telescope/telescope-fzf-native.nvim',  { 'do': 'make' }
 Plug 'nvim-lua/popup.nvim',
 Plug 'nvim-telescope/telescope-media-files.nvim',
