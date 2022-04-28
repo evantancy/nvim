@@ -6,10 +6,16 @@ local expr_opts = { noremap = true, expr = true }
 
 if vim.g.vscode then
     -- Current behaviour in vscode:
-    --     -> buffer navigation w/ tab / s-tab
-    --     -> comments using vim-commentary
-    -- TODO: get keybinds to work inside vscode
-    -- navigate buffer
+    -- buffer navigation using tab / s-tab
+    -- comments using Comment.nvim
+    -- file tree navigation
+
+    -- inside vscode
+
+    -- allow single line travel when lines visually wrap
+    map('n', 'k', 'gk')
+    map('n', 'j', 'gj')
+
     map('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>', opts)
     map('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>', opts)
     -- splits
@@ -26,6 +32,10 @@ if vim.g.vscode then
     map('n', 'gr', '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
 else
     -- inside vim
+
+    -- allow single line travel when lines visually wrap
+    map('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
+    map('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
 
     -- navigate buffer
     map('n', '<tab>', '<cmd>bnext<cr>', opts)
@@ -65,10 +75,6 @@ map('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
 map('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
 map('v', 'J', ":m '>+1<CR>gv=gv", opts)
 map('v', 'K', ":m '<-2<CR>gv=gv", opts)
-
--- allow single line travel when lines visually wrap
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
 
 -- toggle ignorecase
 map('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
