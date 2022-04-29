@@ -2,8 +2,13 @@
 
 # environment variables
 if [[ -z $STOW_FOLDERS ]]; then
-	# STOW_FOLDERS="bin,i3,netflix,nvim,personal,tmux,uwuntu,xkb,zsh"
-	STOW_FOLDERS=("nvim" "tmux" "i3" "dunst")
+	# if using bash
+	if [[ $SHELL = "/bin/bash" ]]; then
+		STOW_FOLDERS=("nvim" "tmux" "i3" "dunst" "aliases" "bash" "zsh")
+	else
+		# if using zsh
+		STOW_FOLDERS="nvim, tmux, i3, dunst, aliases, bash, zsh"
+	fi
 fi
 
 if [[ -z $DOTFILES ]]; then
