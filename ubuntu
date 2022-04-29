@@ -4,10 +4,10 @@
 if [[ -z $STOW_FOLDERS ]]; then
 	# if using bash
 	if [[ $SHELL = "/bin/bash" ]]; then
-		STOW_FOLDERS=("nvim" "tmux" "i3" "dunst" "aliases" "bash" "zsh")
+		STOW_FOLDERS=("nvim" "tmux" "i3" "dunst" "aliases" "bash" "zsh" "readline")
 	else
 		# if using zsh
-		STOW_FOLDERS="nvim, tmux, i3, dunst, aliases, bash, zsh"
+		STOW_FOLDERS=("nvim" "tmux" "i3" "dunst" "aliases" "bash" "zsh" "readline")
 	fi
 fi
 
