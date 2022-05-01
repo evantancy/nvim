@@ -1,0 +1,55 @@
+# guide: https://wiki.archlinux.org/title/readline
+$include /etc/inputrc
+# set editing-mode vi
+# set show-mode-in-prompt on
+
+# cursor shapes for vim mode
+set vi-ins-mode-string \1\e[6 q\2
+set vi-cmd-mode-string \1\e[2 q\2
+
+# completion visuals
+set colored-stats on
+set visible-stats on
+set mark-symlinked-directories on
+set colored-completion-prefix on
+set menu-complete-display-prefix on
+set completion-ignore-case on
+set completion-display-width 0
+set completion-prefix-display-length 3
+
+# completion functionality
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Ctrl-C no longer shows
+set echo-control-characters off
+
+# command history scrolling (only displays current input as prefix)
+# emacs
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# move forward/backword by word using Ctrl+Left/Right
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+
+# vim
+$if mode=vi
+set keymap vi-command
+    # these are for vi-command mode
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+    j: history-search-forward
+    k: history-search-backward
+
+set keymap vi-insert
+    # these are for vi-insert mode
+    "\e[A": history-search-backward
+    "\e[B": history-search-forward
+
+$endif
+
+# bash keybindings
+# use Alt-S to quickly prepend sudo
+"\es": "\C-asudo \C-e"
+
