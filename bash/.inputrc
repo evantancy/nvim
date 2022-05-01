@@ -1,5 +1,6 @@
 # guide: https://wiki.archlinux.org/title/readline
 $include /etc/inputrc
+TAB:menu-complete
 # set editing-mode vi
 # set show-mode-in-prompt on
 

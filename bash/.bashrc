@@ -21,6 +21,7 @@ shopt -s autocd           # automatically cd into dirs
 shopt -s cdspell dirspell # correct minor spelling errors
 shopt -s checkwinsize     # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s globstar         # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
+shopt -s cmdhist          # try to save multiline commands
 if [ "$TERM" = "xterm-256color" ]; then
 	PROMPT_COMMAND='echo -en "\033]0;Terminal\a"' # set fixed title for terminal win
 fi
@@ -111,7 +112,7 @@ if [ -f $DOTFILES/.sh_aliases ]; then
 	. $DOTFILES/.sh_aliases
 fi
 
-USER_COMPLETIONS_DIR="$DOTFILES/bash/.config/bash/completions"
+USER_COMPLETIONS_DIR="$DOTFILES/bash/.bash_completion.d"
 if [ -d $USER_COMPLETIONS_DIR ]; then
 	for completion_script in "$USER_COMPLETIONS_DIR"/*; do
 		. $completion_script
@@ -132,7 +133,7 @@ if ! shopt -oq posix; then
 	fi
 fi
 
-# TAB:menu-complete
+# bind 'TAB:menu-complete'
 
 # SSH SETTINGS
 eval $(keychain --eval --quiet --agents ssh ~/.ssh/ubuntu1804-DLWS)
@@ -171,11 +172,14 @@ export FZF_COMPLETION_OPTS='--multi --inline-info'
 export FZF_DEFAULT_OPS='--multi --inline-info'
 source ~/bin/fzf-tab-completion/bash/fzf-bash-completion.sh
 bind -x '"\t": fzf_bash_completion'
-
 # END FZF SETTINGS - ANSIBLE MANAGED BLOCK
 
 # BEGIN Z SETTINGS - ANSIBLE MANAGED BLOCK
-source ~/bin/z/z.sh
+if [ -d ~/.bash_completion.d ]; then
+	for file in ~/.bash_completion.d/*; do
+		. $file
+	done
+fi
 # END Z SETTINGS - ANSIBLE MANAGED BLOCK
 
 # BEGIN TLDR SETTINGS - ANSIBLE MANAGED BLOCK
