@@ -46,7 +46,7 @@ else
     map('n', '<c-k>', '<c-w>k')
     map('n', '<c-l>', '<c-w>l')
     -- nvim-tree
-    map('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle(false, false)<cr>", opts)
+    map('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
 
     -- Comment.nvim
     -- ctrl+/ or ctrl+\ to line/block comment

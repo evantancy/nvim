@@ -15,7 +15,7 @@ Plug 'folke/lsp-colors.nvim',
 Plug 'ryanoasis/vim-devicons',
 Plug 'kyazdani42/nvim-web-devicons',
 " File tree
-Plug 'kyazdani42/nvim-tree.lua',
+Plug 'kyazdani42/nvim-tree.lua', {'commit': '428898154f909d2e1d07b185b2f82e412882d5f2'}
 " Startup screen
 Plug 'goolord/alpha-nvim',
 " Jump around quickly
@@ -24,8 +24,8 @@ Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymot
 Plug 'folke/which-key.nvim',
 " Telescope and deps
 Plug 'nvim-lua/plenary.nvim',
-Plug 'nvim-telescope/telescope.nvim', {'tag': 'nvim-0.6'}
 Plug 'nvim-telescope/telescope-fzf-native.nvim',  { 'do': 'make' }
+Plug 'nvim-telescope/telescope.nvim', {'tag': 'nvim-0.6'}
 Plug 'nvim-lua/popup.nvim',
 Plug 'nvim-telescope/telescope-media-files.nvim',
 " Solidity
@@ -72,7 +72,7 @@ Plug 'lewis6991/gitsigns.nvim',
 " Comments
 Plug 'numToStr/Comment.nvim', {'tag': 'v0.6'}
 " Highlighter
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'commit': '8a1acc00d2a768985a79358d1a6caa9f08a0eeea'}
 " Bufferline
 Plug 'akinsho/nvim-bufferline.lua',
 " Statusline

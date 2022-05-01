@@ -1,126 +1,72 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export DOTFILES="$HOME/.dotfiles"
+export PATH=$PATH:~/bin
+export PATH=$PATH:~/.local/bin
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# xdg
+export XDG_CONFIG_HOME="$HOME/.config" # default
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/.local/share" # default
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/.cache" # default
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# zsh
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+source "$ZDOTDIR/zsh-functions"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# node version manager
+export NVM_DIR="$HOME/.nvm"
+# export NVM_COMPLETION=true #significant slows zsh
+export NVM_LAZY_LOAD=true
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# plugins
+zsh_add_plugin "zsh-users/zsh-autosuggestions"
+# zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
+zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
+zsh_add_plugin "Aloxaf/fzf-tab"
+zsh_add_plugin "lukechilds/zsh-nvm"
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-export HISTSIZE=100000
-export SAVEHIST=$HISTSIZE
-export HISTFILE="$HOME/.zsh_history"
-setopt hist_ignore_all_dups # store unique commands
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    gitfast
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-completions
-    zsh-vi-mode
-)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
+[ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 # autocompletion
-autoload -U compinit
+autoload -Uz compinit
+# case insensitive autocompletion
+zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
+_comp_options+=(globdots)
 compinit -i
 
+# history settings
+export HISTSIZE=100000 # maximum events for internal history
+export SAVEHIST=$HISTSIZE # maximum events in history file
+export HISTFILE="$HOME/.zsh_history"
+setopt EXTENDED_HISTORY # Write the history file in the ':start:elapsed;command' format.
+setopt SHARE_HISTORY # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY # Do not execute immediately upon history expansion.
 
 # aliases
-source ~/.sh_aliases
+source $DOTFILES/.sh_aliases
+
+# dircolors and aliases ripped off Bash
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto -h'
+	alias dir='dir --color=auto -h'
+	alias vdir='vdir --color=auto -h'
+
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+fi
+# some more ls aliases
+alias ll='ls -alF -h'
+alias la='ls -A -h'
+alias l='ls -CF -h'
 
 # miniconda
-# export PATH="~/miniconda3/bin:$PATH"  # commented out by conda initialize
+export PATH="$HOME/miniconda3/bin:$PATH"
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/evan/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -136,26 +82,21 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# check go install, check pip stuff
-export PATH=$PATH:~/bin:~/.local/bin:/usr/local/go/bin
+# golang
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/go/bin
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='--multi --inline-info'
 export FZF_DEFAULT_OPS='--multi --inline-info'
-source ~/bin/fzf-tab/fzf-tab.plugin.zsh
 
 # z - jump around
 source ~/bin/z/z.sh
 
-# tldr
+# # tldr
 [ -f ~/bin/tldr ] && compctl -k "($( tldr 2>/dev/null --list))" tldr
-
-# node verison manager
-export NVM_DIR="$HOME/.nvm"
-export NVM_COMPLETION=true
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 
 # sumo
 export SUMO_HOME="/usr/share/sumo"
@@ -163,6 +104,7 @@ export SUMO_HOME="/usr/share/sumo"
 # foundry
 export PATH="$PATH:$HOME/.foundry/bin"
 
+# diff-so-fancy
+export PATH="$PATH:$HOME/bin/diff-so-fancy"
 export EDITOR="nvim"
 export GPG_TTY=$(tty)
-

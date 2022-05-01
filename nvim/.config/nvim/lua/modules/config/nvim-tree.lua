@@ -4,6 +4,7 @@ if not nvim_tree then
 end
 -- vim.g.nvim_tree_indent_markers = 0
 vim.g.nvim_tree_respect_buf_cwd = 1
+vim.g.nvim_tree_group_empty = 0
 nvim_tree.setup({
     disable_netrw = true,
     hijack_netrw = true,
@@ -24,7 +25,6 @@ nvim_tree.setup({
         height = 30,
         side = 'left',
         hide_root_folder = false,
-        auto_resize = false,
         signcolumn = 'no',
         mappings = {
             -- `custom_only = false` will merge list of mappings with defaults

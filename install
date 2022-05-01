@@ -3,4 +3,5 @@ source ./ubuntu
 for loc in "${STOW_FOLDERS[@]}"; do
 	stow -vD $loc
 	stow -v $loc
+	echo
 done
