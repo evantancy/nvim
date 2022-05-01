@@ -10,24 +10,21 @@ esac
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoredups:erasedups
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-# export PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
-PROMPT_COMMAND='echo -en "\033]0;Terminal\a"'
-
+export HISTCONTROL=ignoredups:erasedups
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=20000
-HISTFILESIZE=40000
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+# https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
+shopt -s histappend       # append to the history file, don't overwrite it
+shopt -s autocd           # automatically cd into dirs
+shopt -s cdspell dirspell # correct minor spelling errors
+shopt -s checkwinsize     # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
+shopt -s globstar         # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
+if [ "$TERM" = "xterm-256color" ]; then
+	PROMPT_COMMAND='echo -en "\033]0;Terminal\a"' # set fixed title for terminal win
+fi
+# export PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -45,7 +42,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
 	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -57,16 +54,21 @@ if [ -n "$force_color_prompt" ]; then
 		color_prompt=
 	fi
 fi
+
+parse_git_branch() {
+	git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
 if [ "$color_prompt" = yes ]; then
 	# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\W\[\e[91m\]$(parse_git_branch)\[\033[00m\]$ '
 else
 	# PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-	PS1='${debian_chroot:+($debian_chroot)}\u:\W\$ '
+	PS1='${debian_chroot:+($debian_chroot)}\u \W$(parse_git_branch)$ '
 fi
 unset color_prompt force_color_prompt
 
-# set custom promp with 2 chars per directory
+# set custom prompt with 2 chars per directory
 # TODO: enable color
 # PS1='$(echo $(dirname \w) | sed -e "s;\(/..\)[^/]*;\1;g")/$(basename \w) $ '
 
@@ -78,10 +80,9 @@ xterm* | rxvt*)
 	# PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u: \w\a\]$PS1"
 	;;
 *) ;;
-
 esac
 
-# enable color support of ls and also add handy aliases
+# enable color support (default)
 if [ -x /usr/bin/dircolors ]; then
 	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 	alias ls='ls --color=auto -h'
@@ -96,11 +97,6 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF -h'
-alias la='ls -A -h'
-alias l='ls -CF -h'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -109,9 +105,17 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
+export DOTFILES="$HOME/.dotfiles"
 
-if [ -f $DOTFILEs/.sh_aliases ]; then
-	. ~/.sh_aliases
+if [ -f $DOTFILES/.sh_aliases ]; then
+	. $DOTFILES/.sh_aliases
+fi
+
+USER_COMPLETIONS_DIR="$DOTFILES/bash/.config/bash/completions"
+if [ -d $USER_COMPLETIONS_DIR ]; then
+	for completion_script in "$USER_COMPLETIONS_DIR"/*; do
+		. $completion_script
+	done
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -122,8 +126,14 @@ if ! shopt -oq posix; then
 		. /usr/share/bash-completion/bash_completion
 	elif [ -f /etc/bash_completion ]; then
 		. /etc/bash_completion
+	elif [ -f /usr/local/etc/bash_completion ]; then
+		# macOS completion
+		. /usr/local/etc/bash_completion
 	fi
 fi
+
+# TAB:menu-complete
+
 # SSH SETTINGS
 eval $(keychain --eval --quiet --agents ssh ~/.ssh/ubuntu1804-DLWS)
 
@@ -144,8 +154,9 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # BEGIN USER BASH SETTINGS - ANSIBLE MANAGED BLOCK
-HISTTIMEFORMAT="%D @ %T "
-export PATH=$PATH:~/bin:~/.local/bin:/usr/local/go/bin
+# HISTTIMEFORMAT="%D @ %T "
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/go/bin
 # write Bash history across multiple shells
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # max num folders in path
@@ -160,6 +171,7 @@ export FZF_COMPLETION_OPTS='--multi --inline-info'
 export FZF_DEFAULT_OPS='--multi --inline-info'
 source ~/bin/fzf-tab-completion/bash/fzf-bash-completion.sh
 bind -x '"\t": fzf_bash_completion'
+
 # END FZF SETTINGS - ANSIBLE MANAGED BLOCK
 
 # BEGIN Z SETTINGS - ANSIBLE MANAGED BLOCK
@@ -172,8 +184,33 @@ complete -W "$(tldr 2>/dev/null --list)" tldr
 
 # node version manager
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# # NVM LAZY LOADING
+# # https://www.growingwiththeweb.com/2018/01/slow-nvm-init.html
+# if [ -s "$HOME/.nvm/nvm.sh" ]; then
+# 	export NVM_DIR="$HOME/.nvm"
+# 	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# 	alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+# 	alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+# 	alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+# fi
+#
+# # Defer initialization of nvm until nvm, node or a node-dependent command is
+# # run. Ensure this block is only run once if .bashrc gets sourced multiple times
+# # by checking whether __init_nvm is a function.
+# if [ -s "$HOME/.nvm/nvm.sh" ] && [ ! "$(type -t __init_nvm)" = function ]; then
+# 	export NVM_DIR="$HOME/.nvm"
+# 	[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# 	declare -a __node_commands=('nvm' 'node' 'npm' 'yarn' 'gulp' 'grunt' 'webpack')
+# 	function __init_nvm() {
+# 		for i in "${__node_commands[@]}"; do unalias $i; done
+# 		. "$NVM_DIR"/nvm.sh
+# 		unset __node_commands
+# 		unset -f __init_nvm
+# 	}
+# 	for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
+# fi
 
 # sumo
 export SUMO_HOME="/usr/share/sumo"
@@ -183,6 +220,9 @@ export PATH="$PATH:/home/evan/.foundry/bin"
 
 # rust
 . "$HOME/.cargo/env"
+
+# diff-so-fancy
+export PATH="$PATH:$HOME/bin/diff-so-fancy"
 
 export EDITOR="nvim"
 export GPG_TTY=$(tty)
