@@ -33,8 +33,9 @@ alias cde="conda deactivate"
 alias load_conda='export PATH="$HOME/miniconda3/bin:$PATH" && source $HOME/miniconda3/etc/profile.d/conda.sh'
 
 # copying and pasting to clipboard
-alias pbcopy="xsel --output --input"
-alias pbpaste="xsel --output --output"
+# e.g. to copy use `pbcopy < hello.py`
+alias pbcopy="xclip -sel clip"
+alias pbpaste="xclip -sel clip -o"
 
 # misc
 alias vim="nvim"
