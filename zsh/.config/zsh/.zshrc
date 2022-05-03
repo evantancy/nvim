@@ -63,7 +63,6 @@ zsh_add_plugin "changyuheng/fz"
 [ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit
-# TODO: fix clash with fzf
 # show completion colors (like Bash's `set colored-completion-prefix on`)
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 eval "`pip completion --zsh`"
@@ -71,6 +70,7 @@ eval "`pip completion --zsh`"
 zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
 # whether to show dirs ./ and ../
 zstyle ':completion:*' special-dirs false
+# TODO: fix clash with fzf
 # autocorrect any spelling errors, i.e. Bash's `shopt -s dirspell`
 # autocorrect() {
 #   zle .spell-word

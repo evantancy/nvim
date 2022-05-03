@@ -4,8 +4,9 @@ gui:
   showFileTree: false
 git:
   paging:
-    colorArg: always
+    # colorArg: never
     # pager: delta --dark --paging=never
+    colorArg: always
     pager: diff-so-fancy
 promptToReturnFromSubprocess: false # display confirmation when subprocess terminate
 # keybinding:

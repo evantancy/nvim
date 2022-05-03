@@ -168,8 +168,8 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 [ -f ~/bin/.fzf.bash ] && source ~/bin/.fzf.bash
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER='**'
-export FZF_COMPLETION_OPTS='--multi --inline-info'
-export FZF_DEFAULT_OPS='--multi --inline-info'
+export FZF_COMPLETION_OPTS='--inline-info'
+export FZF_DEFAULT_OPS=' --inline-info'
 source ~/bin/fzf-tab-completion/bash/fzf-bash-completion.sh
 bind -x '"\t": fzf_bash_completion'
 # END FZF SETTINGS - ANSIBLE MANAGED BLOCK
