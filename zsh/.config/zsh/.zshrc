@@ -1,9 +1,28 @@
 # Load colors so we can access $fg and more.
 autoload -U colors && colors
+
 # Disable CTRL-s from freezing your terminal's output.
 stty stop undef
 
-setopt interactive_comments # Enable comments when working in an interactive shell.
+# history settings
+export HISTSIZE=100000 # maximum events for internal history
+export SAVEHIST=$HISTSIZE # maximum events in history file
+export HISTFILE="$HOME/.zsh_history"
+setopt EXTENDED_HISTORY # Write the history file in the ':start:elapsed;command' format.
+setopt SHARE_HISTORY # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
+setopt HIST_IGNORE_DUPS # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_FIND_NO_DUPS # Do not display a previously found event.
+setopt HIST_IGNORE_SPACE # Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY # Do not execute immediately upon history expansion.
+setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
+
+setopt INTERACTIVE_COMMENTS # Enable comments when working in an interactive shell.
+setopt GLOB_DOTS # list all hidden files
+setopt PROMPT_SUBST # ??
+setopt AUTO_CD
 
 # Prompt. Using single quotes around the PROMPT is very important, otherwise
 # the git branch will always be empty. Using single quotes delays the
@@ -14,25 +33,18 @@ git_prompt() {
     if (( ${#branch} > ${#branch_truncated} )); then
         branch="${branch_truncated}..."
     fi
-
-    [ -n "${branch}" ] && echo "${branch}"
+    [ -n "${branch}" ] && echo "(${branch})"
 }
-setopt PROMPT_SUBST
-# from nickjj
+# from nick janetakis
 # PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
-PROMPT='%B%{$fg[blue]%}%c%{$fg[magenta]%}(%{$reset_color%}%{$fg[red]%}$(git_prompt)%{$fg[magenta]%})%{$reset_color%}%(?.$.%{$fg[red]%}$)%b '
+PROMPT='%B%{$fg[green]%}%n %{$fg[blue]%}%c%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 
+# some paths
 export DOTFILES="$HOME/.dotfiles"
 export PATH=$PATH:~/bin
 export PATH=$PATH:~/.local/bin
 
-# xdg
-export XDG_CONFIG_HOME="$HOME/.config" # default
-export XDG_DATA_HOME="$XDG_CONFIG_HOME/.local/share" # default
-export XDG_CACHE_HOME="$XDG_CONFIG_HOME/.cache" # default
-
 # zsh
-export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 source "$ZDOTDIR/zsh-functions"
 
 # node version manager
@@ -47,18 +59,30 @@ zsh_add_plugin "Aloxaf/fzf-tab"
 zsh_add_plugin "lukechilds/zsh-nvm"
 zsh_add_plugin "changyuheng/fz"
 
-[ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 # autocompletion
+[ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit
-
+# TODO: fix clash with fzf
+# show completion colors (like Bash's `set colored-completion-prefix on`)
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 eval "`pip completion --zsh`"
 # case insensitive autocompletion
 zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
+# whether to show dirs ./ and ../
+zstyle ':completion:*' special-dirs false
+# autocorrect any spelling errors, i.e. Bash's `shopt -s dirspell`
+# autocorrect() {
+#   zle .spell-word
+#   zle .$WIDGET
+# }
+# zle -N accept-line autocorrect
+# zle -N magic-space autocorrect
+# bindkey '\t' magic-space
 _comp_options+=(globdots)
 # zstyle ':completion:*' menu select=2
 # zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
+# zstyle ':completion:*' completer _expand _complete _correct _approximate
 # zstyle ':completion:*' format 'Completing %d'
 # zstyle ':completion:*' group-name ''
 
@@ -76,20 +100,6 @@ command -v dircolors > /dev/null 2>&1 && eval "$(dircolors -b)"
 #
 compinit -i
 
-# history settings
-export HISTSIZE=100000 # maximum events for internal history
-export SAVEHIST=$HISTSIZE # maximum events in history file
-export HISTFILE="$HOME/.zsh_history"
-setopt EXTENDED_HISTORY # Write the history file in the ':start:elapsed;command' format.
-setopt SHARE_HISTORY # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
-setopt HIST_IGNORE_DUPS # Do not record an event that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
-setopt HIST_FIND_NO_DUPS # Do not display a previously found event.
-setopt HIST_IGNORE_SPACE # Do not record an event starting with a space.
-setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
-setopt HIST_VERIFY # Do not execute immediately upon history expansion.
-setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
 
 # aliases
 source $DOTFILES/.sh_aliases
