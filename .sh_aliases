@@ -45,7 +45,12 @@ alias cat="bat --paging=never -pp --theme='gruvbox-dark' $*"
 alias cp="cp -riv"
 alias mv="mv -iv"
 alias mkdir="mkdir -vp"
+# find files using fd
+alias findfile='fd --hidden --glob --type=file $*'
+alias finddir='fd --hidden --glob --type=directory $*'
+alias findlink='fd --hidden --glob --type=link $*'
 
 # display what key you're pressing
 alias whichkey='read -n c && printf "%s" "$c"'
+
 # ANSIBLE MANAGED FILE
