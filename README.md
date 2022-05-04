@@ -1,7 +1,19 @@
 # .dotfiles
 
-Place in $HOME and use stow
+# Dependencies
 
-# Caveats
+- GNU Stow
 
-For i3, you will need to install playerctl for media controls.
+# Setup
+
+Place this repo in **$HOME**.
+Install using the `install` script.
+Uninstall using the `clean-env` script.
+
+# Resources
+
+- https://thevaluable.dev/zsh-install-configure-mouseless/
+
+# TODO
+
+- Create bootstrap script or link Ansible config
