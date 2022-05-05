@@ -14,6 +14,3 @@ Uninstall using the `clean-env` script.
 
 - https://thevaluable.dev/zsh-install-configure-mouseless/
 
-# TODO
-
-- Create bootstrap script or link Ansible config
