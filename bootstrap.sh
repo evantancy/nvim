@@ -104,7 +104,7 @@ python3 -m pip install cmakelang
 cargo install stylua
 
 # tsc
-npm install -g tsc
+npm install -g typescript
 
 # lazygit + delta
 LGIT_VER="0.34"
