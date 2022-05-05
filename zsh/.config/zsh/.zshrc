@@ -35,6 +35,9 @@ bindkey -M emacs '^[[1;5D' backward-word
 bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 
+# enable emacs
+bindkey -e
+
 # history settings
 export HISTSIZE=100000 # maximum events for internal history
 export SAVEHIST=$HISTSIZE # maximum events in history file
@@ -88,6 +91,7 @@ zsh_add_plugin "zsh-users/zsh-autosuggestions"
 zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
 zsh_add_plugin "Aloxaf/fzf-tab"
 zsh_add_plugin "lukechilds/zsh-nvm"
+zsh_add_plugin "rupa/z"
 zsh_add_plugin "changyuheng/fz"
 
 # autocompletion
@@ -179,9 +183,6 @@ export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='--multi --inline-info'
 export FZF_DEFAULT_OPS='--multi --inline-info'
 
-# z - jump around
-source $DOTFILES/bash/.bash_completion.d/z.sh
-
 # tldr
 [ -f ~/bin/tldr ] && compctl -k "($( tldr 2>/dev/null --list))" tldr
 
@@ -192,6 +193,8 @@ export SUMO_HOME="/usr/share/sumo"
 export PATH="$PATH:$HOME/.foundry/bin"
 
 # diff-so-fancy
-export PATH="$PATH:$HOME/bin/diff-so-fancy"
 export EDITOR="nvim"
 export GPG_TTY=$(tty)
+
+# rust
+. "$HOME/.cargo/env"
