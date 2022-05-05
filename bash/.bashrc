@@ -22,6 +22,7 @@ shopt -s cdspell dirspell # correct minor spelling errors
 shopt -s checkwinsize     # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s globstar         # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
 shopt -s cmdhist          # try to save multiline commands
+
 if [ "$TERM" = "xterm-256color" ]; then
 	PROMPT_COMMAND='echo -en "\033]0;Terminal\a"' # set fixed title for terminal win
 fi
@@ -106,16 +107,18 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-export DOTFILES="$HOME/.dotfiles"
 
+export XDG_CONFIG_HOME="$HOME/.config" # default
+export BASHDOTDIR="$XDG_CONFIG_HOME/bash"
+export DOTFILES="$HOME/.dotfiles"
 if [ -f $DOTFILES/.sh_aliases ]; then
 	. $DOTFILES/.sh_aliases
 fi
 
-USER_COMPLETIONS_DIR="$DOTFILES/bash/.bash_completion.d"
-if [ -d $USER_COMPLETIONS_DIR ]; then
-	for completion_script in "$USER_COMPLETIONS_DIR"/*; do
-		. $completion_script
+COMPLETIONS_DIR="$BASHDOTDIR/.bash_completion.d"
+if [ -d $COMPLETIONS_DIR ]; then
+	for completion in "$COMPLETIONS_DIR"/*; do
+		. $completion
 	done
 fi
 
@@ -136,7 +139,7 @@ fi
 # bind 'TAB:menu-complete'
 
 # SSH SETTINGS
-eval $(keychain --eval --quiet --agents ssh ~/.ssh/ubuntu1804-DLWS)
+# eval $(keychain --eval --quiet --agents ssh ~/.ssh/ubuntu1804-DLWS)
 
 # added by Miniconda3 installer
 # >>> conda initialize >>>
@@ -164,23 +167,19 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 #export PROMPT_DIRTRIM=2
 # END USER BASH SETTINGS - ANSIBLE MANAGED BLOCK
 
+source $BASHDOTDIR/bash-functions
+
 # BEGIN FZF SETTINGS - ANSIBLE MANAGED BLOCK
-[ -f ~/bin/.fzf.bash ] && source ~/bin/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 # Use ~~ as the trigger sequence instead of the default **
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='--inline-info'
 export FZF_DEFAULT_OPS=' --inline-info'
-source ~/bin/fzf-tab-completion/bash/fzf-bash-completion.sh
+bash_add_plugin "lincheney/fzf-tab-completion"
+# manually add file because of nested 'bash' folder & difference in name of script and plugin
+bash_add_file "plugins/fzf-tab-completion/bash/fzf-bash-completion.sh"
 bind -x '"\t": fzf_bash_completion'
 # END FZF SETTINGS - ANSIBLE MANAGED BLOCK
-
-# BEGIN Z SETTINGS - ANSIBLE MANAGED BLOCK
-if [ -d ~/.bash_completion.d ]; then
-	for file in ~/.bash_completion.d/*; do
-		. $file
-	done
-fi
-# END Z SETTINGS - ANSIBLE MANAGED BLOCK
 
 # BEGIN TLDR SETTINGS - ANSIBLE MANAGED BLOCK
 complete -W "$(tldr 2>/dev/null --list)" tldr
@@ -224,9 +223,6 @@ export PATH="$PATH:/home/evan/.foundry/bin"
 
 # rust
 . "$HOME/.cargo/env"
-
-# diff-so-fancy
-export PATH="$PATH:$HOME/bin/diff-so-fancy"
 
 export EDITOR="nvim"
 export GPG_TTY=$(tty)

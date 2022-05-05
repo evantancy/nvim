@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Function to source files if they exist
+bash_add_file() {
+    [ -f "$BASHDOTDIR/$1" ] && source "$BASHDOTDIR/$1"
+}
+
+bash_add_plugin() {
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [ -d "$BASHDOTDIR/plugins/$PLUGIN_NAME" ]; then
+        # For plugins
+        bash_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.bash" || \
+        bash_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.sh"
+    else
+        git clone "https://github.com/$1.git" "$BASHDOTDIR/plugins/$PLUGIN_NAME"
+    fi
+}
+
