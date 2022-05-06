@@ -43,7 +43,8 @@ export HISTSIZE=100000 # maximum events for internal history
 export SAVEHIST=$HISTSIZE # maximum events in history file
 export HISTFILE="$HOME/.zsh_history"
 setopt EXTENDED_HISTORY # Write the history file in the ':start:elapsed;command' format.
-setopt SHARE_HISTORY # Share history between all sessions.
+# setopt SHARE_HISTORY # Share history between all sessions.
+setopt INC_APPEND_HISTORY 
 setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS # Do not record an event that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
@@ -120,11 +121,6 @@ _comp_options+=(globdots)
 # zstyle ':completion:*' completer _expand _complete _correct _approximate
 # zstyle ':completion:*' format 'Completing %d'
 # zstyle ':completion:*' group-name ''
-
-# dircolors is a GNU utility that's not on macOS by default. With this not
-# being used on macOS it means zsh's complete menu won't have colors.
-command -v dircolors > /dev/null 2>&1 && eval "$(dircolors -b)"
-
 # zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # zstyle ':completion:*' list-colors ''
 # zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -138,6 +134,15 @@ compinit -i
 
 # aliases
 source $DOTFILES/.sh_aliases
+
+# dircolors
+# setting `TERM = xterm-256color` in alacritty sometimes isn't being read, force
+export TERM="xterm-256color"
+eval $(env TERM=xterm-256color dircolors)
+
+# dircolors is a GNU utility that's not on macOS by default. With this not
+# being used on macOS it means zsh's complete menu won't have colors.
+command -v dircolors > /dev/null 2>&1 && eval "$(dircolors -b)"
 
 # dircolors and aliases ripped off Bash
 # enable color support of ls and also add handy aliases
@@ -198,3 +203,4 @@ export GPG_TTY=$(tty)
 
 # rust
 . "$HOME/.cargo/env"
+
