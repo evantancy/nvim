@@ -27,17 +27,15 @@
 [init]
         defaultBranch = main
 [core]
-        pager = diff-so-fancy | less --tabs=4 -RFXS
-        ; pager = delta
+        pager = delta
 [interactive]
-        diffFilter = diff-so-fancy --patch
-        ; diffFilter = delta --color-only
-; [delta]
-;         navigate = true # use n and N to move between diff sections
-; [merge]
-;     conflictstyle = diff3
-; [diff]
-;     colorMoved = default
+        diffFilter = delta --color-only
+[delta]
+        navigate = true # use n and N to move between diff sections
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
 [color]
         ui = auto
 [color "diff-highlight"]

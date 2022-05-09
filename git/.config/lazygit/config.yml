@@ -2,11 +2,20 @@ gui:
   sidePanelWidth: 0.25
   showCommandLog: false # enable/disable command log by default
   showFileTree: false # enable/disable file tree view in side panel
+  theme:
+    selectedLineBgColor:
+      # - "#413660"
+      - reverse
+    selectedRangeBgColor:
+      - reverse
+
 git:
   paging:
     colorArg: always
     pager: delta --paging=never --24-bit-color=never
+
 promptToReturnFromSubprocess: false # disable 'Press Enter to return to lazygit'
+
 # keybinding:
 #   universal:
 #     quit: 'q'
