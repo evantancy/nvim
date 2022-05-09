@@ -70,9 +70,6 @@ end
 local servers = {
     'pyright',
     'sumneko_lua',
-    'solc',
-    -- "solang",
-    'solidity_ls',
     'tsserver',
     'clangd',
     'bashls',
@@ -89,34 +86,10 @@ for _, lsp in pairs(servers) do
         server_instance:install()
     end
 
-    -- TODO: config solang
     if server_instance.name == 'solc' then
         -- rely on proper configuration from remappings
         local remappings = get_lines_from('remappings.txt')
         local cmd = { 'solc', '--lsp', unpack(remappings) }
-        server_instance:setup({
-            cmd = cmd,
-            on_attach = on_attach,
-            capabilities = capabilities,
-            flags = {
-                debounce_text_changes = 150,
-            },
-        })
-    elseif server_instance.name == 'solang' then
-        -- `-m` for linking imports (lib)
-        -- `-I` for where your contracts live (src)
-        -- https://github.com/hyperledger-labs/solang/issues/705
-        -- https://github.com/hyperledger-labs/solang/issues/591
-        -- https://github.com/hyperledger-labs/solang/issues/493
-        -- local remappings = get_lines_from("remappings.txt")
-        local cmd = {
-            'solang',
-            '--language-server',
-            -- "--importmap=openzeppelin=lib/openzeppelin-contracts",
-            -- "--importmap base64-sol=base64",
-            -- "-I",
-            -- "./src",
-        }
         server_instance:setup({
             cmd = cmd,
             on_attach = on_attach,
