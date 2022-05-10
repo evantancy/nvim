@@ -150,6 +150,10 @@ zsh_add_plugin "lukechilds/zsh-nvm"
 zsh_add_plugin "rupa/z"
 zsh_add_plugin "changyuheng/fz"
 
+zsh_add_plugin "sharkdp/fd"
+FD_COMPLETION_DIR="$ZDOTDIR/plugins/fd/contrib/completion"
+[ -d $FD_COMPLETION_DIR ] && fpath+=$FD_COMPLETION_DIR
+
 # autocompletion
 [ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 autoload bashcompinit && bashcompinit
