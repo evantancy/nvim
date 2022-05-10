@@ -85,6 +85,8 @@ npm install -g prettier prettier-plugin-solidity
 
 # black
 python3 -m pip install black
+# isort
+python3 -m pip install isort
 
 # shfmt
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
