@@ -85,7 +85,16 @@ Plug 'iamcco/markdown-preview.nvim',  { 'do': 'cd app && yarn install'  }
 Plug 'mbbill/undotree',
 " Display hex color codes
 Plug 'RRethy/vim-hexokinase',  { 'do': 'make hexokinase' }
+" enhanced cpp highlighting
+Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
+
+" enhanced cpp highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_concepts_highlight = 1
 
 lua require('core.utils')
 lua require('modules')
