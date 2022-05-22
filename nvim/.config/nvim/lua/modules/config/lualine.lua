@@ -5,9 +5,9 @@ end
 
 lualine.setup({
     options = {
-        icons_enabled = true,
+        icons_enabled = false,
         theme = 'auto',
-        component_separators = { left = '', right = '' },
+        component_separators = { left = '|', right = '|' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = {},
         always_divide_middle = true,
@@ -21,8 +21,8 @@ lualine.setup({
             {
                 'filename',
                 file_status = false,
-                path = 1, -- 0: filename only, 1: relative, 2: absolute
-                shorting_target = 4, -- Shortens path to leave 40 spaces in the window
+                path = 0, -- 0: filename only, 1: relative, 2: absolute
+                shorting_target = 40, -- Shortens path to leave 40 spaces in the window
                 symbols = {
                     modified = '[+]', -- Text to show when the file is modified.
                     readonly = '[-]', -- Text to show when the file is non-modifiable or readonly.
@@ -30,9 +30,9 @@ lualine.setup({
                 },
             },
         },
-        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_x = { 'filetype' },
         lualine_y = {},
-        lualine_z = { 'location' },
+        lualine_z = { 'location', 'progress' },
     },
     tabline = {},
     extensions = {},

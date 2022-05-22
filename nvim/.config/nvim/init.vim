@@ -87,7 +87,12 @@ Plug 'mbbill/undotree',
 Plug 'RRethy/vim-hexokinase',  { 'do': 'make hexokinase' }
 " enhanced cpp highlighting
 Plug 'octol/vim-cpp-enhanced-highlight'
+" colorize bracket pairs
+Plug 'luochen1990/rainbow'
 call plug#end()
+
+"set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 1 
 
 " enhanced cpp highlighting
 let g:cpp_class_scope_highlight = 1
