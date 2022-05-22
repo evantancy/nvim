@@ -263,3 +263,15 @@ export GPG_TTY=$(tty)
 # rust
 . "$HOME/.cargo/env"
 
+# CUDA and cuDNN
+export PATH="/usr/local/cuda/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+export CUDA_ROOT="/usr/local/cuda"
+
+# ros stuff
+ROS_VER=$(ls /opt/ros)
+ROS_SETUP_FILE=/opt/ros/$ROS_VER/setup.zsh
+[ ! -z $ROS_VER ] && [ -f $ROS_SETUP_FILE ] && source $ROS_SETUP_FILE
+
+export PATH=$PATH:~/.local/bin/
