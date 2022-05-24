@@ -30,7 +30,7 @@ telescope.setup({
         selection_caret = '>> ',
         color_devicons = true,
         path_display = {
-            shorten = { len = 2, exclude = { 1, 2, -2, -1 } },
+            shorten = { len = 2, exclude = { 1, -1 } },
         },
         file_ignore_patterns = { 'node_modules/.*', '%.git/.*', '%.idea/.*', '%.vscode/.*' },
         -- sorting_strategy = "ascending",
