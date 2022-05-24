@@ -68,6 +68,12 @@ else
     map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 end
 
+-- diagnostics
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
 -- move hightlighted text up/down
 map('n', '<space>j', ':m .+1<CR>==', opts)
 map('n', '<space>k', ':m .-2<CR>==', opts)
@@ -98,10 +104,6 @@ map('i', ',', ',<c-g>u', opts)
 map('i', '.', '.<c-g>u', opts)
 map('i', '!', '!<c-g>u', opts)
 map('i', '?', '?<c-g>u', opts)
--- vim.cmd([[
--- nnoremap <expr> k (v:count > 5 ? "m'" . v:count : "") . 'k'
--- nnoremap <expr> j (v:count > 5 ? "m'" . v:count : "") . 'j'
--- ]])
 
 -- make vim behave
 -- D copies highlighted text

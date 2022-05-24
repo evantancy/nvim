@@ -44,6 +44,11 @@ augroup END
 --   autocmd BufEnter * silent! lcd %:p:h
 -- ]])
 
+-- Disable automatic comment insertion
+vim.cmd([[
+    autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+]])
+
 -- silence `Press Enter ...` confirmations for fugitive
 vim.cmd([[
   function! s:ftplugin_fugitive() abort

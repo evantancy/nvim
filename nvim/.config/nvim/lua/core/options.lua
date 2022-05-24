@@ -43,7 +43,7 @@ opt.splitbelow = true -- Horizontal splits will automatically be below
 opt.splitright = true -- Vertical splits will automatically be to the right
 opt.scrolloff = 10 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
-opt.cursorlineopt = 'number'
+opt.cursorlineopt = 'number' -- disable highlighting the entire line
 
 -- Backups
 opt.swapfile = false
