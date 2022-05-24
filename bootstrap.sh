@@ -9,10 +9,10 @@ DISTRO=$(lsb_release -cs)
 
 case $(uname) in
 "Linux")
-	INSTALL_CMD="sudo apt install $@"
+	INSTALL_CMD="sudo apt install $*"
 	;;
 "Darwin")
-	INSTALL_CMD="brew install $@"
+	INSTALL_CMD="brew install $*"
 	;;
 esac
 
@@ -35,7 +35,7 @@ wget https://go.dev/dl/$GOLANG_TAR -P ~/Downloads &&
 	parse_password | sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf ~/Downloads/$GOLANG_TAR
 
 # change default shell to zsh
-chsh -s $(which zsh)
+chsh -s $(command -v zsh)
 
 # nvim 0.6.1 why? just bc vscode-neovim isn't compatible with latest
 if ! [ -d "$XDG_DATA_HOME/nvim" ]; then
@@ -69,8 +69,7 @@ cargo install ripgrep
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/bin/fzf &&
 	~/bin/fzf/install --key-bindings --completion --no-update-rc
 
-# shellcheck
-if [[ $(which shellcheck) == 0 ]]; then
+if [[ $(command -v shellcheck) == 0 ]]; then
 	$INSTALL_CMD shellcheck
 fi
 
@@ -80,8 +79,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" &&
 	nvm install --lts
 
-# npm prettier
-npm install -g prettier prettier-plugin-solidity
+# npm installs
+npm install -g prettier prettier-plugin-solidity yarn typescript
 
 # black
 python3 -m pip install black
@@ -92,7 +91,7 @@ python3 -m pip install isort
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
 
 # clang-format
-if [[ $(which clangd) == 0 ]] | [[ $(which clang-format) == 0 ]] | [[ $(which clang-tidy) == 0 ]]; then
+if [[ $(command -v clangd) == 0 ]] | [[ $(command -v clang-format) == 0 ]] | [[ $(command -v clang-tidy) == 0 ]]; then
 	echo "clangd / clang-format / clang-tidy missing"
 	parse_password | wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 	parse_password | sudo add-apt-repository "deb http://apt.llvm.org/$DISTRO/ llvm-toolchain-$DISTRO main"
@@ -104,9 +103,6 @@ python3 -m pip install cmakelang
 
 # stylua
 cargo install stylua
-
-# tsc
-npm install -g typescript
 
 # lazygit + delta
 LGIT_VER="0.34"
