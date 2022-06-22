@@ -61,7 +61,7 @@ opt.softtabstop = 4
 opt.shiftwidth = 4 -- Number of spaces for indentation
 
 -- Utility
-opt.clipboard = 'unnamed' -- Share clipboard between Vim and system
+opt.clipboard = 'unnamedplus' -- Share clipboard between Vim and system
 opt.mouse = 'a' -- Enable mouse
 opt.errorbells = false -- Disable annoying sounds
 opt.iskeyword = opt.iskeyword + '-' -- Treat dash separated words as a word text object

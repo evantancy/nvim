@@ -14,7 +14,7 @@ opt.hlsearch = true
 opt.ignorecase = true
 opt.smartcase = true
 opt.virtualedit = 'block'
-opt.clipboard = 'unnamedplus'
+-- opt.clipboard = 'unnamedplus'
 opt.iskeyword = o.iskeyword + '-'
 
 vim.g.mapleader = ' '

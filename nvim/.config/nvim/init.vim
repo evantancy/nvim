@@ -92,7 +92,7 @@ Plug 'luochen1990/rainbow'
 call plug#end()
 
 "set to 0 if you want to enable it later via :RainbowToggle
-let g:rainbow_active = 1 
+let g:rainbow_active = 1
 
 " enhanced cpp highlighting
 let g:cpp_class_scope_highlight = 1
@@ -100,6 +100,9 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 let g:cpp_posix_standard = 1
 let g:cpp_concepts_highlight = 1
+
+" clear registers
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
 lua require('core.utils')
 lua require('modules')

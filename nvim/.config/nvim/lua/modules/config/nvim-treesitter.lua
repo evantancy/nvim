@@ -6,7 +6,7 @@ end
 nvim_treesitter.setup({
     highlight = {
         enable = not vim.g.vscode, -- false will disable the whole extension
-        -- additional_vim_regex_highlighting = false,
+        additional_vim_regex_highlighting = true,
         -- disable = { 'json' }, -- list of language that will be disabled
     },
     indent = { enable = true },

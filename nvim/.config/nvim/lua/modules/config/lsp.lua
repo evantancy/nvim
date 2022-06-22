@@ -67,6 +67,7 @@ local servers = {
     'pyright',
     'sumneko_lua',
     'tsserver',
+    'ccls',
     'clangd',
     'bashls',
     'ansiblels',

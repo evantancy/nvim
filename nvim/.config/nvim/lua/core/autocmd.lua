@@ -4,6 +4,11 @@
 --   execute 'autocmd BufWritePost {' .. &packpath .. '}/**/*.lua source <afile> | PackerCompile'
 -- ]])
 
+-- -- clear all registers on launch
+-- vim.cmd([[
+-- autocmd VimEnter * WipeReg
+-- ]])
+
 -- Highlight text on yank
 vim.cmd([[
 augroup HighlightYank

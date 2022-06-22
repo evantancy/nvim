@@ -15,6 +15,7 @@
     lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
 # END GIT SETTINGS - ANSIBLE MANAGED BLOCK
+
 [user]
         email = tcyevan@gmail.com
         name = Evan Tan
@@ -31,27 +32,10 @@
 [interactive]
         diffFilter = delta --color-only
 [delta]
-        navigate = true # use n and N to move between diff sections
+    navigate = true # use n and N to move between diff sections
+    light = false
 [merge]
     conflictstyle = diff3
 [diff]
     colorMoved = default
-[color]
-        ui = auto
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-[diff-so-fancy]
-	markEmptyLines = false
-	changeHunkIndicators = true
-        stripLeadingSymbols = true
+
