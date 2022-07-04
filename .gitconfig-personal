@@ -1,0 +1,6 @@
+[user]
+    name = Evan Tan
+    email = tcyevan@gmail.com
+
+[core]
+    sshCommand = "ssh -i ~/.ssh/macos-personal"

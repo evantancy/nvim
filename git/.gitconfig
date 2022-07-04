@@ -1,4 +1,7 @@
 # BEGIN GIT SETTINGS - ANSIBLE MANAGED BLOCK
+[includeIf "gitdir/i:~/.dotfiles/"]
+    path = ~/.dotfiles/.gitconfig-personal
+
 [alias]
     co = checkout
     br = branch
