@@ -1,3 +1,4 @@
 .vscode
 .swp
 *.zcompdump*
+*.zsh_sessions/

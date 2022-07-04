@@ -3,10 +3,6 @@ alias sysup="sudo apt update && sudo apt upgrade -y"
 alias q="exit"
 alias c="clear"
 alias lt="ls --human-readable --size -1 -S --classify"
-# TAKEN FROM ~/.bashrc defaults
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # python
 alias py3="python3"

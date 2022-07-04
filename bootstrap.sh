@@ -5,11 +5,11 @@ set -euxo pipefail
 
 BIN_DIR="$HOME/bin"
 INTALL_CMD=
-DISTRO=$(lsb_release -cs)
 
 case $(uname) in
 "Linux")
 	INSTALL_CMD="sudo apt install $*"
+	DISTRO=$(lsb_release -cs)
 	;;
 "Darwin")
 	INSTALL_CMD="brew install $*"
@@ -23,7 +23,7 @@ parse_password() {
 }
 
 # some deps
-parse_password | sudo apt install -y curl wget zsh
+parse_password | $INSTALL_CMD -y curl wget zsh
 # rust
 # https://github.com/rust-lang/rustup/issues/1031
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path &&
@@ -50,20 +50,27 @@ if ! [ -d "$VIMPLUG_DIR/plug.vim" ]; then
 	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
 
-# bat
-BAT_VER="0.20.0"
-BAT_DEB="bat_${BAT_VER}_amd64.deb"
-wget https://github.com/sharkdp/bat/releases/download/v$BAT_VER/$BAT_DEB -P ~/Downloads &&
-	parse_password | sudo dpkg -i ~/Downloads/$BAT_DEB
 
-# xclip
-parse_password | sudo apt install xclip
+case $(uname) in
+"Linux")
+	# bat
+	BAT_VER="0.20.0"
+	BAT_DEB="bat_${BAT_VER}_amd64.deb"
+	wget https://github.com/sharkdp/bat/releases/download/v$BAT_VER/$BAT_DEB -P ~/Downloads &&
+		parse_password | sudo dpkg -i ~/Downloads/$BAT_DEB
 
-# fd
-cargo install fd-find
+	# xclip
+	parse_password | $INSTALL_CMD xclip
 
-# ripgrep
-cargo install ripgrep
+	cargo install fd-find ripgrep git-delta
+
+	;;
+"Darwin")
+	INSTALL_CMD="brew install $*"
+	brew install fd bat ripgrep git-delta
+
+	;;
+esac
 
 # # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/bin/fzf &&
@@ -106,11 +113,10 @@ cargo install stylua
 
 # lazygit + delta
 LGIT_VER="0.34"
-LGIT_TAR="lazygit_${LGIT_VER}_Linux_x86_64.tar.gz"
+LGIT_TAR="lazygit_${LGIT_VER}_$(uname)_x86_64.tar.gz"
 wget https://github.com/jesseduffield/lazygit/releases/download/v$LGIT_VER/$LGIT_TAR -P ~/Downloads &&
 	tar -xvf $LGIT_TAR &&
 	mv ~/Downloads/lazygit ~/bin
-cargo install git-delta
 
 # tldr
 curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr &&
@@ -121,3 +127,4 @@ curl -L https://foundry.paradigm.xyz | bash
 foundryup
 
 # miniconda
+

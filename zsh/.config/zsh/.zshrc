@@ -1,30 +1,68 @@
 # Load colors so we can access $fg and more.
 autoload -U colors && colors
 
+# setting `TERM = xterm-256color` in alacritty sometimes isn't being read, force
+export TERM="xterm-256color"
+
+case $(uname) in
+"Linux")
+    eval $(env TERM=xterm-256color dircolors)
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+    # Bash's readline (.inputrc) functionality
+    # Start typing + [Up-Arrow] - fuzzy find history forward
+    if [[ -n "${terminfo[kcuu1]}" ]]; then
+      autoload -U up-line-or-beginning-search
+      zle -N up-line-or-beginning-search
+      bindkey -M emacs "${terminfo[kcuu1]}" up-line-or-beginning-search
+      bindkey -M viins "${terminfo[kcuu1]}" up-line-or-beginning-search
+      bindkey -M vicmd "${terminfo[kcuu1]}" up-line-or-beginning-search
+    fi
+
+    # Start typing + [Down-Arrow] - fuzzy find history backward
+    if [[ -n "${terminfo[kcud1]}" ]]; then
+      autoload -U down-line-or-beginning-search
+      zle -N down-line-or-beginning-search
+      bindkey -M emacs "${terminfo[kcud1]}" down-line-or-beginning-search
+      bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
+      bindkey -M vicmd "${terminfo[kcud1]}" down-line-or-beginning-search
+    fi
+
+	;;
+"Darwin")
+    # homebrew
+    eval "$(/opt/homebrew/bin/brew shellenv)" 
+
+
+    # # dircolors is a GNU utility that's not on macOS by default. With this not
+    # # being used on macOS it means zsh's complete menu won't have colors.
+    # command -v gdircolors > /dev/null 2>&1 && eval "$(gdircolors -b)"
+    # https://geoff.greer.fm/lscolors/
+    export CLICOLOR=1
+    export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd # Linux default colors
+
+    # terminfo doesn't work for macOS Monterey
+    autoload -U up-line-or-beginning-search
+    zle -N up-line-or-beginning-search
+    bindkey -M emacs "^[[A" up-line-or-beginning-search
+    bindkey -M viins "^[[A" up-line-or-beginning-search
+    bindkey -M vicmd "^[[A" up-line-or-beginning-search
+
+    autoload -U down-line-or-beginning-search
+    zle -N down-line-or-beginning-search
+    bindkey -M emacs "^[[B" down-line-or-beginning-search
+    bindkey -M viins "^[[B" down-line-or-beginning-search
+    bindkey -M vicmd "^[[B" down-line-or-beginning-search
+
+    # gnu-tar
+    export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+	;;
+esac
+
 # Disable CTRL-s from freezing your terminal's output.
 stty stop undef
 
 # see https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/key-bindings.zsh
-
-# Bash's readline (.inputrc) functionality
-# Start typing + [Up-Arrow] - fuzzy find history forward
-if [[ -n "${terminfo[kcuu1]}" ]]; then
-  autoload -U up-line-or-beginning-search
-  zle -N up-line-or-beginning-search
-
-  bindkey -M emacs "${terminfo[kcuu1]}" up-line-or-beginning-search
-  bindkey -M viins "${terminfo[kcuu1]}" up-line-or-beginning-search
-  bindkey -M vicmd "${terminfo[kcuu1]}" up-line-or-beginning-search
-fi
-# Start typing + [Down-Arrow] - fuzzy find history backward
-if [[ -n "${terminfo[kcud1]}" ]]; then
-  autoload -U down-line-or-beginning-search
-  zle -N down-line-or-beginning-search
-
-  bindkey -M emacs "${terminfo[kcud1]}" down-line-or-beginning-search
-  bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
-  bindkey -M vicmd "${terminfo[kcud1]}" down-line-or-beginning-search
-fi
 
 # [Ctrl-RightArrow] - move forward one word
 bindkey -M emacs '^[[1;5C' forward-word
@@ -57,7 +95,6 @@ setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
 setopt INTERACTIVE_COMMENTS # Enable comments when working in an interactive shell.
 setopt GLOB_DOTS # list all hidden files
 setopt PROMPT_SUBST # ??
-setopt AUTO_CD
 
 # Prompt. Using single quotes around the PROMPT is very important, otherwise
 # the git branch will always be empty. Using single quotes delays the
@@ -158,6 +195,7 @@ FD_COMPLETION_DIR="$ZDOTDIR/plugins/fd/contrib/completion"
 [ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit
+
 # show completion colors (like Bash's `set colored-completion-prefix on`)
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 eval "`pip completion --zsh`"
@@ -194,32 +232,8 @@ compinit -i
 # aliases
 source $DOTFILES/.sh_aliases
 
-# dircolors
-# setting `TERM = xterm-256color` in alacritty sometimes isn't being read, force
-export TERM="xterm-256color"
-eval $(env TERM=xterm-256color dircolors)
-
-# dircolors is a GNU utility that's not on macOS by default. With this not
-# being used on macOS it means zsh's complete menu won't have colors.
-command -v dircolors > /dev/null 2>&1 && eval "$(dircolors -b)"
-
-# dircolors and aliases ripped off Bash
+# aliases ripped off Bash
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-	alias ls='ls --color=auto -h'
-	alias dir='dir --color=auto -h'
-	alias vdir='vdir --color=auto -h'
-
-	alias grep='grep --color=auto --ignore-case'
-	alias fgrep='fgrep --color=auto'
-	alias egrep='egrep --color=auto'
-fi
-# some more ls aliases
-alias ll='ls -alF -h'
-alias la='ls -A -h'
-alias l='ls -CF -h'
-
 # miniconda
 export PATH="$HOME/miniconda3/bin:$PATH"
 # >>> conda initialize >>>
@@ -236,6 +250,17 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+alias ls='ls --color=auto -hp'
+alias dir='dir --color=auto -h'
+alias vdir='vdir --color=auto -h'
+
+alias grep='grep --color=auto --ignore-case'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+# some more ls aliases
+alias ll='ls -alFh'
+alias la='ls -Aph'
+alias l='ls -CFph'
 
 # golang
 export PATH=$PATH:/usr/local/go/bin
@@ -274,4 +299,3 @@ ROS_VER=$(ls /opt/ros)
 ROS_SETUP_FILE=/opt/ros/$ROS_VER/setup.zsh
 [ ! -z $ROS_VER ] && [ -f $ROS_SETUP_FILE ] && source $ROS_SETUP_FILE
 
-export PATH=$PATH:~/.local/bin/

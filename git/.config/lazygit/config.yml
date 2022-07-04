@@ -1,7 +1,7 @@
 gui:
   sidePanelWidth: 0.25
   showCommandLog: false # enable/disable command log by default
-  showFileTree: false # enable/disable file tree view in side panel
+  showFileTree: true # enable/disable file tree view in side panel
   theme:
     selectedLineBgColor:
       # - "#413660"
