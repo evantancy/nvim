@@ -18,6 +18,4 @@ export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
 
 # java setup
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_331.jdk/Contents/Home
-export PATH=$JAVA_HOME/bin:$PATH:.
-export CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.
+export JAVA_HOME=$(/usr/libexec/java_home -v1.8.0)
