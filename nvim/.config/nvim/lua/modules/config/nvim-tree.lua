@@ -14,10 +14,16 @@ nvim_tree.setup({
         ignore_list = {},
     },
     filters = {
+        -- whether to hide dotfiles
         dotfiles = false,
         -- Files to hide
         custom = { '.git', '.vscode' },
-        exclude = { '.env*', '.*rc', '.config' },
+        -- exclude = { '.env*', '.*rc', '.config' },
+    },
+    git = {
+        enable = true,
+        ignore = true,
+        timeout = 400,
     },
 
     view = {
@@ -30,7 +36,7 @@ nvim_tree.setup({
             -- `custom_only = false` will merge list of mappings with defaults
             custom_only = true,
             list = {
-                { key = '<c-r>', action = 'refresh' },
+                { key = 'R', action = 'refresh' },
                 { key = 'a', action = 'create' },
                 { key = 'd', action = 'remove' },
                 { key = '<bs>', action = 'close_node' },
@@ -44,6 +50,7 @@ nvim_tree.setup({
                 { key = 'Y', action = 'copy_path' },
                 { key = 'y', action = 'copy_name' },
                 { key = 'I', action = 'toggle_ignored' },
+                { key = 'G', action = 'toggle_git_ignored' },
                 { key = 'H', action = 'toggle_dotfiles' },
                 { key = 's', action = 'system_open' },
                 { key = 'S', action = 'search_node' },

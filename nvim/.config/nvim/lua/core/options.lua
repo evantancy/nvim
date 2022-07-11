@@ -66,6 +66,7 @@ opt.mouse = 'a' -- Enable mouse
 opt.errorbells = false -- Disable annoying sounds
 opt.iskeyword = opt.iskeyword + '-' -- Treat dash separated words as a word text object
 opt.incsearch = true -- Searching
+opt.hlsearch = true -- Searching
 
 -- Speed
 opt.updatetime = 50 -- Faster autocomplete
