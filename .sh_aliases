@@ -14,12 +14,7 @@ alias jlab="jupyter-lab"
 alias jnb="jupyter notebook"
 
 # git
-alias ga="git add"
-alias gc="git commit"
-alias gst="git status"
-alias gcl="git clone"
-alias gpl="git pull"
-alias gps="git push"
+alias g="git"
 alias lgit="lazygit"
 
 # conda
