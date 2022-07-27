@@ -42,6 +42,9 @@ null_ls.setup({
         diagnostics.tsc,
         diagnostics.flake8,
         diagnostics.shellcheck,
+ --        diagnostics.sqlfluff.with({
+	-- 	extra_args = {"--dialect", "postgres"} -- change to your dialect
+	-- })
     },
     on_attach = function(client)
         if client.resolved_capabilities.document_formatting then

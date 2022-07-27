@@ -5,17 +5,13 @@ local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
 if vim.g.vscode then
-    -- Current behaviour in vscode:
-    -- buffer navigation using tab / s-tab
-    -- comments using Comment.nvim
-    -- file tree navigation
-
     -- inside vscode
 
     -- allow single line travel when lines visually wrap
     map('n', 'k', 'gk')
     map('n', 'j', 'gj')
 
+    -- navigate buffer
     map('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>', opts)
     map('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>', opts)
     -- splits
@@ -30,6 +26,18 @@ if vim.g.vscode then
     map('n', 'K', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>')
     map('n', 'gd', '<cmd>call VSCodeNotify("editor.action.revealDefinition")<cr>')
     map('n', 'gr', '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
+
+    -- TODO
+    -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
+    -- Telescope | dl -> diagnostics list | fa -> find all
+    -- map('n', '<space>vrc', "<cmd>lua require('core.utils').search_dotfiles()<cr>")
+    -- map('n', '<space>vrg', "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
+    -- map('n', '<space>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
+    -- map('n', '<space>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+    -- map('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
+    -- map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+    -- map('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
+    -- map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 else
     -- inside vim
 
@@ -91,28 +99,31 @@ map('i', 'jk', '<esc>', opts)
 -- delete without yanking
 map('n', '<space>d', '"_d', opts)
 map('v', '<space>d', '"_d', opts)
+map('n', "<space>D", '"_D', opts)
+map('n', "<space>C", '"_C', opts)
+map('n', "<space>c", '"_c', opts)
+map('n', "<space>x", '"_x', opts)
+
 --  replace currently selected text with default register without yanking
 map('v', 'p', '"_dP', opts)
-map('n', '<space>x', '"_dx', opts)
 
 -- wtf?????????????????????????????????????????????????????????????????????
 map('n', 'Y', 'y$', opts)
 map('n', 'n', 'nzzzv', opts)
 map('n', 'N', 'Nzzzv', opts)
 map('n', '<space>J', 'mzJ`z', opts)
+-- break undo sequence using punctuation marks
 map('i', ',', ',<c-g>u', opts)
 map('i', '.', '.<c-g>u', opts)
 map('i', '!', '!<c-g>u', opts)
 map('i', '?', '?<c-g>u', opts)
 
 -- make vim behave
--- D copies highlighted text
+-- D duplicates highlighted text below
 map('v', 'D', "y'>p", opts)
 -- tab while code selected
 map('v', '<', '<gv', opts)
 map('v', '>', '>gv', opts)
--- map("n", "<space>b", "<cmd>b <c-d>", opts)
--- map("n", "<space>b", "<cmd>ls<cr>:b<space>", opts)
 
 -- Harpoon
 map('n', '<leader>a', "<cmd>lua require('harpoon.mark').add_file()<cr>")

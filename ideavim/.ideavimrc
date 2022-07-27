@@ -1,3 +1,16 @@
+" IDEAVim Specific settings
+set ideajoin
+set idearefactormode=keep
+" :w writes all files
+set ideawrite=all
+set showmode
+set showcmd
+nnoremap [[ :action MethodUp<CR>zz
+nnoremap ]] :action MethodDown<CR>zz
+nnoremap <space>R :action Refactorings.QuickListPopupAction<CR>
+
+
+
 " autocmd 
 " augroup vimrc-incsearch-highlight-undo
 "     autocmd!
@@ -8,12 +21,15 @@
 " Disable automatic comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+
+
 " options
 let mapleader = " "
 
 set relativenumber
 set number
 set clipboard+=unnamedplus
+set clipboard+=ideaput
 set hlsearch
 set incsearch
 set scrolloff=5 " Keep X lines above/below cursor when scrolling
@@ -30,9 +46,10 @@ nnoremap <space>j :m .+1<CR>==
 nnoremap <space>k :m .-2<CR>==
 inoremap <c-j> <esc>:m .+1<CR>==gi
 inoremap <c-k> <esc>:m .-2<CR>==gi
-" `[v`] <-- selects last visual selection, only moving upwards bugged for IDEA
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>`[V`]=`[V`]<CR>
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap K :m '<-2<CR>gv=gv
+vnoremap J <Action>(MoveLineDown)
+vnoremap K <Action>(MoveLineUp)
 
 " toggle ignorecase
 nnoremap <F2> :set ignorecase! ignorecase?<cr>
@@ -69,7 +86,7 @@ nnoremap <space>J mzJ`z
 " inoremap ? ?<c-g>u
 
 " make vim behave
-" D copies highlighted text
+" D duplicates highlighted below
 vnoremap D y'>p
 " tab while code selected
 vnoremap < <gv
@@ -101,9 +118,10 @@ nmap ]d <Action>(GotoNextError)
 
 " Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 " Telescope | dl -> diagnostics list | fa -> find all
-nmap <leader>ff <Action>(GotoFile)
-nmap <leader>fg <Action>(FindInPath)
-" map('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
+nmap <space>ff <Action>(GotoFile)
+" SearchEverywhere
+nmap <space>fg <Action>(FindInPath)
+nmap <space>fb <Action>(RecentFiles)
 " map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
 nmap <space>fd <Action>(ActivateProblemsViewToolWindow)
 nmap <space>fa <Action>(FindUsages)

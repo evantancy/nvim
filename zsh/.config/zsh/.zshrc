@@ -176,8 +176,8 @@ source "$ZDOTDIR/zsh-functions"
 
 # node version manager
 export NVM_DIR="$HOME/.nvm"
-export NVM_COMPLETION=false #significant slows zsh
-export NVM_LAZY_LOAD=false
+export NVM_COMPLETION=true #significant slows zsh
+export NVM_LAZY_LOAD=true
 
 # plugins
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
