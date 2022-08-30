@@ -126,5 +126,3 @@ curl -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr &&
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
 
-# miniconda
-

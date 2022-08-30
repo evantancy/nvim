@@ -111,7 +111,7 @@ env:
 # Font configuration
 font:
   # Point size
-  size: 11.0
+  size: 13.0
   # Normal (roman) font face
   normal:
     # Font family
