@@ -2,3 +2,4 @@
 .swp
 *.zcompdump*
 *.zsh_sessions/
+.env

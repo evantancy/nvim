@@ -1,21 +1,16 @@
 # xdg
-if [ -f "../okg/install" ]; then
-   echo "Install script found"
-   ../okg/install
-else
-   echo "Install script missing"
-fi
-
-cd $OKG_DACS_BASEDIR
-if [[ $(ls -A) ]]; then
+OKG_DACS_BASEDIR=""
+OKG_CONFIG_HOME="$OKG_DACS_BASEDIR/Documents/.config"
+OKG_HOME="$OKG_DACS_BASEDIR/Documents"
+if [[ $(ls -A $OKG_DACS_BASEDIR) ]]; then
 	#successfully inside container
 	export XDG_CONFIG_HOME=$OKG_CONFIG_HOME
-    export DYNAMIC_HOME="$OKG_HOME"
+	export DYNAMIC_HOME="$OKG_HOME"
 else
 	# failed to ls inside container, operation not permitted
 	export XDG_CONFIG_HOME="$HOME/.config" # default
-    export DYNAMIC_HOME="$HOME"
-    cd $HOME
+	export DYNAMIC_HOME="$HOME"
+	cd $HOME
 fi
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/.local/share" # default
 export XDG_CACHE_HOME="$XDG_CONFIG_HOME/.cache" # default
@@ -36,3 +31,8 @@ export PATH=$M2:$PATH
 
 # java setup
 export JAVA_HOME=$(/usr/libexec/java_home -v1.8.0)
+
+# clean and reinstall symlinks according to env
+cd $DYNAMIC_HOME/.dotfiles/
+./install
+cd $DYNAMIC_HOME
