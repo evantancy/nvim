@@ -1,11 +1,20 @@
 # xdg
+if [ -f "../okg/install" ]; then
+   echo "Install script found"
+   ../okg/install
+else
+   echo "Install script missing"
+fi
+
 cd $OKG_DACS_BASEDIR
 if [[ $(ls -A) ]]; then
 	#successfully inside container
 	export XDG_CONFIG_HOME=$OKG_CONFIG_HOME
+    export DYNAMIC_HOME="$OKG_HOME"
 else
 	# failed to ls inside container, operation not permitted
 	export XDG_CONFIG_HOME="$HOME/.config" # default
+    export DYNAMIC_HOME="$HOME"
     cd $HOME
 fi
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/.local/share" # default
