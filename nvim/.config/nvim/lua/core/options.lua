@@ -21,7 +21,7 @@ end
 -- Enable syntax highlighting
 vim.cmd([[
 	syntax on
-    set undodir=~/.vim/undodir
+    set undodir=$XDG_DATA_HOME/.vim/undodir
     set undofile
 ]])
 

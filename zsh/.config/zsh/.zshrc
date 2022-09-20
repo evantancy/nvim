@@ -164,7 +164,7 @@ git_info() {
 # from nick janetakis
 # PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 # PROMPT='%B%{$fg[green]%}%n %{$fg[blue]%}%c%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
-PROMPT='%{$fg[cyan]%* $fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
+PROMPT='%{$fg[cyan]%}%* %{$fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 # %y%m%d@%H:%M:%S)
 # some paths
 export DOTFILES="$HOME/.dotfiles"
@@ -181,6 +181,8 @@ export NVM_LAZY_LOAD=true
 
 # plugins
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+
 zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
 zsh_add_plugin "Aloxaf/fzf-tab"
 zsh_add_plugin "lukechilds/zsh-nvm"
@@ -194,8 +196,9 @@ FD_COMPLETION_DIR="$ZDOTDIR/plugins/fd/contrib/completion"
 # autocompletion
 [ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
 autoload bashcompinit && bashcompinit
-autoload -Uz compinit
-
+autoload -Uz compinit bracketed-paste-magic
+zle -N bracketed-paste bracketed-paste-magic
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 # show completion colors (like Bash's `set colored-completion-prefix on`)
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 eval "`pip completion --zsh`"

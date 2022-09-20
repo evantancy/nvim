@@ -3,7 +3,7 @@ function! Cond(Cond, ...)
   return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('$XDG_DATA_HOME/.vim/plugged')
 " Colorschemes
 Plug 'rebelot/kanagawa.nvim',
 Plug 'ellisonleao/gruvbox.nvim', {'commit': 'f19263ac45b36962b9d86ce8a7b041bed5b4ffc4' }
