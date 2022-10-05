@@ -285,7 +285,7 @@ export SUMO_HOME="/usr/share/sumo"
 export PATH="$PATH:$HOME/.foundry/bin"
 
 # diff-so-fancy
-export EDITOR="nvim"
+export EDITOR="vim"
 export GPG_TTY=$(tty)
 
 # rust
@@ -302,3 +302,9 @@ ROS_VER=$(ls /opt/ros)
 ROS_SETUP_FILE=/opt/ros/$ROS_VER/setup.zsh
 [ ! -z $ROS_VER ] && [ -f $ROS_SETUP_FILE ] && source $ROS_SETUP_FILE
 
+gdf() {
+	echo 'Commits that exist in '$1' but not in '$2':'
+	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $2..$1
+	echo 'Commits that exist in '$2' but not in '$1':'
+	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $1..$2
+}

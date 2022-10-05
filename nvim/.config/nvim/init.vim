@@ -62,7 +62,7 @@ Plug 'windwp/nvim-ts-autotag'
 " Autocomplete bracket pairs
 Plug 'windwp/nvim-autopairs',
 " Auto indent blanklines
-Plug 'lukas-reineke/indent-blankline.nvim',
+Plug 'lukas-reineke/indent-blankline.nvim', Cond(!exists('g:vscode')),
 " I love you tpope <3
 Plug 'tpope/vim-fugitive',
 " Diff files
@@ -80,11 +80,11 @@ Plug 'nvim-lualine/lualine.nvim',
 " Speed
 Plug 'ThePrimeagen/harpoon',
 " Markdown
-Plug 'iamcco/markdown-preview.nvim',  { 'do': 'cd app && yarn install'  }
+Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
 " Visualize undo trees
 Plug 'mbbill/undotree',
 " Display hex color codes
-Plug 'RRethy/vim-hexokinase',  { 'do': 'make hexokinase' }
+Plug 'RRethy/vim-hexokinase', {'do': 'make hexokinase'}
 " enhanced cpp highlighting
 Plug 'octol/vim-cpp-enhanced-highlight'
 " colorize bracket pairs

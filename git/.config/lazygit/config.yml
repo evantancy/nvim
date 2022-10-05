@@ -1,5 +1,5 @@
 gui:
-  sidePanelWidth: 0.25
+  sidePanelWidth: 0.33
   showCommandLog: false # enable/disable command log by default
   showFileTree: true # enable/disable file tree view in side panel
   theme:

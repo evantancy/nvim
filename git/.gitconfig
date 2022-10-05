@@ -24,6 +24,8 @@
     open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' | xargs open -a 'Google Chrome'"
     rt = reset
     rb = rebase
+    rl = reflog --pretty=reflog
+    rbc = "!git rebase --onto \"$1\" \"$2\" $(git rev-parse --abbrev-ref HEAD) #"
     lg = lg1 # default git lg behaviour
     lg1 = lg1-specific --all
     lg2 = lg2-specific --all
@@ -59,3 +61,7 @@
 [diff]
     colorMoved = default
 
+[pretty]
+    reflog = %C(cyan)%cs %C(auto)%h %<|(17)%C(red)%gd %C(reset) %gs (%s)
+[color]
+	ui = true
