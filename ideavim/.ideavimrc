@@ -45,10 +45,8 @@ nnoremap <space>j :m .+1<CR>==
 nnoremap <space>k :m .-2<CR>==
 inoremap <c-j> <esc>:m .+1<CR>==gi
 inoremap <c-k> <esc>:m .-2<CR>==gi
-" vnoremap J :m '>+1<CR>gv=gv
-" vnoremap K :m '<-2<CR>gv=gv
-vnoremap J <Action>(MoveLineDown)
-vnoremap K <Action>(MoveLineUp)
+xmap J <Action>(MoveLineDown)
+xmap K <Action>(MoveLineUp)
 
 " toggle ignorecase
 nnoremap <F2> :set ignorecase! ignorecase?<cr>
