@@ -31,8 +31,7 @@ case $(uname) in
 	;;
 "Darwin")
     # homebrew
-    eval "$(/opt/homebrew/bin/brew shellenv)" 
-
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # # dircolors is a GNU utility that's not on macOS by default. With this not
     # # being used on macOS it means zsh's complete menu won't have colors.
@@ -41,7 +40,7 @@ case $(uname) in
     export CLICOLOR=1
     export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd # Linux default colors
 
-    # terminfo doesn't work for macOS Monterey
+    # terminfo (above) doesn't work for macOS Monterey
     autoload -U up-line-or-beginning-search
     zle -N up-line-or-beginning-search
     bindkey -M emacs "^[[A" up-line-or-beginning-search
@@ -82,7 +81,7 @@ export SAVEHIST=$HISTSIZE # maximum events in history file
 export HISTFILE="$HOME/.zsh_history"
 setopt EXTENDED_HISTORY # Write the history file in the ':start:elapsed;command' format.
 # setopt SHARE_HISTORY # Share history between all sessions.
-setopt INC_APPEND_HISTORY 
+setopt INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS # Do not record an event that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
@@ -91,7 +90,6 @@ setopt HIST_IGNORE_SPACE # Do not record an event starting with a space.
 setopt HIST_SAVE_NO_DUPS # Do not write a duplicate event to the history file.
 setopt HIST_VERIFY # Do not execute immediately upon history expansion.
 setopt HIST_REDUCE_BLANKS    # Remove unnecessary blank lines.
-
 setopt INTERACTIVE_COMMENTS # Enable comments when working in an interactive shell.
 setopt GLOB_DOTS # list all hidden files
 setopt PROMPT_SUBST # ??
@@ -162,10 +160,7 @@ git_info() {
 }
 
 # from nick janetakis
-# PROMPT='%B%{$fg[green]%}%n@%{$fg[green]%}%M %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
-# PROMPT='%B%{$fg[green]%}%n %{$fg[blue]%}%c%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 PROMPT='%{$fg[cyan]%}%* %{$fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
-# %y%m%d@%H:%M:%S)
 # some paths
 export DOTFILES="$HOME/.dotfiles"
 export PATH=$PATH:~/bin
@@ -180,15 +175,13 @@ export NVM_COMPLETION=true #significant slows zsh
 export NVM_LAZY_LOAD=true
 
 # plugins
+zsh_add_plugin "Aloxaf/fzf-tab" # must be loaded FIRST!!! also unstable
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
-
 zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
-zsh_add_plugin "Aloxaf/fzf-tab"
 zsh_add_plugin "lukechilds/zsh-nvm"
 zsh_add_plugin "rupa/z"
 zsh_add_plugin "changyuheng/fz"
-
 zsh_add_plugin "sharkdp/fd"
 FD_COMPLETION_DIR="$ZDOTDIR/plugins/fd/contrib/completion"
 [ -d $FD_COMPLETION_DIR ] && fpath+=$FD_COMPLETION_DIR
@@ -200,8 +193,15 @@ autoload -Uz compinit bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 # show completion colors (like Bash's `set colored-completion-prefix on`)
-zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
-eval "`pip completion --zsh`"
+zstyle ':completion:*' list-colors ${(@s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+
+# eval "`pip completion --zsh`"
 # case insensitive autocompletion
 zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
 # whether to show dirs ./ and ../
@@ -289,7 +289,7 @@ export EDITOR="vim"
 export GPG_TTY=$(tty)
 
 # rust
-. "$HOME/.cargo/env"
+[ -f ~/.cargo/env ] && source ~/.cargo/env
 
 # CUDA and cuDNN
 export PATH="/usr/local/cuda/bin:$PATH"
@@ -298,7 +298,7 @@ export LD_LIBRARY_PATH="/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
 export CUDA_ROOT="/usr/local/cuda"
 
 # ros stuff
-ROS_VER=$(ls /opt/ros)
+[ -d /opt/ros ] && ROS_VER=$(ls /opt/ros)
 ROS_SETUP_FILE=/opt/ros/$ROS_VER/setup.zsh
 [ ! -z $ROS_VER ] && [ -f $ROS_SETUP_FILE ] && source $ROS_SETUP_FILE
 

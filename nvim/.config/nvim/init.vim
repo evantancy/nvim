@@ -89,6 +89,8 @@ Plug 'RRethy/vim-hexokinase', {'do': 'make hexokinase'}
 Plug 'octol/vim-cpp-enhanced-highlight'
 " colorize bracket pairs
 Plug 'luochen1990/rainbow'
+" easy align things
+Plug 'junegunn/vim-easy-align'
 call plug#end()
 
 "set to 0 if you want to enable it later via :RainbowToggle
@@ -109,3 +111,6 @@ lua require('modules')
 lua require('core.keymaps')
 lua require('core.autocmd')
 lua require('core.options')
+
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
