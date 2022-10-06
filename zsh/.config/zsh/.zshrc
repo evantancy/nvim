@@ -192,6 +192,11 @@ autoload bashcompinit && bashcompinit
 autoload -Uz compinit bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+######################## fzf-tab settings ####################################
+# trigger continuous completion, useful for completion long paths
+# default value, but we use '/' in branch names a lot
+# zstyle ':fzf-tab:*' continuous-trigger '/'
+zstyle ':fzf-tab:*' continuous-trigger '\'
 # show completion colors (like Bash's `set colored-completion-prefix on`)
 zstyle ':completion:*' list-colors ${(@s.:.)LS_COLORS}
 # preview directory's content with exa when completing cd

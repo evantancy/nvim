@@ -9,4 +9,4 @@ set softtabstop=4
 set expandtab
 nnoremap Y y$
 vnoremap Y y$
-
+syntax on
