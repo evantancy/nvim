@@ -6,10 +6,13 @@
     # launch fzf, use Tab or Shift-Tab to select multiple files
     a = "!git status --short | fzf --multi | awk '{print $2}' | xargs git add"
     d = diff
+    sw = switch
     co = checkout
     ci = commit
     ca = commit --all
+    deepclean = "!git reset --hard HEAD && git clean -fd"
     ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
+    psinit = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
     pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
     st = status
     br = branch
