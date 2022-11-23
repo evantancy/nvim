@@ -15,7 +15,7 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.virtualedit = 'block'
 -- opt.clipboard = 'unnamedplus'
-opt.iskeyword = o.iskeyword + '-'
+opt.iskeyword = opt.iskeyword + '-'
 
 vim.g.mapleader = ' '
 map('n', '<leader>', '<Nop>')

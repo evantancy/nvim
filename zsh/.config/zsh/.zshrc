@@ -177,7 +177,9 @@ export NVM_LAZY_LOAD=true
 # plugins
 zsh_add_plugin "Aloxaf/fzf-tab" # must be loaded FIRST!!! also unstable
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242,underline,bold'
+ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+ZSH_AUTOSUGGEST_MAX_BUFFER_SIZE=20
 zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
 zsh_add_plugin "lukechilds/zsh-nvm"
 zsh_add_plugin "rupa/z"
@@ -191,7 +193,26 @@ FD_COMPLETION_DIR="$ZDOTDIR/plugins/fd/contrib/completion"
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
+# original zstyle setting before fixing speed
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+# source: https://gist.github.com/magicdude4eva/2d4748f8ef3e6bf7b1591964c201c1ab
+### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+### Fix slowness of pastes
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+
+
+# git completions
+zstyle ':completion:*:*:git:*' script $ZDOTDIR/plugins/git/contrib/completion/git-completion.bash
+export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 ######################## fzf-tab settings ####################################
 # trigger continuous completion, useful for completion long paths
 # default value, but we use '/' in branch names a lot
@@ -312,4 +333,8 @@ gdf() {
 	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $2..$1
 	echo 'Commits that exist in '$2' but not in '$1':'
 	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $1..$2
+}
+
+curbranch() {
+    git rev-parse --abbrev-ref HEAD
 }
