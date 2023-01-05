@@ -11,6 +11,10 @@ if [[ $(ls -A $DOCUMENTS) ]]; then
 	# export DYNAMIC_HOME="$DOCUMENTS"
     # for zsh stuff
     export TMPPREFIX="$DOCUMENTS/tmp/zsh"
+    # mvnd settings
+    export MVND_MIN_THREADS=3
+    export MVND_THREADS=9
+    export MVND_DAEMON_STORAGE="$DOCUMENTS/.m2/registry/"
 else
 	# failed to ls inside container, operation not permitted
 	export XDG_CONFIG_HOME="$HOME/.config" # default

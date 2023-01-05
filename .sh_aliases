@@ -14,6 +14,9 @@ alias pip2="python2 -m pip"
 alias jlab="jupyter-lab"
 alias jnb="jupyter notebook"
 
+#maven
+alias mvn="mvnd"
+
 # git
 alias g="git"
 alias lgit="lazygit"

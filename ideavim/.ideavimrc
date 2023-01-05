@@ -136,6 +136,7 @@ nmap <space>R <Action>(RenameElement)
 nmap <space>ca <Action>(ShowIntentionActions)
 nmap <space>fm <Action>(ShowReformatFileDialog)
 vmap <space>fm <Action>(ShowReformatFileDialog)
+nmap <space>fi <Action>(OptimizeImports)
 nmap <F1> <Action>(ShowReformatFileDialog)
 
 nnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
