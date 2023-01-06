@@ -140,6 +140,7 @@ nmap <space>fi <Action>(OptimizeImports)
 nmap <F1> <Action>(ShowReformatFileDialog)
 
 nnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
+xnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
 nmap <space>tc :action RunCoverage<CR>
 nmap <space>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
 nmap <space>fc :action HideAllWindows<CR>
