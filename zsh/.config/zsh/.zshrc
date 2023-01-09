@@ -1,3 +1,6 @@
+# Turn off all beeps
+unsetopt BEEP
+
 # Load colors so we can access $fg and more.
 autoload -U colors && colors
 
@@ -64,13 +67,13 @@ stty stop undef
 # see https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/key-bindings.zsh
 
 # [Ctrl-RightArrow] - move forward one word
-bindkey -M emacs '^[[1;5C' forward-word
-bindkey -M viins '^[[1;5C' forward-word
-bindkey -M vicmd '^[[1;5C' forward-word
+bindkey -M emacs '^[^[[C' forward-word
+bindkey -M viins '^[^[[C' forward-word
+bindkey -M vicmd '^[^[[C' forward-word
 # [Ctrl-LeftArrow] - move backward one word
-bindkey -M emacs '^[[1;5D' backward-word
-bindkey -M viins '^[[1;5D' backward-word
-bindkey -M vicmd '^[[1;5D' backward-word
+bindkey -M emacs '^[^[[D' backward-word
+bindkey -M viins '^[^[[D' backward-word
+bindkey -M vicmd '^[^[[D' backward-word
 
 # enable emacs
 bindkey -e
