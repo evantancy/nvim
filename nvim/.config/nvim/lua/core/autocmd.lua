@@ -13,7 +13,7 @@
 vim.cmd([[
 augroup HighlightYank
   autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank({timeout = 50})
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank({timeout = 150})
 augroup end
 ]])
 
@@ -30,10 +30,10 @@ augroup end
 --   autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
 -- ]])
 
--- Recognise solidity files for prettier's solidity plugin
+-- Recognise file type(s)
 vim.cmd([[
-  au BufNewFile,BufRead *.sol set filetype=solidity
-  au BufNewFile,BufRead *.json set filetype=jsonc
+  au BufNew,BufNewFile,BufRead *.sol set filetype=solidity
+  au BufNew,BufNewFile,BufRead *.json set filetype=jsonc
 ]])
 
 -- Only enable highlights during search
@@ -51,7 +51,7 @@ augroup END
 
 -- Disable automatic comment insertion
 vim.cmd([[
-    autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+    autocmd FileType * setlocal formatoptions-=c formatoptions+=r formatoptions-=o
 ]])
 
 -- silence `Press Enter ...` confirmations for fugitive

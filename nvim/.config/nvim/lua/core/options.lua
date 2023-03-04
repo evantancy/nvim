@@ -59,6 +59,7 @@ opt.expandtab = true -- Tabs to spaces
 opt.tabstop = 4 -- Number of spaces for tab
 opt.softtabstop = 4
 opt.shiftwidth = 4 -- Number of spaces for indentation
+opt.virtualedit = 'block' -- Allow rectangular selections, see https://medium.com/usevim/vim-101-virtual-editing-661c99c05847
 
 -- Utility
 opt.clipboard = 'unnamedplus' -- Share clipboard between Vim and system
@@ -67,23 +68,35 @@ opt.errorbells = false -- Disable annoying sounds
 opt.iskeyword = opt.iskeyword + '-' -- Treat dash separated words as a word text object
 opt.incsearch = true -- Searching
 opt.hlsearch = true -- Searching
+opt.inccommand = 'nosplit' -- Enable preview result of incsearch
+-- opt.wildignore = { '.git/*', 'node_modules/*' }
+opt.wildignorecase = true
+-- Align with autocmd.lua
+opt.formatoptions = opt.formatoptions 
+    + {
+    c = false,
+    o = false, -- o and O don't continue comments
+    r = true, -- Pressing Enter will continue comments
+}
+-- -- Disable automatic comment insertion
+-- vim.cmd([[
+--     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+-- ]])
+
 
 -- Speed
 opt.updatetime = 50 -- Faster autocomplete
 opt.timeoutlen = 500 -- Reduce timeoutlen
 
 -- -- Shortmess
--- o.shortmess = o.shortmess
--- 	+ {
--- 		A = true, -- don't give the "ATTENTION" message when an existing swap file is found.
--- 		I = true, -- don't give the intro message when starting Vim |:intro|.
--- 		W = true, -- don't give "written" or "[w]" when writing a file
--- 		c = true, -- don't give |ins-completion-menu| messages
--- 		m = true, -- use "[+]" instead of "[Modified]"
--- 	}
-
--- Format options
-vim.cmd([[set formatoptions-=cro]])
+opt.shortmess = o.shortmess
+	+ {
+		A = true, -- don't give the "ATTENTION" message when an existing swap file is found.
+		I = true, -- don't give the intro message when starting Vim |:intro|.
+		W = true, -- don't give "written" or "[w]" when writing a file
+		c = true, -- don't give |ins-completion-menu| messages
+		m = true, -- use "[+]" instead of "[Modified]"
+}
 
 -- Remove builtin plugins
 g.netrw_dirhistmax = 0
