@@ -16,9 +16,10 @@
     pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
     st = status
     br = branch
-    ba = branch --all
+    bra = "!git branch --all | fzf"
     brr = branch --remotes
     brd = "!git push -d origin \"$1\" && git branch -d \"$1\" #"
+    brD = "!git push -d origin \"$1\" && git branch -D \"$1\" #"
     bm = branch --merged
     bn = branch --no-merged
     df = "!git hist | fzf | awk '{print $2}' | xargs -I {} git diff {}^ {}"

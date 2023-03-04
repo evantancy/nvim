@@ -10,3 +10,5 @@ set expandtab
 nnoremap Y y$
 vnoremap Y y$
 syntax on
+nmap j gj
+nmap k gk
