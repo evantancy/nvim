@@ -82,8 +82,6 @@ Plug 'akinsho/nvim-bufferline.lua',
 Plug 'nvim-lualine/lualine.nvim',
 " Speed
 Plug 'ThePrimeagen/harpoon',
-" Markdown
-Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
 " Visualize undo trees
 Plug 'mbbill/undotree',
 " Display hex color codes

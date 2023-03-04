@@ -21,7 +21,7 @@ augroup end
 vim.cmd([[
 augroup LspFormat
   autocmd! * <buffer>
-  autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 2000)
+  autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
 augroup end
 ]])
 
