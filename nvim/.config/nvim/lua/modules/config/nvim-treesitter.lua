@@ -9,10 +9,25 @@ nvim_treesitter.setup({
         additional_vim_regex_highlighting = true,
         -- disable = { 'json' }, -- list of language that will be disabled
     },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = '<c-space>',
+            node_incremental = '<c-space>',
+            scope_incremental = '<c-r>',
+            node_decremental = '<c-backspace>',
+        }
+    },
     indent = { enable = true },
     autopairs = { enable = true },
     rainbow = { enable = true },
     autotag = { enable = true },
     context_commentstring = { enable = true },
-    ensure_installed = {'c', 'help', 'lua', 'vim', 'cpp', 'python', 'typescript'}
+    -- A list of parser names, or "all"
+    ensure_installed = {'c', 'help', 'lua', 'vim', 'cpp', 'python', 'typescript'},
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = true,
+    -- Automatically install missing parsers when entering buffer
+    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+    auto_install = true,
 })

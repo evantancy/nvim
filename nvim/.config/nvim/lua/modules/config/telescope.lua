@@ -2,6 +2,10 @@ local telescope = safe_require('telescope')
 if not telescope then
     return
 end
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+telescope.load_extension('fzf')
+telescope.load_extension('media_files')
 
 local actions = require('telescope.actions')
 local sorters = require('telescope.sorters')
@@ -30,7 +34,7 @@ telescope.setup({
         selection_caret = '>> ',
         color_devicons = true,
         path_display = {
-            shorten = { len = 2, exclude = { 1, -1 } },
+            shorten = { len = 3, exclude = { 1, -1 } },
         },
         file_ignore_patterns = { 'node_modules/.*', '%.git/.*', '%.idea/.*', '%.vscode/.*' },
         -- sorting_strategy = "ascending",
@@ -71,7 +75,3 @@ telescope.setup({
         },
     },
 })
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
-telescope.load_extension('fzf')
-telescope.load_extension('media_files')

@@ -78,6 +78,8 @@ opt.formatoptions = opt.formatoptions
     o = false, -- o and O don't continue comments
     r = true, -- Pressing Enter will continue comments
 }
+opt.ignorecase = true
+opt.smartcase = true
 -- -- Disable automatic comment insertion
 -- vim.cmd([[
 --     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o

@@ -2,12 +2,10 @@ local nvim_tree = safe_require('nvim-tree')
 if not nvim_tree then
     return
 end
--- vim.g.nvim_tree_indent_markers = 0
--- vim.g.nvim_tree_respect_buf_cwd = 1
--- vim.g.nvim_tree_group_empty = 0
 nvim_tree.setup({
     disable_netrw = true,
     hijack_netrw = true,
+    respect_buf_cwd = true,
     update_focused_file = {
         enable = true,
         update_cwd = false,
@@ -20,18 +18,27 @@ nvim_tree.setup({
         custom = { '.git', '.vscode' },
         -- exclude = { '.env*', '.*rc', '.config' },
     },
-    git = {
-        enable = true,
-        ignore = true,
-        timeout = 400,
+    renderer = {
+        group_empty = false,
+        indent_width = 2,
+        highlight_git = true,
+        indent_markers = {
+          enable = true,
+          inline_arrows = true,
+          icons = {
+            corner = "└",
+            edge = "│",
+            item = "│",
+            bottom = "─",
+            none = " ",
+          },
+        },
     },
-
     view = {
-        width = 30,
-        -- height = 30,
+        width = 60,
         side = 'left',
         hide_root_folder = false,
-        signcolumn = 'no',
+        signcolumn = 'yes',
         mappings = {
             -- `custom_only = false` will merge list of mappings with defaults
             custom_only = true,

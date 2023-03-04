@@ -69,11 +69,18 @@ else
     map('n', '<space>vrc', "<cmd>lua require('core.utils').search_dotfiles()<cr>")
     map('n', '<space>vrg', "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
     map('n', '<space>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
+    map('n', '<space>fo', "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>", opts)
     map('n', '<space>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-    map('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
+    map('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>", opts)
     map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
     map('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
     map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+    vim.keymap.set('n', '<leader>/', function()
+      -- You can pass additional configuration to telescope to change theme, layout, etc.
+      require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        previewer = true,
+      })
+    end, { desc = '[/] Fuzzily search in current buffer' })
 end
 
 -- diagnostics

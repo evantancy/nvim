@@ -16,7 +16,6 @@ local cmp = safe_require('cmp')
 if not cmp then
     return
 end
-
 local cmp_autopairs = safe_require('nvim-autopairs.completion.cmp')
 if not cmp_autopairs then
     return
@@ -32,6 +31,7 @@ local on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
     end
+    require('illuminate').on_attach(client)
 
 --    if client.name == 'tsserver' then
 --        local ts_utils = safe_require('nvim-lsp-ts-utils')
@@ -78,18 +78,26 @@ local servers = {
     'emmet_ls',
 }
 
-for _, lsp in pairs(servers) do
-    -- local server_found, server_instance = require('nvim-lsp-installer').get_server(lsp)
-    local server_found, server_instance = require('mason-lspconfig').get_lines_from
-    if server_found and not server_instance:is_installed() then
-        server_instance:install()
-    end
+local mason = safe_require('mason')
+if not mason then
+    return
+end
+local mason_lspconfig = safe_require('mason-lspconfig')
+if not mason_lspconfig then
+    return
+end
+mason.setup({})
+mason_lspconfig.setup({
+    ensure_installed = servers,
+})
 
-    if server_instance.name == 'solc' then
+
+for _, lsp in pairs(servers) do
+    if lsp == 'solc' then
         -- rely on proper configuration from remappings
         local remappings = get_lines_from('remappings.txt')
         local cmd = { 'solc', '--lsp', unpack(remappings) }
-        server_instance:setup({
+        lspconfig[lsp].setup({
             cmd = cmd,
             on_attach = on_attach,
             capabilities = capabilities,
@@ -98,11 +106,7 @@ for _, lsp in pairs(servers) do
             },
         })
     else
-        --  require('lspconfig')[lsp].setup {
-        --    on_attach = on_attach,
-        --    cmd_env = server_instance:get_default_options().cmd_env
-        --  }
-        server_instance:setup({
+        lspconfig[lsp].setup({
             on_attach = on_attach,
             capabilities = capabilities,
             flags = {

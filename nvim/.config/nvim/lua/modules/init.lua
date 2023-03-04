@@ -8,8 +8,8 @@ local plugins = {
     { 'haishanh/night-owl.vim' },
     { -- Colorschemes
         'folke/tokyonight.nvim',
-        requires = { 'folke/lsp-colors.nvim' },
         config = conf('colors'),
+        requires = { 'folke/lsp-colors.nvim' },
     },
     { -- LSP colors
         'folke/lsp-colors.nvim',
@@ -20,10 +20,10 @@ local plugins = {
     },
     { -- File tree
         'kyazdani42/nvim-tree.lua',
+        config = conf('nvim-tree'),
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
-        config = conf('nvim-tree'),
     },
     { -- Startup screen
         'goolord/alpha-nvim',
@@ -48,44 +48,40 @@ local plugins = {
     { -- Solidity
         'TovarishFin/vim-solidity',
     },
---    { -- LSP
---        'neovim/nvim-lspconfig',
---        config = conf('lsp'),
---        requires = {
---            'williamboman/nvim-lsp-installer',
---            'jose-elias-alvarez/null-ls.nvim',
---            { 'jose-elias-alvarez/nvim-lsp-ts-utils', branch = 'main' },
---            'RRethy/vim-illuminate',
---        },
---    },
---   { -- LSP
---       'neovim/nvim-lspconfig',
---       config = conf('lsp'),
---       requires = {
---           'williamboman/mason.nvim',
---           'williamboman/mason-lspconfig.nvim',
---           'jose-elias-alvarez/null-ls.nvim',
---           'RRethy/vim-illuminate',
---       },
---   },
-    { -- Formatters
-        'jose-elias-alvarez/null-ls.nvim',
-        branch = 'main',
-        config = conf('null-ls'),
+    {
+       'RRethy/vim-illuminate',
+        config = conf('illuminate'),
     },
-    { -- Autocompletion plugin
-        'hrsh7th/nvim-cmp',
+    { -- LSP
+        'VonHeikemen/lsp-zero.nvim',
+        config = conf('lsp'),
         requires = {
+            -- LSP support
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+            'jose-elias-alvarez/null-ls.nvim',
+            'RRethy/vim-illuminate',
+            -- Autocompletion
+            'hrsh7th/nvim-cmp',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
+            -- Snippets
             'L3MON4D3/LuaSnip',
             'saadparwaiz1/cmp_luasnip',
+            -- LSP Suggestion formatting
             'onsails/lspkind-nvim',
         },
+    },
+    { -- Formatters
+        'jose-elias-alvarez/null-ls.nvim',
+        branch = 'main',
+        config = conf('null-ls'),
+    },
+    { -- Autocompletion plugin
     },
     { -- AI Autocompletion
         'tzachar/cmp-tabnine',
@@ -135,6 +131,7 @@ local plugins = {
     },
     { -- Highlighter
         'nvim-treesitter/nvim-treesitter',
+        requires = { 'windwp/nvim-ts-autotag' },
         config = conf('nvim-treesitter'),
     },
     { -- Bufferline
@@ -148,11 +145,6 @@ local plugins = {
     { -- Speed
         'ThePrimeagen/harpoon',
         requires = { 'nvim-lua/plenary.nvim' },
-    },
-    { -- Markdown
-        'iamcco/markdown-preview.nvim',
-        run = 'cd app && yarn install',
-        config = conf('markdown-preview'),
     },
     { -- Visualize undo trees
         'mbbill/undotree',

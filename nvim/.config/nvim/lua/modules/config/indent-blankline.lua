@@ -4,6 +4,7 @@ if not indent_blankline then
 end
 vim.opt.list = true
 vim.opt.listchars:append('eol:↴')
+vim.opt.listchars:append "space:⋅"
 indent_blankline.setup({
     buftype_exclude = { 'terminal' },
     filetype_exclude = { 'help', 'NvimTree', 'dashboard', 'packer', 'TelescopePrompt' },
