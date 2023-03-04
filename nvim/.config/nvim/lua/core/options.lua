@@ -89,7 +89,7 @@ opt.updatetime = 50 -- Faster autocomplete
 opt.timeoutlen = 500 -- Reduce timeoutlen
 
 -- -- Shortmess
-opt.shortmess = o.shortmess
+opt.shortmess = opt.shortmess
 	+ {
 		A = true, -- don't give the "ATTENTION" message when an existing swap file is found.
 		I = true, -- don't give the intro message when starting Vim |:intro|.
