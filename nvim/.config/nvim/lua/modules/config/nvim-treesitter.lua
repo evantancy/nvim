@@ -14,4 +14,5 @@ nvim_treesitter.setup({
     rainbow = { enable = true },
     autotag = { enable = true },
     context_commentstring = { enable = true },
+    ensure_installed = {'c', 'help', 'lua', 'vim', 'cpp', 'python', 'typescript'}
 })
