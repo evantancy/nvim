@@ -9,7 +9,7 @@ if not cmp_nvim_lsp then
 end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 if cmp_nvim_lsp then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+    capabilities = cmp_nvim_lsp.default_capabilities()
 end
 
 local cmp = safe_require('cmp')
@@ -29,22 +29,23 @@ local opts = { noremap = true }
 local on_attach = function(client, bufnr)
     -- only allow null-ls to format
     if client.name ~= 'null-ls' then
-        client.resolved_capabilities.document_formatting = false
-        -- client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
     end
 
-    if client.name == 'tsserver' then
-        local ts_utils = safe_require('nvim-lsp-ts-utils')
-        if not ts_utils then
-            return
-        end
-        ts_utils.setup({})
-        ts_utils.setup_client(client)
-        -- TODO: fix keymaps that clash
-        buf_map(bufnr, 'n', 'gs', ':TSLspOrganize<CR>')
-        buf_map(bufnr, 'n', 'gi', ':TSLspRenameFile<CR>')
-        buf_map(bufnr, 'n', 'go', ':TSLspImportAll<CR>')
-    end
+--    if client.name == 'tsserver' then
+--        local ts_utils = safe_require('nvim-lsp-ts-utils')
+--        if not ts_utils then
+--            return
+--        end
+--        ts_utils.setup({})
+--        ts_utils.setup_client(client)
+--        -- TODO: fix keymaps that clash
+--        buf_map(bufnr, 'n', 'gs', ':TSLspOrganize<CR>')
+--        buf_map(bufnr, 'n', 'gi', ':TSLspRenameFile<CR>')
+--        buf_map(bufnr, 'n', 'go', ':TSLspImportAll<CR>')
+--    end
+
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
@@ -65,7 +66,7 @@ end
 -- map buffer local keybindings when the language server attaches
 local servers = {
     'pyright',
-    'sumneko_lua',
+    'lua_ls',
     'tsserver',
     'ccls',
     'clangd',
@@ -78,7 +79,8 @@ local servers = {
 }
 
 for _, lsp in pairs(servers) do
-    local server_found, server_instance = require('nvim-lsp-installer').get_server(lsp)
+    -- local server_found, server_instance = require('nvim-lsp-installer').get_server(lsp)
+    local server_found, server_instance = require('mason-lspconfig').get_lines_from
     if server_found and not server_instance:is_installed() then
         server_instance:install()
     end

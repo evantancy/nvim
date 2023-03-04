@@ -48,16 +48,26 @@ local plugins = {
     { -- Solidity
         'TovarishFin/vim-solidity',
     },
-    { -- LSP
-        'neovim/nvim-lspconfig',
-        config = conf('lsp'),
-        requires = {
-            'williamboman/nvim-lsp-installer',
-            'jose-elias-alvarez/null-ls.nvim',
-            { 'jose-elias-alvarez/nvim-lsp-ts-utils', branch = 'main' },
-            'RRethy/vim-illuminate',
-        },
-    },
+--    { -- LSP
+--        'neovim/nvim-lspconfig',
+--        config = conf('lsp'),
+--        requires = {
+--            'williamboman/nvim-lsp-installer',
+--            'jose-elias-alvarez/null-ls.nvim',
+--            { 'jose-elias-alvarez/nvim-lsp-ts-utils', branch = 'main' },
+--            'RRethy/vim-illuminate',
+--        },
+--    },
+--   { -- LSP
+--       'neovim/nvim-lspconfig',
+--       config = conf('lsp'),
+--       requires = {
+--           'williamboman/mason.nvim',
+--           'williamboman/mason-lspconfig.nvim',
+--           'jose-elias-alvarez/null-ls.nvim',
+--           'RRethy/vim-illuminate',
+--       },
+--   },
     { -- Formatters
         'jose-elias-alvarez/null-ls.nvim',
         branch = 'main',
@@ -162,20 +172,23 @@ for _, plugin in ipairs(plugins) do
     end
 end
 
--- Packer config
+-- Packer Bootstrap config
+local ensure_packer = function() 
+    local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+        vim.fn.system({
+            'git',
+            'clone',
+            '--depth',
+            '1',
+            'https://github.com/wbthomason/packer.nvim',
+            install_path,
+        })
+        vim.cmd('packadd packer.nvim')
+    end
+end
 
--- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
---     vim.fn.system({
---         'git',
---         'clone',
---         '--depth',
---         '1',
---         'https://github.com/wbthomason/packer.nvim',
---         install_path,
---     })
---     vim.cmd('packadd packer.nvim')
--- end
+-- local packer_bootstrap = ensure_packer()
 
 -- local packer = require('packer')
 -- if packer then

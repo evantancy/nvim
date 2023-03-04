@@ -41,7 +41,7 @@ vim.cmd([[
 augroup vimrc-incsearch-highlight
     autocmd!
     autocmd CmdlineEnter /,\? :set hlsearch
-    autocmd CmdlineLeave /,\? :set nohlsearch
+    " autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
 ]])
 -- Automatically change working directory

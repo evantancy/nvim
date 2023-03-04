@@ -14,6 +14,7 @@ vim.diagnostic.config({
 null_ls.setup({
     sources = {
         format.prettier.with({
+            extra_args = { '--print-width=100'},
             filetypes = {
                 'solidity',
                 'javascript',
@@ -47,7 +48,7 @@ null_ls.setup({
 	-- })
     },
     on_attach = function(client)
-        if client.resolved_capabilities.document_formatting then
+        if client.server_capabilities.documentFormattingProvider then
             vim.cmd([[
 		                  augroup LspFormatting
 		                      autocmd! * <buffer>

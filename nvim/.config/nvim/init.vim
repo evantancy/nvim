@@ -6,7 +6,7 @@ endfunction
 call plug#begin('$XDG_DATA_HOME/.vim/plugged')
 " Colorschemes
 Plug 'rebelot/kanagawa.nvim',
-Plug 'ellisonleao/gruvbox.nvim', {'commit': 'f19263ac45b36962b9d86ce8a7b041bed5b4ffc4' }
+Plug 'ellisonleao/gruvbox.nvim',
 Plug 'haishanh/night-owl.vim',
 Plug 'folke/tokyonight.nvim',
 " LSP colors
@@ -15,7 +15,7 @@ Plug 'folke/lsp-colors.nvim',
 Plug 'ryanoasis/vim-devicons',
 Plug 'kyazdani42/nvim-web-devicons',
 " File tree
-Plug 'kyazdani42/nvim-tree.lua', {'commit': '428898154f909d2e1d07b185b2f82e412882d5f2'}
+Plug 'kyazdani42/nvim-tree.lua',
 " Startup screen
 Plug 'goolord/alpha-nvim',
 " Jump around quickly
@@ -25,20 +25,18 @@ Plug 'folke/which-key.nvim',
 " Telescope and deps
 Plug 'nvim-lua/plenary.nvim',
 Plug 'nvim-telescope/telescope-fzf-native.nvim',  { 'do': 'make' }
-Plug 'nvim-telescope/telescope.nvim', {'tag': 'nvim-0.6'}
+Plug 'nvim-telescope/telescope.nvim',
 Plug 'nvim-lua/popup.nvim',
 Plug 'nvim-telescope/telescope-media-files.nvim',
 " Solidity
 Plug 'TovarishFin/vim-solidity',
 " LSP
+Plug 'VonHeikemen/lsp-zero.nvim',
+Plug 'tzachar/cmp-tabnine',  { 'do': './install.sh' }
 Plug 'neovim/nvim-lspconfig',
-Plug 'williamboman/nvim-lsp-installer',
+Plug 'williamboman/mason.nvim',
+Plug 'williamboman/mason-lspconfig.nvim',
 Plug 'jose-elias-alvarez/null-ls.nvim',
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils',
-Plug 'RRethy/vim-illuminate',
-" Formatters
-Plug 'jose-elias-alvarez/null-ls.nvim',  {'branch': 'main'}
-" Autocompletion plugin
 Plug 'hrsh7th/nvim-cmp',
 Plug 'hrsh7th/cmp-nvim-lua',
 Plug 'hrsh7th/cmp-nvim-lsp',
@@ -49,8 +47,13 @@ Plug 'hrsh7th/cmp-nvim-lsp-signature-help',
 Plug 'L3MON4D3/LuaSnip',
 Plug 'saadparwaiz1/cmp_luasnip',
 Plug 'onsails/lspkind-nvim',
+" TODO use typescript.nvim
+" Plug 'jose-elias-alvarez/nvim-lsp-ts-utils',
+Plug 'RRethy/vim-illuminate',
+" Formatters
+Plug 'jose-elias-alvarez/null-ls.nvim',  {'branch': 'main'}
+" Autocompletion plugin
 " AI autocomplete
-Plug 'tzachar/cmp-tabnine',  { 'do': './install.sh' }
 Plug 'nvim-lua/plenary.nvim',
 " Autocomplete comments/tags/brackets
 Plug 'tpope/vim-surround'
@@ -70,9 +73,9 @@ Plug 'sindrets/diffview.nvim',
 " Git in signcolumn
 Plug 'lewis6991/gitsigns.nvim',
 " Comments
-Plug 'numToStr/Comment.nvim', {'tag': 'v0.6'}
+Plug 'numToStr/Comment.nvim',
 " Highlighter
-Plug 'nvim-treesitter/nvim-treesitter', {'commit': '8a1acc00d2a768985a79358d1a6caa9f08a0eeea'}
+Plug 'nvim-treesitter/nvim-treesitter',
 " Bufferline
 Plug 'akinsho/nvim-bufferline.lua',
 " Statusline
@@ -91,6 +94,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'luochen1990/rainbow'
 " easy align things
 Plug 'junegunn/vim-easy-align'
+
 call plug#end()
 
 "set to 0 if you want to enable it later via :RainbowToggle
