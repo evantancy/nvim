@@ -9,6 +9,8 @@ Plug 'rebelot/kanagawa.nvim',
 Plug 'ellisonleao/gruvbox.nvim',
 Plug 'haishanh/night-owl.vim',
 Plug 'folke/tokyonight.nvim',
+Plug 'loctvl842/monokai-pro.nvim'
+Plug 'navarasu/onedark.nvim'
 " LSP colors
 Plug 'folke/lsp-colors.nvim',
 " Icons
@@ -49,7 +51,7 @@ Plug 'L3MON4D3/LuaSnip',
 Plug 'saadparwaiz1/cmp_luasnip',
 Plug 'onsails/lspkind-nvim',
 " TODO use typescript.nvim
-" Plug 'jose-elias-alvarez/nvim-lsp-ts-utils',
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils',
 Plug 'RRethy/vim-illuminate',
 " Formatters
 Plug 'jose-elias-alvarez/null-ls.nvim',  {'branch': 'main'}
@@ -66,7 +68,7 @@ Plug 'windwp/nvim-ts-autotag'
 " Autocomplete bracket pairs
 Plug 'windwp/nvim-autopairs',
 " Auto indent blanklines
-Plug 'lukas-reineke/indent-blankline.nvim', Cond(!exists('g:vscode')),
+Plug 'lukas-reineke/indent-blankline.nvim',
 " I love you tpope <3
 Plug 'tpope/vim-fugitive',
 " Diff files

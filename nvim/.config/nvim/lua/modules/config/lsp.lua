@@ -33,33 +33,32 @@ local on_attach = function(client, bufnr)
     end
     require('illuminate').on_attach(client)
 
---    if client.name == 'tsserver' then
---        local ts_utils = safe_require('nvim-lsp-ts-utils')
---        if not ts_utils then
---            return
---        end
---        ts_utils.setup({})
---        ts_utils.setup_client(client)
---        -- TODO: fix keymaps that clash
---        buf_map(bufnr, 'n', 'gs', ':TSLspOrganize<CR>')
---        buf_map(bufnr, 'n', 'gi', ':TSLspRenameFile<CR>')
---        buf_map(bufnr, 'n', 'go', ':TSLspImportAll<CR>')
---    end
+    if client.name == 'tsserver' then
+        local ts_utils = safe_require('nvim-lsp-ts-utils')
+        if not ts_utils then
+            return
+        end
+        ts_utils.setup({
+            update_imports_on_move = false,
+            enable_imports_on_completion = true,
+        })
+        ts_utils.setup_client(client)
+    end
 
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_map(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_map(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_map(bufnr, 'n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_map(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_map(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -68,7 +67,6 @@ local servers = {
     'pyright',
     'lua_ls',
     'tsserver',
-    'ccls',
     'clangd',
     'bashls',
     'ansiblels',
@@ -90,7 +88,6 @@ mason.setup({})
 mason_lspconfig.setup({
     ensure_installed = servers,
 })
-
 
 for _, lsp in pairs(servers) do
     if lsp == 'solc' then

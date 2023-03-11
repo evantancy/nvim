@@ -76,18 +76,18 @@ else
     map('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
     map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
     vim.keymap.set('n', '<leader>/', function()
-      -- You can pass additional configuration to telescope to change theme, layout, etc.
-      require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        previewer = true,
-      })
+        -- You can pass additional configuration to telescope to change theme, layout, etc.
+        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+            previewer = true,
+        }))
     end, { desc = '[/] Fuzzily search in current buffer' })
 end
 
 -- diagnostics
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- move hightlighted text up/down
 map('n', '<space>j', ':m .+1<CR>==', opts)
@@ -106,10 +106,10 @@ map('i', 'jk', '<esc>', opts)
 -- delete without yanking
 map('n', '<space>d', '"_d', opts)
 map('v', '<space>d', '"_d', opts)
-map('n', "<space>D", '"_D', opts)
-map('n', "<space>C", '"_C', opts)
-map('n', "<space>c", '"_c', opts)
-map('n', "<space>x", '"_x', opts)
+map('n', '<space>D', '"_D', opts)
+map('n', '<space>C', '"_C', opts)
+map('n', '<space>c', '"_c', opts)
+map('n', '<space>x', '"_x', opts)
 
 --  replace currently selected text with default register without yanking
 map('v', 'p', '"_dP', opts)

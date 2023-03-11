@@ -1,10 +1,13 @@
+if vim.g.vscode then
+    return
+end
 local indent_blankline = safe_require('indent_blankline')
 if not indent_blankline then
     return
 end
 vim.opt.list = true
 vim.opt.listchars:append('eol:↴')
-vim.opt.listchars:append "space:⋅"
+vim.opt.listchars:append('space:⋅')
 indent_blankline.setup({
     buftype_exclude = { 'terminal' },
     filetype_exclude = { 'help', 'NvimTree', 'dashboard', 'packer', 'TelescopePrompt' },

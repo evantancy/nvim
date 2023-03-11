@@ -31,15 +31,14 @@ theme.section.footer.val = {
 theme.nvim_web_devicons.enabled = true
 theme.nvim_web_devicons.highlight = true
 
--- https://github.com/goolord/alpha-nvim/issues/14
-theme.opts.layout = {
-    theme.section.header,
-    { type = 'padding', val = 1 },
-    theme.section.top_buttons,
-    theme.section.mru,
-    theme.section.mru_cwd,
-    { type = 'padding', val = 1 },
-    theme.section.footer,
-}
+-- theme.opts.layout = {
+--     theme.section.header,
+--     { type = 'padding', val = 1 },
+--     theme.section.top_buttons,
+--     theme.section.mru,
+--     theme.section.mru_cwd,
+--     { type = 'padding', val = 1 },
+--     theme.section.footer,
+-- }
 
 alpha.setup(theme.config)
