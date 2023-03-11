@@ -122,3 +122,4 @@ map <leader>s <Plug>Sneak_s
 map <leader>S <Plug>Sneak_S
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+command SnapshotPugins PlugSnapshot! $DOTFILES/nvim/snapshots/plug.snapshot
