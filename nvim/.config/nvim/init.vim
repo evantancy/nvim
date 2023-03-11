@@ -98,6 +98,12 @@ Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
+lua require('core.utils')
+lua require('modules')
+lua require('core.keymaps')
+lua require('core.autocmd')
+lua require('core.options')
+
 "set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
 
@@ -108,17 +114,11 @@ let g:cpp_class_decl_highlight = 1
 let g:cpp_posix_standard = 1
 let g:cpp_concepts_highlight = 1
 let g:sneak#label = 1
-map f <Plug>Sneak_s
-map F <Plug>Sneak_S
 
 " clear registers
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
-lua require('core.utils')
-lua require('modules')
-lua require('core.keymaps')
-lua require('core.autocmd')
-lua require('core.options')
-
+map <leader>s <Plug>Sneak_s
+map <leader>S <Plug>Sneak_S
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
