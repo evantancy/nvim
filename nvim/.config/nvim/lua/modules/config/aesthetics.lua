@@ -1,3 +1,18 @@
+vim.g.gruvbox_contrast_dark = 'hard'
+vim.g.tokyonight_style = 'night'
+if not vim.g.vscode then
+    vim.cmd([[
+        " This line enables the true color support.
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+        " set t_Co=256
+        " colorscheme gruvbox
+        " colorscheme kanagawa
+        " colorscheme onedark
+        " colorscheme monokai-pro
+        colorscheme night-owl
+        ]])
+end
+
 local illuminate = safe_require('illuminate')
 if not illuminate then
     return
@@ -48,4 +63,27 @@ illuminate.configure({
     large_file_overrides = nil,
     -- min_count_to_highlight: minimum number of matches required to perform highlighting
     min_count_to_highlight = 1,
+})
+
+local bufferline = safe_require('bufferline')
+if not bufferline then
+    return
+end
+
+bufferline.setup({
+    options = {
+        mode = 'buffers',
+        max_name_length = 18,
+        max_prefix_length = 15, -- prefix used when a buffer is deduplicated
+        tab_size = 15,
+        diagnostics = 'nvim_lsp',
+        offsets = { { filetype = 'NvimTree' } },
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        show_tab_indicators = false,
+        persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
+        separator_style = 'thick',
+        always_show_bufferline = true,
+        modified_icon = '[+]',
+    },
 })

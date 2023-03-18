@@ -3,83 +3,6 @@ local function conf(name)
 end
 
 local plugins = {
-    { 'rebelot/kanagawa.nvim' },
-    { 'ellisonleao/gruvbox.nvim' },
-    { 'haishanh/night-owl.vim' },
-    { -- Colorschemes
-        'folke/tokyonight.nvim',
-        config = conf('colors'),
-        requires = { 'folke/lsp-colors.nvim' },
-    },
-    { -- LSP colors
-        'folke/lsp-colors.nvim',
-    },
-    { -- Icons
-        'ryanoasis/vim-devicons',
-        'kyazdani42/nvim-web-devicons',
-    },
-    { -- File tree
-        'kyazdani42/nvim-tree.lua',
-        config = conf('nvim-tree'),
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-        },
-    },
-    { -- Startup screen
-        'goolord/alpha-nvim',
-        config = conf('alpha-nvim'),
-    },
-    { -- whichkey
-        'folke/which-key.nvim',
-    },
-    { -- Finder
-        'nvim-telescope/telescope.nvim',
-        config = conf('telescope'),
-        requires = {
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            { 'nvim-lua/popup.nvim' },
-            { 'nvim-telescope/telescope-media-files.nvim' },
-        },
-    },
-    { -- Solidity
-        'TovarishFin/vim-solidity',
-    },
-    {
-        'RRethy/vim-illuminate',
-        config = conf('illuminate'),
-    },
-    { -- LSP
-        'VonHeikemen/lsp-zero.nvim',
-        config = conf('lsp'),
-        requires = {
-            -- LSP support
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            'jose-elias-alvarez/null-ls.nvim',
-            'RRethy/vim-illuminate',
-            -- Autocompletion
-            'hrsh7th/nvim-cmp',
-            'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
-            -- Snippets
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-            -- LSP Suggestion formatting
-            'onsails/lspkind-nvim',
-        },
-    },
-    { -- Formatters
-        'jose-elias-alvarez/null-ls.nvim',
-        branch = 'main',
-        config = conf('null-ls'),
-    },
-    { -- Autocompletion plugin
-    },
     { -- AI Autocompletion
         'tzachar/cmp-tabnine',
         config = conf('tabnine'),
@@ -131,10 +54,6 @@ local plugins = {
         requires = { 'windwp/nvim-ts-autotag' },
         config = conf('nvim-treesitter'),
     },
-    { -- Bufferline
-        'akinsho/nvim-bufferline.lua',
-        config = conf('bufferline'),
-    },
     { -- Statusline
         'nvim-lualine/lualine.nvim',
         config = conf('lualine'),
@@ -153,13 +72,10 @@ local plugins = {
     },
 }
 
-for _, plugin in ipairs(plugins) do
-    if plugin['config'] == nil then
-        return
-    else
-        use(plugin['config'])
-    end
-end
+conf('aesthetics')
+conf('files')
+conf('lsp')
+conf('formatter')
 
 -- Packer Bootstrap config
 local ensure_packer = function()

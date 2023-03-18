@@ -89,6 +89,28 @@ if not lspconfig then
     return
 end
 
+-- see if a file exists
+local function file_exists(file)
+    local f = io.open(file, 'rb')
+    if f then
+        f:close()
+    end
+    return f ~= nil
+end
+
+-- get all lines from a file, returns an empty
+-- list/table if the file does not exist
+local function get_lines_from(file)
+    if not file_exists(file) then
+        return {}
+    end
+    local lines = {}
+    for line in io.lines(file) do
+        lines[#lines + 1] = line
+    end
+    return lines
+end
+
 mason_lspconfig.setup_handlers({
     function(server_name)
         lspconfig[server_name].setup({
@@ -132,7 +154,7 @@ mason_lspconfig.setup_handlers({
     ['solc'] = function()
         -- rely on proper configuration from remappings
         local remappings = get_lines_from('remappings.txt')
-        local cmd = { 'solc', '--lsp', unpack(remappings) }
+        local cmd = { 'solc', '--lsp', table.unpack(remappings) }
         lspconfig.solc.setup({
             cmd = cmd,
             on_attach = on_attach,
