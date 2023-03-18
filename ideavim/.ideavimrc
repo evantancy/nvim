@@ -155,6 +155,5 @@ Plug 'tpope/vim-commentary'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 50 " time in milliseconds
 let g:highlightedyank_highlight_color = "rgba(255, 195, 0, 100)"
-Plug 'easymotion/vim-easymotion'
 Plug 'dbakker/vim-paragraph-motion'
 

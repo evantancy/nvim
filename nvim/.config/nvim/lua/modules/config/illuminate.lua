@@ -1,5 +1,9 @@
+local illuminate = safe_require('illuminate')
+if not illuminate then
+    return
+end
 -- default configuration
-require('illuminate').configure({
+illuminate.configure({
     -- providers: provider used to get references in the buffer, ordered by priority
     providers = {
         'lsp',
@@ -45,4 +49,3 @@ require('illuminate').configure({
     -- min_count_to_highlight: minimum number of matches required to perform highlighting
     min_count_to_highlight = 1,
 })
-

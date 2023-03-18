@@ -23,15 +23,15 @@ nvim_tree.setup({
         indent_width = 2,
         highlight_git = true,
         indent_markers = {
-          enable = true,
-          inline_arrows = true,
-          icons = {
-            corner = "└",
-            edge = "│",
-            item = "│",
-            bottom = "─",
-            none = " ",
-          },
+            enable = true,
+            inline_arrows = true,
+            icons = {
+                corner = '└',
+                edge = '│',
+                item = '│',
+                bottom = '─',
+                none = ' ',
+            },
         },
     },
     view = {

@@ -15,10 +15,10 @@ if vim.g.vscode then
     map('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>', opts)
     map('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>', opts)
     -- splits
-    map('n', '<C-h>', '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<cr>')
-    map('n', '<C-j>', '<cmd>call VSCodeNotify("workbench.action.navigateDown")<cr>')
-    map('n', '<C-k>', '<cmd>call VSCodeNotify("workbench.action.navigateUp")<cr>')
-    map('n', '<C-l>', '<cmd>call VSCodeNotify("workbench.action.navigateRight")<cr>')
+    map('n', 'sh', '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<cr>')
+    map('n', 'sj', '<cmd>call VSCodeNotify("workbench.action.navigateDown")<cr>')
+    map('n', 'sk', '<cmd>call VSCodeNotify("workbench.action.navigateUp")<cr>')
+    map('n', 'sl', '<cmd>call VSCodeNotify("workbench.action.navigateRight")<cr>')
     -- nvim-tree
     map('n', '<C-n>', "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<cr>", opts)
 
@@ -26,18 +26,6 @@ if vim.g.vscode then
     map('n', 'K', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>')
     map('n', 'gd', '<cmd>call VSCodeNotify("editor.action.revealDefinition")<cr>')
     map('n', 'gr', '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
-
-    -- TODO
-    -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
-    -- Telescope | dl -> diagnostics list | fa -> find all
-    -- map('n', '<space>vrc', "<cmd>lua require('core.utils').search_dotfiles()<cr>")
-    -- map('n', '<space>vrg', "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
-    -- map('n', '<space>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
-    -- map('n', '<space>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-    -- map('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers()<cr>", opts)
-    -- map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-    -- map('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
-    -- map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 else
     -- inside vim
 
@@ -49,20 +37,20 @@ else
     map('n', '<tab>', '<cmd>bnext<cr>', opts)
     map('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
     -- splits
-    map('n', '<c-h>', '<c-w>h')
-    map('n', '<c-j>', '<c-w>j')
-    map('n', '<c-k>', '<c-w>k')
-    map('n', '<c-l>', '<c-w>l')
+    map('n', 'sh', '<c-w>h')
+    map('n', 'sj', '<c-w>j')
+    map('n', 'sk', '<c-w>k')
+    map('n', 'sl', '<c-w>l')
     -- nvim-tree
     map('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
 
     -- Comment.nvim
     -- ctrl+/ or ctrl+\ to line/block comment
-    map('n', '<c-_>', "<cmd> lua require('Comment.api').toggle_current_linewise()<cr>")
-    map('n', '<c-bslash>', "<cmd> lua require('Comment.api').toggle_current_blockwise()<cr>")
+    vim.keymap.set('n', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise.current()<cr>")
+    vim.keymap.set('n', '<c-bslash>', "<cmd> lua require('Comment.api').toggle.blockwise.current()<cr>")
     -- VISUAL MODE COMMENTS
-    map('x', '<c-_>', '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
-    map('x', '<c-bslash>', '<ESC><CMD>lua require("Comment.api").toggle_blockwise_op(vim.fn.visualmode())<CR>')
+    vim.keymap.set('x', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>")
+    vim.keymap.set('x', '<c-bslash>', "<cmu> lua require('Comment.api').toggle.blockwise(vim.fn.visualmode())<cr>")
 
     -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
     -- Telescope | dl -> diagnostics list | fa -> find all
@@ -82,6 +70,9 @@ else
         }))
     end, { desc = '[/] Fuzzily search in current buffer' })
 end
+-- split window
+map('n', 'ss', ':split<CR><C-w>w', { silent = true })
+map('n', 'sv', ':vsplit<CR><C-w>w', { silent = true })
 
 -- diagnostics
 map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -104,18 +95,19 @@ map('n', '<c-c>', '<esc>', opts)
 map('i', 'kj', '<esc>', opts)
 map('i', 'jk', '<esc>', opts)
 -- delete without yanking
-map('n', '<space>d', '"_d', opts)
-map('v', '<space>d', '"_d', opts)
+vim.keymap.set({ 'n', 'v' }, '<space>d', '"_d')
 map('n', '<space>D', '"_D', opts)
 map('n', '<space>C', '"_C', opts)
 map('n', '<space>c', '"_c', opts)
-map('n', '<space>x', '"_x', opts)
+map('n', 'x', '"_x', opts)
 
 --  replace currently selected text with default register without yanking
 map('v', 'p', '"_dP', opts)
 
 -- wtf?????????????????????????????????????????????????????????????????????
 map('n', 'Y', 'y$', opts)
+map('n', '<C-d>', '<C-d>zz', opts)
+map('n', '<C-u>', '<C-u>zz', opts)
 map('n', 'n', 'nzzzv', opts)
 map('n', 'N', 'Nzzzv', opts)
 map('n', '<space>J', 'mzJ`z', opts)

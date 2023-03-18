@@ -2,7 +2,6 @@ local api = vim.api
 local g = vim.g
 local opt = vim.opt
 local o = vim.o
-
 local function status_line()
     local mode = '%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}'
     local file_name = '%-.16t'
@@ -27,7 +26,10 @@ vim.cmd([[
 
 api.nvim_set_hl(0, 'CursorLine', { underline = true })
 -- Aesthetics
+opt.title = true
 opt.signcolumn = 'yes' -- Keep gutter even without LSP screaming
+opt.winblend = 0
+opt.wildoptions = 'pum'
 opt.pumheight = 8 -- Popup menu height
 opt.pumblend = 20 -- Popup menu transparency
 opt.cmdheight = 1
@@ -42,10 +44,10 @@ opt.relativenumber = true -- Relative line numbers
 opt.termguicolors = true
 opt.splitbelow = true -- Horizontal splits will automatically be below
 opt.splitright = true -- Vertical splits will automatically be to the right
+opt.scroll = 10
 opt.scrolloff = 10 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
-opt.cursorlineopt = 'number' -- disable highlighting the entire line
-
+opt.cursorlineopt = 'number,screenline' -- disable highlighting the entire line
 -- Backups
 opt.swapfile = false
 opt.writebackup = false
@@ -56,6 +58,7 @@ opt.smarttab = true
 opt.autoindent = true
 opt.smartcase = true
 opt.smartindent = true
+opt.breakindent = true
 opt.expandtab = true -- Tabs to spaces
 opt.tabstop = 4 -- Number of spaces for tab
 opt.softtabstop = 4
@@ -73,12 +76,12 @@ opt.inccommand = 'nosplit' -- Enable preview result of incsearch
 -- opt.wildignore = { '.git/*', 'node_modules/*' }
 opt.wildignorecase = true
 -- Align with autocmd.lua
-opt.formatoptions = opt.formatoptions 
+opt.formatoptions = opt.formatoptions
     + {
-    c = false,
-    o = false, -- o and O don't continue comments
-    r = true, -- Pressing Enter will continue comments
-}
+        c = false,
+        o = false, -- o and O don't continue comments
+        r = true, -- Pressing Enter will continue comments
+    }
 opt.ignorecase = true
 opt.smartcase = true
 -- -- Disable automatic comment insertion
@@ -86,20 +89,19 @@ opt.smartcase = true
 --     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 -- ]])
 
-
 -- Speed
 opt.updatetime = 50 -- Faster autocomplete
 opt.timeoutlen = 500 -- Reduce timeoutlen
 
 -- -- Shortmess
 opt.shortmess = opt.shortmess
-	+ {
-		A = true, -- don't give the "ATTENTION" message when an existing swap file is found.
-		I = true, -- don't give the intro message when starting Vim |:intro|.
-		W = true, -- don't give "written" or "[w]" when writing a file
-		c = true, -- don't give |ins-completion-menu| messages
-		m = true, -- use "[+]" instead of "[Modified]"
-}
+    + {
+        A = true, -- don't give the "ATTENTION" message when an existing swap file is found.
+        I = true, -- don't give the intro message when starting Vim |:intro|.
+        W = true, -- don't give "written" or "[w]" when writing a file
+        c = true, -- don't give |ins-completion-menu| messages
+        m = true, -- use "[+]" instead of "[Modified]"
+    }
 
 -- Remove builtin plugins
 g.netrw_dirhistmax = 0

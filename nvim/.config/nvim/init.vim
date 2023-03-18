@@ -21,8 +21,6 @@ Plug 'kyazdani42/nvim-tree.lua',
 " Startup screen
 Plug 'goolord/alpha-nvim',
 " Jump around quickly
-Plug 'easymotion/vim-easymotion', Cond(!exists('g:vscode'))
-Plug 'asvetliakov/vim-easymotion', Cond(exists('g:vscode'), { 'as': 'vsc-easymotion' })
 Plug 'justinmk/vim-sneak'
 Plug 'folke/which-key.nvim',
 " Telescope and deps
@@ -95,14 +93,17 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'luochen1990/rainbow'
 " easy align things
 Plug 'junegunn/vim-easy-align'
+" Plug 'frabjous/knap'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
 lua require('core.utils')
 lua require('modules')
-lua require('core.keymaps')
-lua require('core.autocmd')
-lua require('core.options')
+lua require('core')
+" lua require('core.keymaps')
+" lua require('core.autocmd')
+" lua require('core.options')
 
 "set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
@@ -115,11 +116,20 @@ let g:cpp_posix_standard = 1
 let g:cpp_concepts_highlight = 1
 let g:sneak#label = 1
 
-" clear registers
-command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+" latex preview stuff
+let g:livepreview_previewer = 'evince'
+let g:livepreview_engine = 'lualatex'
+" let g:livepreview_engine = 'lualatex -shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -pdf -output-directory=%OUTDIR% %DOC%'
+let g:livepreview_cursorhold_recompile = 0
 
 map <leader>s <Plug>Sneak_s
 map <leader>S <Plug>Sneak_S
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-command SnapshotPugins PlugSnapshot! $DOTFILES/nvim/snapshots/plug.snapshot
+
+" wipe registers
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+" close all but current buffer
+command! CloseAllButCurrent %bd|e#|bd#
+" create snapshot of plugins
+command! SnapshotPugins PlugSnapshot! $DOTFILES/nvim/snapshots/plug.snapshot
