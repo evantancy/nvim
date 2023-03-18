@@ -1,8 +1,3 @@
-local lspconfig = safe_require('lspconfig')
-if not lspconfig then
-    return
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local cmp_nvim_lsp = safe_require('cmp_nvim_lsp')
 if not cmp_nvim_lsp then
@@ -58,7 +53,7 @@ local on_attach = function(client, bufnr)
     buf_map(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_map(bufnr, 'n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_map(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_map(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_map(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -89,12 +84,56 @@ mason_lspconfig.setup({
     ensure_installed = servers,
 })
 
-for _, lsp in pairs(servers) do
-    if lsp == 'solc' then
+local lspconfig = safe_require('lspconfig')
+if not lspconfig then
+    return
+end
+
+mason_lspconfig.setup_handlers({
+    function(server_name)
+        lspconfig[server_name].setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            flags = {
+                debounce_text_changes = 150,
+            },
+            settings = {
+                completions = {
+                    completeFunctionCalls = true,
+                },
+            },
+        })
+    end,
+    ['lua_ls'] = function()
+        lspconfig.lua_ls.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim' },
+                    },
+                },
+            },
+        })
+    end,
+    ['tsserver'] = function()
+        lspconfig.tsserver.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+            settings = {
+                completions = {
+                    completeFunctionCalls = true,
+                },
+            },
+        })
+    end,
+    ['solc'] = function()
         -- rely on proper configuration from remappings
         local remappings = get_lines_from('remappings.txt')
         local cmd = { 'solc', '--lsp', unpack(remappings) }
-        lspconfig[lsp].setup({
+        lspconfig.solc.setup({
             cmd = cmd,
             on_attach = on_attach,
             capabilities = capabilities,
@@ -102,16 +141,8 @@ for _, lsp in pairs(servers) do
                 debounce_text_changes = 150,
             },
         })
-    else
-        lspconfig[lsp].setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            flags = {
-                debounce_text_changes = 150,
-            },
-        })
-    end
-end
+    end,
+})
 
 -- Setup nvim-cmp.
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }

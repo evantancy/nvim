@@ -122,11 +122,6 @@ let g:livepreview_engine = 'lualatex'
 " let g:livepreview_engine = 'lualatex -shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -pdf -output-directory=%OUTDIR% %DOC%'
 let g:livepreview_cursorhold_recompile = 0
 
-map <leader>s <Plug>Sneak_s
-map <leader>S <Plug>Sneak_S
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
 " wipe registers
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 " close all but current buffer
