@@ -75,142 +75,142 @@ vim.cmd([[
 --------------------------- AUTO COMMANDS ----------------------------------
 --------------------------- AUTO COMMANDS ----------------------------------
 
+--------------------------- REMAPS ----------------------------------
+--------------------------- REMAPS ----------------------------------
+--------------------------- REMAPS ----------------------------------
+
 -- Leader
 vim.g.mapleader = ' '
 
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
-if vim.g.vscode then
-    -- inside vscode
+vim.keymap.set('n', '<leader>s', '<Plug>Sneak_s')
+vim.keymap.set('n', '<leader>S', '<Plug>Sneak_S')
 
-    -- allow single line travel when lines visually wrap
-    map('n', 'k', 'gk')
-    map('n', 'j', 'gj')
+-- inside vim
 
-    -- navigate buffer
-    map('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<cr>', opts)
-    map('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<cr>', opts)
-    -- splits
-    map('n', 'sh', '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<cr>')
-    map('n', 'sj', '<cmd>call VSCodeNotify("workbench.action.navigateDown")<cr>')
-    map('n', 'sk', '<cmd>call VSCodeNotify("workbench.action.navigateUp")<cr>')
-    map('n', 'sl', '<cmd>call VSCodeNotify("workbench.action.navigateRight")<cr>')
-    -- nvim-tree
-    map('n', '<C-n>', "<cmd>call VSCodeNotify('workbench.action.toggleSidebarVisibility')<cr>", opts)
+-- allow single line travel when lines visually wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
 
-    -- see `lsp.lua`
-    map('n', 'K', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>')
-    map('n', 'gd', '<cmd>call VSCodeNotify("editor.action.revealDefinition")<cr>')
-    map('n', 'gr', '<cmd>call VSCodeNotify("editor.action.goToReferences")<cr>')
-else
-    -- inside vim
+-- navigate buffer
+vim.keymap.set('n', '<tab>', '<cmd>bnext<cr>', opts)
+vim.keymap.set('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
+-- splits
+vim.keymap.set('n', 'sh', '<c-w>h')
+vim.keymap.set('n', 'sj', '<c-w>j')
+vim.keymap.set('n', 'sk', '<c-w>k')
+vim.keymap.set('n', 'sl', '<c-w>l')
+-- nvim-tree
+vim.keymap.set('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
 
-    -- allow single line travel when lines visually wrap
-    map('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
-    map('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
+-- Comment.nvim
+-- ctrl+/ or ctrl+\ to line/block comment
+vim.keymap.set('n', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise.current()<cr>")
+vim.keymap.set('n', '<c-bslash>', "<cmd> lua require('Comment.api').toggle.blockwise.current()<cr>")
+-- VISUAL MODE COMMENTS
+vim.keymap.set('x', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>")
+vim.keymap.set('x', '<c-bslash>', "<cmu> lua require('Comment.api').toggle.blockwise(vim.fn.visualmode())<cr>")
 
-    -- navigate buffer
-    map('n', '<tab>', '<cmd>bnext<cr>', opts)
-    map('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
-    -- splits
-    map('n', 'sh', '<c-w>h')
-    map('n', 'sj', '<c-w>j')
-    map('n', 'sk', '<c-w>k')
-    map('n', 'sl', '<c-w>l')
-    -- nvim-tree
-    map('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
+-- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
+-- Telescope | dl -> diagnostics list | fa -> find all
 
-    -- Comment.nvim
-    -- ctrl+/ or ctrl+\ to line/block comment
-    vim.keymap.set('n', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise.current()<cr>")
-    vim.keymap.set('n', '<c-bslash>', "<cmd> lua require('Comment.api').toggle.blockwise.current()<cr>")
-    -- VISUAL MODE COMMENTS
-    vim.keymap.set('x', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>")
-    vim.keymap.set('x', '<c-bslash>', "<cmu> lua require('Comment.api').toggle.blockwise(vim.fn.visualmode())<cr>")
+vim.keymap.set('n', '<space>vrc', function()
+    require('telescope.builtin').find_files({
+        prompt_title = '< VimRC >',
+        cwd = '~/.dotfiles/',
+        hidden = true,
+    })
+end)
+vim.keymap.set('n', '<space>vrg', function()
+    require('telescope.builtin').live_grep({
+        prompt_title = '< VimRC Live Grep >',
+        cwd = '$DOTFILES',
+    })
+end)
+vim.keymap.set('n', '<space>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
+vim.keymap.set('n', '<space>fo', "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>", opts)
+vim.keymap.set('n', '<space>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+vim.keymap.set('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>", opts)
+vim.keymap.set('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+vim.keymap.set('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
+vim.keymap.set('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+vim.keymap.set('n', '<leader>/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+        previewer = true,
+    }))
+end, { desc = '[/] Fuzzily search in current buffer' })
 
-    -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
-    -- Telescope | dl -> diagnostics list | fa -> find all
-    map('n', '<space>vrc', "<cmd>lua require('core.utils').search_dotfiles()<cr>")
-    map('n', '<space>vrg', "<cmd>lua require('core.utils').grep_dotfiles()<cr>")
-    map('n', '<space>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
-    map('n', '<space>fo', "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>", opts)
-    map('n', '<space>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-    map('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>", opts)
-    map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-    map('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
-    map('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
-    vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
-        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
-            previewer = true,
-        }))
-    end, { desc = '[/] Fuzzily search in current buffer' })
-end
 -- split window
-map('n', 'ss', ':split<CR><C-w>w', { silent = true })
-map('n', 'sv', ':vsplit<CR><C-w>w', { silent = true })
+vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true })
+vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true })
 
 -- diagnostics
-map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- move hightlighted text up/down
-map('n', '<space>j', ':m .+1<CR>==', opts)
-map('n', '<space>k', ':m .-2<CR>==', opts)
-map('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
-map('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
-map('v', 'J', ":m '>+1<CR>gv=gv", opts)
-map('v', 'K', ":m '<-2<CR>gv=gv", opts)
+vim.keymap.set('n', '<space>j', ':m .+1<CR>==', opts)
+vim.keymap.set('n', '<space>k', ':m .-2<CR>==', opts)
+vim.keymap.set('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
+vim.keymap.set('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
 
 -- toggle ignorecase
-map('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
-map('n', '<c-c>', '<esc>', opts)
+vim.keymap.set('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
+vim.keymap.set('n', '<c-c>', '<esc>', opts)
 -- exit insert mode whenever you type 'jk' or 'kj'
-map('i', 'kj', '<esc>', opts)
-map('i', 'jk', '<esc>', opts)
+vim.keymap.set('i', 'kj', '<esc>', opts)
+vim.keymap.set('i', 'jk', '<esc>', opts)
 -- delete without yanking
 vim.keymap.set({ 'n', 'v' }, '<space>d', '"_d')
-map('n', '<space>D', '"_D', opts)
-map('n', '<space>C', '"_C', opts)
-map('n', '<space>c', '"_c', opts)
-map('n', 'x', '"_x', opts)
+vim.keymap.set('n', '<space>D', '"_D', opts)
+vim.keymap.set('n', '<space>C', '"_C', opts)
+vim.keymap.set('n', '<space>c', '"_c', opts)
+vim.keymap.set('n', 'x', '"_x', opts)
 
 --  replace currently selected text with default register without yanking
-map('v', 'p', '"_dP', opts)
+vim.keymap.set('v', 'p', '"_dP', opts)
 
 -- wtf?????????????????????????????????????????????????????????????????????
-map('n', 'Y', 'y$', opts)
-map('n', '<C-d>', '<C-d>zz', opts)
-map('n', '<C-u>', '<C-u>zz', opts)
-map('n', 'n', 'nzzzv', opts)
-map('n', 'N', 'Nzzzv', opts)
-map('n', '<space>J', 'mzJ`z', opts)
+vim.keymap.set('n', 'Y', 'y$', opts)
+vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
+vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
+vim.keymap.set('n', 'n', 'nzzzv', opts)
+vim.keymap.set('n', 'N', 'Nzzzv', opts)
+vim.keymap.set('n', '<space>J', 'mzJ`z', opts)
 -- break undo sequence using punctuation marks
-map('i', ',', ',<c-g>u', opts)
-map('i', '.', '.<c-g>u', opts)
-map('i', '!', '!<c-g>u', opts)
-map('i', '?', '?<c-g>u', opts)
+vim.keymap.set('i', ',', ',<c-g>u', opts)
+vim.keymap.set('i', '.', '.<c-g>u', opts)
+vim.keymap.set('i', '!', '!<c-g>u', opts)
+vim.keymap.set('i', '?', '?<c-g>u', opts)
 
 -- make vim behave
 -- D duplicates highlighted text below
-map('v', 'D', "y'>p", opts)
+vim.keymap.set('v', 'D', "y'>p", opts)
 -- tab while code selected
-map('v', '<', '<gv', opts)
-map('v', '>', '>gv', opts)
+vim.keymap.set('v', '<', '<gv', opts)
+vim.keymap.set('v', '>', '>gv', opts)
 
 -- Harpoon
-map('n', '<leader>a', "<cmd>lua require('harpoon.mark').add_file()<cr>")
-map('n', '<leader>h', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>")
-map('n', '<leader>tc', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>")
-map('n', '<A-1>', "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
-map('n', '<A-2>', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
-map('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
-map('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
+vim.keymap.set('n', '<leader>a', "<cmd>lua require('harpoon.mark').add_file()<cr>")
+vim.keymap.set('n', '<leader>h', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>")
+vim.keymap.set('n', '<leader>tc', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>")
+vim.keymap.set('n', '<A-1>', "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
+vim.keymap.set('n', '<A-2>', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
+vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
+vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
 -- undotree
-map('n', '<space>u', '<cmd>UndotreeToggle<cr>')
+vim.keymap.set('n', '<space>u', '<cmd>UndotreeToggle<cr>')
+
+--------------------------- REMAPS ----------------------------------
+--------------------------- REMAPS ----------------------------------
+--------------------------- REMAPS ----------------------------------
 
 local api = vim.api
 local g = vim.g
