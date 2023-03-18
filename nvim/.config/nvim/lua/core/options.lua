@@ -25,6 +25,7 @@ vim.cmd([[
     set undofile
 ]])
 
+api.nvim_set_hl(0, 'CursorLine', { underline = true })
 -- Aesthetics
 opt.signcolumn = 'yes' -- Keep gutter even without LSP screaming
 opt.pumheight = 8 -- Popup menu height
