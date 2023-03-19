@@ -128,3 +128,6 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 command! CloseAllButCurrent %bd|e#|bd#
 " create snapshot of plugins
 command! SnapshotPugins PlugSnapshot! $DOTFILES/nvim/snapshots/plug.snapshot
+" Quick fix stuff
+command! QuickFixClear call setqflist([],'r')
+command! QuickFixUndo cdo :norm! u

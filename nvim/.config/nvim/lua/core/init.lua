@@ -85,8 +85,8 @@ vim.g.mapleader = ' '
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
-vim.keymap.set('n', '<leader>s', '<Plug>Sneak_s')
-vim.keymap.set('n', '<leader>S', '<Plug>Sneak_S')
+vim.keymap.set({ 'n', 'x' }, '<leader>s', '<Plug>Sneak_s')
+vim.keymap.set({ 'n', 'x' }, '<leader>S', '<Plug>Sneak_S')
 
 -- inside vim
 
@@ -97,11 +97,6 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
 -- navigate buffer
 vim.keymap.set('n', '<tab>', '<cmd>bnext<cr>', opts)
 vim.keymap.set('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
--- splits
-vim.keymap.set('n', 'sh', '<c-w>h')
-vim.keymap.set('n', 'sj', '<c-w>j')
-vim.keymap.set('n', 'sk', '<c-w>k')
-vim.keymap.set('n', 'sl', '<c-w>l')
 -- nvim-tree
 vim.keymap.set('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
 
@@ -207,6 +202,34 @@ vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
 vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
 -- undotree
 vim.keymap.set('n', '<space>u', '<cmd>UndotreeToggle<cr>')
+
+-- split window
+vim.keymap.set('n', 'ss', ':split<CR><C-w>w')
+vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w')
+
+-- resize windows
+vim.keymap.set('n', '<C-left>', '<C-w><')
+vim.keymap.set('n', '<C-right>', '<C-w>>')
+vim.keymap.set('n', '<C-up>', '<C-w>+')
+vim.keymap.set('n', '<C-down>', '<C-w>-')
+
+-- moving around in vim commandline
+vim.keymap.set('c', '<c-h>', '<left>')
+vim.keymap.set('c', '<c-j>', '<down>')
+vim.keymap.set('c', '<c-k>', '<up>')
+vim.keymap.set('c', '<c-l>', '<right>')
+vim.keymap.set('c', '^', '<home>')
+vim.keymap.set('c', '$', '<end>')
+
+-- quickfix list
+vim.keymap.set('n', ']q', ':cnext<cr>')
+vim.keymap.set('n', '[q', ':cprev<cr>')
+
+-- increment/decrement
+vim.keymap.set('n', '+', '<c-a>')
+vim.keymap.set('n', '-', '<c-x>')
+
+-- vim.keymap.set('n', 's')
 
 --------------------------- REMAPS ----------------------------------
 --------------------------- REMAPS ----------------------------------
