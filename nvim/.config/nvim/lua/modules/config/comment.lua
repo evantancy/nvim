@@ -1,5 +1,5 @@
-local Comment = safe_require('Comment')
-if not Comment then
+local status, Comment = pcall(require, 'Comment')
+if not status then
     return
 end
 Comment.setup()

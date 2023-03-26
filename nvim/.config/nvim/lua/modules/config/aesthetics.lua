@@ -13,8 +13,8 @@ if not vim.g.vscode then
         ]])
 end
 
-local illuminate = safe_require('illuminate')
-if not illuminate then
+local status, illuminate = pcall(require, 'illuminate')
+if not status then
     return
 end
 -- default configuration
@@ -65,8 +65,8 @@ illuminate.configure({
     min_count_to_highlight = 1,
 })
 
-local bufferline = safe_require('bufferline')
-if not bufferline then
+local status, bufferline = pcall(require, 'bufferline')
+if not status then
     return
 end
 

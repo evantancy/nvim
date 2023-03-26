@@ -15,7 +15,7 @@ autocmd VimEnter * WipeReg
 
 -- Highlight text on yank
 vim.cmd([[
-augroup HighlightYank
+augroup HighlightOnYank
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank({timeout = 150})
 augroup end
@@ -23,7 +23,7 @@ augroup end
 
 -- Autoformat see `null-ls.lua`
 vim.cmd([[
-augroup LspFormat
+augroup LspFormatBeforeWrite
   autocmd! * <buffer>
   autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
 augroup end
@@ -42,10 +42,10 @@ vim.cmd([[
 
 -- Only enable highlights during search
 vim.cmd([[
-augroup vimrc-incsearch-highlight
+augroup HighlightDuringIncsearch
     autocmd!
     autocmd CmdlineEnter /,\? :set hlsearch
-    " autocmd CmdlineLeave /,\? :set nohlsearch
+    autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
 ]])
 -- Automatically change working directory
@@ -53,7 +53,7 @@ augroup END
 --   autocmd BufEnter * silent! lcd %:p:h
 -- ]])
 
--- Disable automatic comment insertion
+-- Disable automatic comment insertion, except when pressing Enter
 vim.cmd([[
     autocmd FileType * setlocal formatoptions-=c formatoptions+=r formatoptions-=o
 ]])
@@ -111,26 +111,26 @@ vim.keymap.set('x', '<c-bslash>', "<cmu> lua require('Comment.api').toggle.block
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
 
-vim.keymap.set('n', '<space>vrc', function()
+vim.keymap.set('n', '<leader>vrc', function()
     require('telescope.builtin').find_files({
         prompt_title = '< VimRC >',
         cwd = '~/.dotfiles/',
         hidden = true,
     })
 end)
-vim.keymap.set('n', '<space>vrg', function()
+vim.keymap.set('n', '<leader>vrg', function()
     require('telescope.builtin').live_grep({
         prompt_title = '< VimRC Live Grep >',
         cwd = '$DOTFILES',
     })
 end)
-vim.keymap.set('n', '<space>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
-vim.keymap.set('n', '<space>fo', "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>", opts)
-vim.keymap.set('n', '<space>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-vim.keymap.set('n', '<space>fb', "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>", opts)
-vim.keymap.set('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-vim.keymap.set('n', '<space>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
-vim.keymap.set('n', '<space>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+vim.keymap.set('n', '<leader>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
+vim.keymap.set('n', '<leader>fo', "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>", opts)
+vim.keymap.set('n', '<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+vim.keymap.set('n', '<leader>fb', "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>", opts)
+vim.keymap.set('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+vim.keymap.set('n', '<leader>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
+vim.keymap.set('n', '<leader>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
 vim.keymap.set('n', '<leader>/', function()
     -- You can pass additional configuration to telescope to change theme, layout, etc.
     require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
@@ -143,14 +143,14 @@ vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true })
 vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true })
 
 -- diagnostics
-vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- move hightlighted text up/down
-vim.keymap.set('n', '<space>j', ':m .+1<CR>==', opts)
-vim.keymap.set('n', '<space>k', ':m .-2<CR>==', opts)
+vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
+vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
 vim.keymap.set('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
 vim.keymap.set('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
@@ -163,10 +163,10 @@ vim.keymap.set('n', '<c-c>', '<esc>', opts)
 vim.keymap.set('i', 'kj', '<esc>', opts)
 vim.keymap.set('i', 'jk', '<esc>', opts)
 -- delete without yanking
-vim.keymap.set({ 'n', 'v' }, '<space>d', '"_d')
-vim.keymap.set('n', '<space>D', '"_D', opts)
-vim.keymap.set('n', '<space>C', '"_C', opts)
-vim.keymap.set('n', '<space>c', '"_c', opts)
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
+vim.keymap.set('n', '<leader>D', '"_D', opts)
+vim.keymap.set('n', '<leader>C', '"_C', opts)
+vim.keymap.set('n', '<leader>c', '"_c', opts)
 vim.keymap.set('n', 'x', '"_x', opts)
 
 --  replace currently selected text with default register without yanking
@@ -178,7 +178,7 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
 vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
 vim.keymap.set('n', 'n', 'nzzzv', opts)
 vim.keymap.set('n', 'N', 'Nzzzv', opts)
-vim.keymap.set('n', '<space>J', 'mzJ`z', opts)
+vim.keymap.set('n', '<leader>J', 'mzJ`z', opts)
 -- break undo sequence using punctuation marks
 vim.keymap.set('i', ',', ',<c-g>u', opts)
 vim.keymap.set('i', '.', '.<c-g>u', opts)
@@ -201,23 +201,24 @@ vim.keymap.set('n', '<A-2>', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
 vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
 vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
 -- undotree
-vim.keymap.set('n', '<space>u', '<cmd>UndotreeToggle<cr>')
+vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>')
 
 -- split window
 vim.keymap.set('n', 'ss', ':split<CR><C-w>w')
 vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w')
 
 -- split navigation
-vim.keymap.set('n', 'sh', '<C-w>h')
-vim.keymap.set('n', 'sj', '<C-w>j')
-vim.keymap.set('n', 'sk', '<C-w>k')
-vim.keymap.set('n', 'sl', '<C-w>l')
+vim.keymap.set('n', 'sh', '<C-w>h', opts)
+vim.keymap.set('n', 'sj', '<C-w>j', opts)
+vim.keymap.set('n', 'sk', '<C-w>k', opts)
+vim.keymap.set('n', 'sl', '<C-w>l', opts)
 
 -- resize windows
-vim.keymap.set('n', '<C-left>', '<C-w><')
-vim.keymap.set('n', '<C-right>', '<C-w>>')
-vim.keymap.set('n', '<C-up>', '<C-w>+')
-vim.keymap.set('n', '<C-down>', '<C-w>-')
+-- TODO fix for MacOS
+vim.keymap.set('n', '<C-left>', '<C-w><', opts)
+vim.keymap.set('n', '<C-right>', '<C-w>>', opts)
+vim.keymap.set('n', '<C-up>', '<C-w>+', opts)
+vim.keymap.set('n', '<C-down>', '<C-w>-', opts)
 
 -- moving around in vim commandline
 vim.keymap.set('c', '<c-h>', '<left>')
@@ -233,7 +234,7 @@ vim.keymap.set('n', '[q', ':cprev<cr>')
 
 -- increment/decrement
 vim.keymap.set('n', '+', '<c-a>')
-vim.keymap.set('n', '-', '<c-x>')
+vim.keymap.set('n', '_', '<c-x>')
 
 -- vim.keymap.set('n', 's')
 
@@ -245,6 +246,8 @@ local api = vim.api
 local g = vim.g
 local opt = vim.opt
 local o = vim.o
+
+-- vim.opt.statusline = status_line()
 local function status_line()
     local mode = '%-5{%v:lua.string.upper(v:lua.vim.fn.mode())%}'
     local file_name = '%-.16t'
@@ -257,8 +260,6 @@ local function status_line()
 
     return string.format('%s%s%s%s%s%s%s%s', mode, file_name, buf_nr, modified, file_type, right_align, line_no, pct_thru_file)
 end
-
--- vim.opt.statusline = status_line()
 
 -- Enable syntax highlighting
 vim.cmd([[

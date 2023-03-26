@@ -11,8 +11,6 @@ Plug 'haishanh/night-owl.vim',
 Plug 'folke/tokyonight.nvim',
 Plug 'loctvl842/monokai-pro.nvim'
 Plug 'navarasu/onedark.nvim'
-" LSP colors
-Plug 'folke/lsp-colors.nvim',
 " Icons
 Plug 'ryanoasis/vim-devicons',
 Plug 'kyazdani42/nvim-web-devicons',
@@ -29,8 +27,6 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim',  { 'do': 'make' }
 Plug 'nvim-telescope/telescope.nvim',
 Plug 'nvim-lua/popup.nvim',
 Plug 'nvim-telescope/telescope-media-files.nvim',
-" Solidity
-Plug 'TovarishFin/vim-solidity',
 " LSP
 Plug 'VonHeikemen/lsp-zero.nvim',
 Plug 'tzachar/cmp-tabnine',  { 'do': './install.sh' }
@@ -48,8 +44,14 @@ Plug 'hrsh7th/cmp-nvim-lsp-signature-help',
 Plug 'L3MON4D3/LuaSnip',
 Plug 'saadparwaiz1/cmp_luasnip',
 Plug 'onsails/lspkind-nvim',
+" Language specific LSP plugins
+" Solidity
+Plug 'TovarishFin/vim-solidity',
 " TODO use typescript.nvim
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils',
+" LSP colors
+Plug 'folke/lsp-colors.nvim',
+" Highlighting current symbol
 Plug 'RRethy/vim-illuminate',
 " Formatters
 Plug 'jose-elias-alvarez/null-ls.nvim',  {'branch': 'main'}
@@ -67,9 +69,9 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'windwp/nvim-autopairs',
 " Auto indent blanklines
 Plug 'lukas-reineke/indent-blankline.nvim',
-" I love you tpope <3
+" Git
 Plug 'tpope/vim-fugitive',
-" Diff files
+" Git Diff files
 Plug 'sindrets/diffview.nvim',
 " Git in signcolumn
 Plug 'lewis6991/gitsigns.nvim',
@@ -93,17 +95,15 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'luochen1990/rainbow'
 " easy align things
 Plug 'junegunn/vim-easy-align'
-" Plug 'frabjous/knap'
+" latex preview
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'rmagatti/auto-session'
 
 call plug#end()
 
-lua require('core.utils')
-lua require('modules')
+lua require('utils')
 lua require('core')
-" lua require('core.keymaps')
-" lua require('core.autocmd')
-" lua require('core.options')
+lua require('modules')
 
 "set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1
@@ -117,7 +117,7 @@ let g:cpp_concepts_highlight = 1
 let g:sneak#label = 1
 
 " latex preview stuff
-let g:livepreview_previewer = 'evince'
+let g:livepreview_previewer = 'evince' " built-in for linux
 let g:livepreview_engine = 'lualatex'
 " let g:livepreview_engine = 'lualatex -shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -pdf -output-directory=%OUTDIR% %DOC%'
 let g:livepreview_cursorhold_recompile = 0

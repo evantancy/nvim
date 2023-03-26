@@ -1,5 +1,5 @@
-local nvim_treesitter = safe_require('nvim-treesitter.configs')
-if not nvim_treesitter then
+local status, nvim_treesitter = pcall(require, 'nvim-treesitter.configs')
+if not status then
     return
 end
 
@@ -16,7 +16,7 @@ nvim_treesitter.setup({
             node_incremental = '<c-space>',
             scope_incremental = '<c-r>',
             node_decremental = '<c-backspace>',
-        }
+        },
     },
     indent = { enable = true },
     autopairs = { enable = true },
@@ -24,7 +24,7 @@ nvim_treesitter.setup({
     autotag = { enable = true },
     context_commentstring = { enable = true },
     -- A list of parser names, or "all"
-    ensure_installed = {'c', 'help', 'lua', 'vim', 'cpp', 'python', 'typescript'},
+    ensure_installed = { 'c', 'help', 'lua', 'vim', 'cpp', 'python', 'typescript' },
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = true,
     -- Automatically install missing parsers when entering buffer

@@ -1,18 +1,19 @@
+vim.lsp.set_log_level('off')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local cmp_nvim_lsp = safe_require('cmp_nvim_lsp')
-if not cmp_nvim_lsp then
+local status, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not status then
     return
 end
 if cmp_nvim_lsp then
     capabilities = cmp_nvim_lsp.default_capabilities()
 end
 
-local cmp = safe_require('cmp')
-if not cmp then
+local status, cmp = pcall(require, 'cmp')
+if not status then
     return
 end
-local cmp_autopairs = safe_require('nvim-autopairs.completion.cmp')
-if not cmp_autopairs then
+local status, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
+if not status then
     return
 end
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
@@ -29,8 +30,8 @@ local on_attach = function(client, bufnr)
     require('illuminate').on_attach(client)
 
     if client.name == 'tsserver' then
-        local ts_utils = safe_require('nvim-lsp-ts-utils')
-        if not ts_utils then
+        local status, ts_utils = pcall(require, 'nvim-lsp-ts-utils')
+        if not status then
             return
         end
         ts_utils.setup({
@@ -71,12 +72,12 @@ local servers = {
     'emmet_ls',
 }
 
-local mason = safe_require('mason')
+local status, mason = pcall(require, 'mason')
 if not mason then
     return
 end
-local mason_lspconfig = safe_require('mason-lspconfig')
-if not mason_lspconfig then
+local status, mason_lspconfig = pcall(require, 'mason-lspconfig')
+if not status then
     return
 end
 mason.setup({})
@@ -84,8 +85,8 @@ mason_lspconfig.setup({
     ensure_installed = servers,
 })
 
-local lspconfig = safe_require('lspconfig')
-if not lspconfig then
+local status, lspconfig = pcall(require, 'lspconfig')
+if not status then
     return
 end
 
@@ -168,7 +169,10 @@ mason_lspconfig.setup_handlers({
 
 -- Setup nvim-cmp.
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-local lspkind = safe_require('lspkind')
+local status, lspkind = pcall(require, 'lspkind')
+if not status then
+    return
+end
 local source_mapping = {
     buffer = '[Buf]',
     nvim_lsp = '[LSP]',
