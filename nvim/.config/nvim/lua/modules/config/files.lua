@@ -1,7 +1,23 @@
-local telescope = safe_require('telescope')
-if not telescope then
+local status, telescope = pcall(require, 'telescope')
+if not status then
     return
 end
+
+local auto_session = safe_require('auto-session')
+if auto_session then
+    require('auto-session').setup({
+        log_level = 'error',
+
+        cwd_change_handling = {
+            restore_upcoming_session = true, -- already the default, no need to specify like this, only here as an example
+            pre_cwd_changed_hook = nil, -- already the default, no need to specify like this, only here as an example
+            post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
+                require('lualine').refresh() -- refresh lualine so the new session name is displayed in the status bar
+            end,
+        },
+    })
+end
+
 -- To get fzf loaded and working with telescope, you need to call
 -- load_extension, somewhere after setup function:
 telescope.load_extension('fzf')
@@ -76,8 +92,8 @@ telescope.setup({
     },
 })
 
-local nvim_tree = safe_require('nvim-tree')
-if not nvim_tree then
+local status, nvim_tree = pcall(require, 'nvim-tree')
+if not status then
     return
 end
 nvim_tree.setup({
@@ -146,8 +162,8 @@ nvim_tree.setup({
     },
 })
 
-local alpha = safe_require('alpha')
-if not alpha then
+local status, alpha = pcall(require, 'alpha')
+if not status then
     return
 end
 
