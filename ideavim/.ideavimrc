@@ -41,8 +41,8 @@ set iskeyword+=- " Treat dash separated words as a word text object
 " nnoremap j gj
 " nnoremap k gk
 " move hightlighted text up/down in different modes
-nnoremap <space>j :m .+1<CR>==
-nnoremap <space>k :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
 inoremap <c-j> <esc>:m .+1<CR>==gi
 inoremap <c-k> <esc>:m .-2<CR>==gi
 xmap J <Action>(MoveLineDown)
@@ -57,24 +57,24 @@ inoremap kj <esc>
 inoremap jk <esc>
 
 " delete without yanking
-nnoremap <space>d "_d
-vnoremap <space>d "_d
-nnoremap <space>D "_D
-nnoremap <space>C "_C
-nnoremap <space>c "_c
-nnoremap <space>x "_x
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+nnoremap <leader>D "_D
+nnoremap <leader>C "_C
+nnoremap <leader>c "_c
+nnoremap <leader>x "_x
 
 " replace currently selected text with default register without yanking
 vnoremap p "_dP
 " ???
-" nnoremap <space>x "_dx
+" nnoremap <leader>x "_dx
 
 " wtf?????????????????????????????????????????????????????????????????????
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
 " ???
-nnoremap <space>J mzJ`z
+nnoremap <leader>J mzJ`z
 " break undo sequence using punctuation marks
 " TODO fix bug
 " inoremap , ,<c-g>u
@@ -91,62 +91,62 @@ vnoremap > >gv
 
 " IDEA SPECIFIC settings (refactored from nvim)
 " splits
-nmap <c-h> <Action>(PrevSplitter)
-" map('n', '<c-j>', '<c-w>j')
-" map('n', '<c-k>', '<c-w>k')
-nmap <c-l> <Action>(NextSplitter)
+nnoremap sh <Action>(PrevSplitter)
+nnoremap sl <Action>(NextSplitter)
+nnoremap sv <Action>(SplitVertically)
+nnoremap ss <Action>(SplitHorizontally)
 
 " navigate buffer
-nmap <tab> <Action>(NextTab)
-" nmap <tab> <Action>(Forward)
-nmap <s-tab> <Action>(PreviousTab)
-" nmap <s-tab> <Action>(Back)
+nnoremap <tab> <Action>(NextTab)
+" nnoremap <tab> <Action>(Forward)
+nnoremap <s-tab> <Action>(PreviousTab)
+" nnoremap <s-tab> <Action>(Back)
 
-" nmap :bd <Action>(CloseContent)
-" nmap :term <Action>(ActivateTerminalToolWindow)
+" nnoremap :bd <Action>(CloseContent)
+" nnoremap :term <Action>(ActivateTerminalToolWindow)
 
 
 
 " diagnostics
-nmap <space>e <Action>(ShowErrorDescription)
-nmap [d <Action>(GotoPreviousError)
-nmap ]d <Action>(GotoNextError)
-" vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+nnoremap <leader>e <Action>(ShowErrorDescription)
+nnoremap [d <Action>(GotoPreviousError)
+nnoremap ]d <Action>(GotoNextError)
+" vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 " Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 " Telescope | dl -> diagnostics list | fa -> find all
-nmap <space>ff <Action>(GotoFile)
+nnoremap <leader>ff <Action>(GotoFile)
 " SearchEverywhere
-nmap <space>fg <Action>(FindInPath)
-nmap <space>fb <Action>(RecentFiles)
-" map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-nmap <space>fd <Action>(ActivateProblemsViewToolWindow)
-nmap <space>fa <Action>(FindUsages)
+nnoremap <leader>fg <Action>(FindInPath)
+nnoremap <leader>fb <Action>(RecentFiles)
+" map('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+nnoremap <leader>fd <Action>(ActivateProblemsViewToolWindow)
+nnoremap <leader>fa <Action>(FindUsages)
 
 " " lsp.lua
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-nmap gd <Action>(GotoDeclaration)
-nmap gD <Action>(GotoDeclaration)
+nnoremap gd <Action>(GotoDeclaration)
+nnoremap gD <Action>(GotoDeclaration)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-nmap gt <Action>(GotoTypeDeclaration)
-nmap gi <Action>(GotoImplementation)
+nnoremap gt <Action>(GotoTypeDeclaration)
+nnoremap gi <Action>(GotoImplementation)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-nmap <space>R <Action>(RenameElement)
-nmap <space>ca <Action>(ShowIntentionActions)
-nmap <space>fm <Action>(ShowReformatFileDialog)
-vmap <space>fm <Action>(ShowReformatFileDialog)
-nmap <space>fi <Action>(OptimizeImports)
-nmap <space>fsv <Action>(Toolkit.GotoService)
-nmap <F1> <Action>(ShowReformatFileDialog)
+nnoremap <leader>R <Action>(RenameElement)
+nnoremap <leader>ca <Action>(ShowIntentionActions)
+nnoremap <leader>fm <Action>(ShowReformatFileDialog)
+vmap <leader>fm <Action>(ShowReformatFileDialog)
+nnoremap <leader>fi <Action>(OptimizeImports)
+nnoremap <leader>fsv <Action>(Toolkit.GotoService)
+nnoremap <F1> <Action>(ShowReformatFileDialog)
 
-nnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
-xnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
-nmap <space>tc :action RunCoverage<CR>
-nmap <space>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
-nmap <space>fc :action HideAllWindows<CR>
-nmap <space>gb :action Annotate<CR>
-xmap <space>gb :action Annotate<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+xnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>tc :action RunCoverage<CR>
+nnoremap <leader>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
+nnoremap <leader>fc :action HideAllWindows<CR>
+nnoremap <leader>gb :action Annotate<CR>
+xmap <leader>gb :action Annotate<CR>
 
 
 " plugins
