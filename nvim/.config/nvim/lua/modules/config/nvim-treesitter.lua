@@ -6,7 +6,7 @@ end
 nvim_treesitter.setup({
     highlight = {
         enable = not vim.g.vscode, -- false will disable the whole extension
-        additional_vim_regex_highlighting = true,
+        additional_vim_regex_highlighting = false,
         -- disable = { 'json' }, -- list of language that will be disabled
     },
     incremental_selection = {
@@ -14,7 +14,7 @@ nvim_treesitter.setup({
         keymaps = {
             init_selection = '<c-space>',
             node_incremental = '<c-space>',
-            scope_incremental = '<c-r>',
+            scope_incremental = '<c-s>',
             node_decremental = '<c-backspace>',
         },
     },

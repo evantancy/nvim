@@ -9,8 +9,6 @@ if auto_session then
         log_level = 'error',
 
         cwd_change_handling = {
-            restore_upcoming_session = true, -- already the default, no need to specify like this, only here as an example
-            pre_cwd_changed_hook = nil, -- already the default, no need to specify like this, only here as an example
             post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
                 require('lualine').refresh() -- refresh lualine so the new session name is displayed in the status bar
             end,
@@ -18,24 +16,21 @@ if auto_session then
     })
 end
 
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
-telescope.load_extension('fzf')
-telescope.load_extension('media_files')
-
 local actions = require('telescope.actions')
 local sorters = require('telescope.sorters')
 telescope.setup({
     defaults = {
-        -- layout_config = {
-        -- 	horizontal = {
-        -- 		height = 0.9,
-        -- 		preview_cutoff = 60,
-        -- 		preview_width = 90,
-        -- 		prompt_position = "bottom",
-        -- 		width = 0.9,
-        -- 	},
-        -- },
+        history = false,
+        layout_config = {
+            scroll_speed = 10,
+            horizontal = {
+                height = 0.9,
+                preview_cutoff = 60,
+                preview_width = 120,
+                prompt_position = 'top',
+                width = 0.9,
+            },
+        },
         vimgrep_arguments = {
             'rg',
             '--color=never',
@@ -53,7 +48,7 @@ telescope.setup({
             shorten = { len = 3, exclude = { 1, -1 } },
         },
         file_ignore_patterns = { 'node_modules/.*', '%.git/.*', '%.idea/.*', '%.vscode/.*' },
-        -- sorting_strategy = "ascending",
+        sorting_strategy = 'ascending',
         file_sorter = sorters.get_fzf_sorter,
         file_previewer = require('telescope.previewers').vim_buffer_cat.new,
         grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
@@ -91,6 +86,11 @@ telescope.setup({
         },
     },
 })
+
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+telescope.load_extension('fzf')
+telescope.load_extension('media_files')
 
 local status, nvim_tree = pcall(require, 'nvim-tree')
 if not status then

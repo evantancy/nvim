@@ -41,20 +41,39 @@ local on_attach = function(client, bufnr)
         ts_utils.setup_client(client)
     end
 
+    local nmap = function(keys, func, desc)
+        if desc then
+            desc = 'LSP: ' .. desc
+        end
+
+        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    end
+
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     vim.api.nvim_buf_set_option(0, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_map(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_map(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_map(bufnr, 'n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_map(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_map(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    buf_map(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_map(bufnr, 'n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_map(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    buf_map(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+
+    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Show [D]ocument [S]ymbols')
+    nmap('<leader>ws', require('telescope.builtin').lsp_workspace_symbols, 'Show [W]orkspace [S]ymbols')
+
+    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    nmap('<leader>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, '[W]orkspace [L]ist Folders')
+
+    -- See `:help K` for why this keymap
+    nmap('K', vim.lsp.buf.hover, ' Hover documentation')
+    nmap('gd', vim.lsp.buf.definition, ' [G]oto [d]efinition')
+    nmap('gD', vim.lsp.buf.declaration, ' [G]oto [D]eclaration')
+    nmap('gt', vim.lsp.buf.type_definition, ' [G]oto [T]ype definition')
+    nmap('gI', vim.lsp.buf.implementation, ' [G]oto [I]mplementation')
+    nmap('<c-h>', vim.lsp.buf.signature_help, ' Show signature [h]elp')
+    nmap('<space>rn', vim.lsp.buf.rename, ' [R]e[n]ame')
+    nmap('<space>ca', vim.lsp.buf.code_action, ' [C]ode [A]ctions')
+    nmap('<space>f', vim.lsp.buf.format, ' [F]ormat')
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -70,6 +89,7 @@ local servers = {
     'cssls',
     'dockerls',
     'emmet_ls',
+    'jdtls',
 }
 
 local status, mason = pcall(require, 'mason')
@@ -83,6 +103,7 @@ end
 mason.setup({})
 mason_lspconfig.setup({
     ensure_installed = servers,
+    automatic_installation = true,
 })
 
 local status, lspconfig = pcall(require, 'lspconfig')

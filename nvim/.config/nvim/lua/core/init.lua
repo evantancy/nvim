@@ -9,9 +9,7 @@
 -- ]])
 
 -- clear all registers on launch
-vim.cmd([[
-autocmd VimEnter * WipeReg
-]])
+-- vim.cmd([[ autocmd VimEnter * WipeReg ]])
 
 -- Highlight text on yank
 vim.cmd([[
@@ -22,17 +20,17 @@ augroup end
 ]])
 
 -- Autoformat see `null-ls.lua`
-vim.cmd([[
-augroup LspFormatBeforeWrite
-  autocmd! * <buffer>
-  autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-augroup end
-]])
+-- vim.cmd([[
+-- augroup LspFormatBeforeWrite
+--   autocmd! * <buffer>
+--   autocmd BufWritePre * lua vim.lsp.buf.format()
+-- augroup end
+-- ]])
 
 -- Show diagnostics on hover
-vim.cmd([[
-  autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
-]])
+-- vim.cmd([[
+--   autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})
+-- ]])
 
 -- Recognise file type(s)
 vim.cmd([[
@@ -85,8 +83,8 @@ vim.g.mapleader = ' '
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
-vim.keymap.set({ 'n', 'x' }, '<leader>s', '<Plug>Sneak_s')
-vim.keymap.set({ 'n', 'x' }, '<leader>S', '<Plug>Sneak_S')
+vim.keymap.set({ 'n', 'x' }, '<leader>s', 'zt<Plug>Sneak_s')
+vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
 
 -- inside vim
 
@@ -102,19 +100,23 @@ vim.keymap.set('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
 
 -- Comment.nvim
 -- ctrl+/ or ctrl+\ to line/block comment
-vim.keymap.set('n', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise.current()<cr>")
-vim.keymap.set('n', '<c-bslash>', "<cmd> lua require('Comment.api').toggle.blockwise.current()<cr>")
+vim.keymap.set('n', '<c-/>', require('Comment.api').toggle.linewise.current, { desc = 'Normal mode line comment' })
+vim.keymap.set('n', '<c-bslash>', require('Comment.api').toggle.blockwise.current, { desc = 'Normal mode block comment' })
 -- VISUAL MODE COMMENTS
-vim.keymap.set('x', '<c-_>', "<cmd> lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>")
-vim.keymap.set('x', '<c-bslash>', "<cmu> lua require('Comment.api').toggle.blockwise(vim.fn.visualmode())<cr>")
+vim.keymap.set('x', '<c-/>', function()
+    require('Comment.api').toggle.linewise(vim.fn.visualmode())
+end, { desc = 'Visual only line comment' })
+vim.keymap.set('x', '<c-bslash>', function()
+    require('Comment.api').toggle.blockwise(vim.fn.visualmode())
+end, { desc = 'visual only block comment' })
 
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
 
 vim.keymap.set('n', '<leader>vrc', function()
     require('telescope.builtin').find_files({
-        prompt_title = '< VimRC >',
-        cwd = '~/.dotfiles/',
+        prompt_title = '< VimRC Find Files >',
+        cwd = '$DOTFILES',
         hidden = true,
     })
 end)
@@ -124,13 +126,28 @@ vim.keymap.set('n', '<leader>vrg', function()
         cwd = '$DOTFILES',
     })
 end)
-vim.keymap.set('n', '<leader>ff', "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", opts)
-vim.keymap.set('n', '<leader>fo', "<cmd>lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))<cr>", opts)
-vim.keymap.set('n', '<leader>fg', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
-vim.keymap.set('n', '<leader>fb', "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>", opts)
-vim.keymap.set('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-vim.keymap.set('n', '<leader>fd', "<cmd>lua require('telescope.builtin').diagnostics()<cr>", opts)
-vim.keymap.set('n', '<leader>fa', "<cmd>lua require('telescope.builtin').lsp_references()<cr>", opts)
+
+vim.keymap.set('n', '<leader>ff', function()
+    require('telescope.builtin').find_files({ hidden = true })
+end)
+vim.keymap.set('n', '<leader>fo', function()
+    require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))
+end)
+vim.keymap.set('n', '<leader>fg', function()
+    require('telescope.builtin').live_grep()
+end)
+vim.keymap.set('n', '<leader>fb', function()
+    require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))
+end)
+vim.keymap.set('n', '<leader>fh', function()
+    require('telescope.builtin').help_tags()
+end)
+vim.keymap.set('n', '<leader>fd', function()
+    require('telescope.builtin').diagnostics()
+end)
+vim.keymap.set('n', '<leader>wk', function()
+    require('telescope.builtin').keymaps()
+end)
 vim.keymap.set('n', '<leader>/', function()
     -- You can pass additional configuration to telescope to change theme, layout, etc.
     require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
@@ -143,9 +160,15 @@ vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true })
 vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true })
 
 -- diagnostics
-vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open [E]rror in float' })
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Goto prev [d]iagnostic' })
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'Goto next [d]iagnostic' })
+vim.keymap.set('n', '[c', function()
+    require('gitsigns').prev_hunk()
+end, { desc = 'Goto prev [c]hange' })
+vim.keymap.set('n', ']c', function()
+    require('gitsigns').next_hunk()
+end, { desc = 'Goto next [c]hange' })
 vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- move hightlighted text up/down
@@ -167,17 +190,19 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
 vim.keymap.set('n', '<leader>D', '"_D', opts)
 vim.keymap.set('n', '<leader>C', '"_C', opts)
 vim.keymap.set('n', '<leader>c', '"_c', opts)
-vim.keymap.set('n', 'x', '"_x', opts)
+vim.keymap.set('n', '<leader>x', '"_x', opts)
 
---  replace currently selected text with default register without yanking
+-- replace currently selected text with default register without yanking
 vim.keymap.set('v', 'p', '"_dP', opts)
 
--- wtf?????????????????????????????????????????????????????????????????????
+-- make vim behave properly, like c & C, d & D
 vim.keymap.set('n', 'Y', 'y$', opts)
-vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
-vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
+-- set scroll=10 <- being overridden by something so set 10 manually here
+vim.keymap.set('n', '<C-d>', '10<C-d>zz')
+vim.keymap.set('n', '<C-u>', '10<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv', opts)
 vim.keymap.set('n', 'N', 'Nzzzv', opts)
+-- maintain cursor at current position when joining lines
 vim.keymap.set('n', '<leader>J', 'mzJ`z', opts)
 -- break undo sequence using punctuation marks
 vim.keymap.set('i', ',', ',<c-g>u', opts)
@@ -288,7 +313,7 @@ opt.relativenumber = true -- Relative line numbers
 opt.termguicolors = true
 opt.splitbelow = true -- Horizontal splits will automatically be below
 opt.splitright = true -- Vertical splits will automatically be to the right
-opt.scroll = 10
+vim.cmd([[set scroll=10]])
 opt.scrolloff = 10 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
 opt.cursorlineopt = 'number,screenline' -- disable highlighting the entire line

@@ -22,8 +22,8 @@ vim.g.mapleader = ' '
 map('n', '<leader>', '<Nop>')
 map('x', '<leader>', '<Nop>')
 
-map('n', 'Q', '<Nop>')
-map('n', 'q:', '<Nop>')
+-- map('n', 'Q', '<Nop>')
+-- map('n', 'q:', '<Nop>')
 map('n', '<C-c>', '<Esc>')
 map('n', 'Y', 'y$')
 map('n', '<CR>', '{->v:hlsearch ? ":nohl\\<CR>" : "\\<CR>"}()', { expr = true })

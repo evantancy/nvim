@@ -63,6 +63,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 " Autocomplete functions
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-sleuth'
 " Autocomplete HTML tags
 Plug 'windwp/nvim-ts-autotag'
 " Autocomplete bracket pairs
@@ -70,7 +71,7 @@ Plug 'windwp/nvim-autopairs',
 " Auto indent blanklines
 Plug 'lukas-reineke/indent-blankline.nvim',
 " Git
-Plug 'tpope/vim-fugitive',
+" Plug 'tpope/vim-fugitive',
 " Git Diff files
 Plug 'sindrets/diffview.nvim',
 " Git in signcolumn

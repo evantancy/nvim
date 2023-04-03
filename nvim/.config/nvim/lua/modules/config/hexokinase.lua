@@ -23,4 +23,5 @@ vim.g.Hexokinase_ftEnabled = {
     'yaml',
     'markdown',
     'solidity',
+    'lua',
 }
