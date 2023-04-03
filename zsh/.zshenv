@@ -8,6 +8,7 @@ CONFIG_HOME="$BASEDIR/Documents/.config"
 DOCUMENTS="$BASEDIR/Documents"
 if [[ $(ls -A $DOCUMENTS) ]]; then
 	# successfully inside container
+    export Z_DATA="$DOCUMENTS/_z"
 	# export XDG_CONFIG_HOME=$CONFIG_HOME
 	# export DYNAMIC_HOME="$DOCUMENTS"
     # for zsh stuff
@@ -17,6 +18,7 @@ if [[ $(ls -A $DOCUMENTS) ]]; then
     export MVND_THREADS=9
     export MVND_DAEMON_STORAGE="$DOCUMENTS/.m2/registry/"
 else
+    export Z_DATA="$HOME/_z"
 	# failed to ls inside container, operation not permitted
 	export XDG_CONFIG_HOME="$HOME/.config" # default
 	export DYNAMIC_HOME="$HOME"
