@@ -1,3 +1,4 @@
+let mapleader = " "
 " IDEAVim Specific settings
 set visualbell
 set ideajoin
@@ -18,11 +19,6 @@ nnoremap ]] :action MethodDown<CR>zz
 
 " Disable automatic comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-
-
-" options
-let mapleader = " "
 
 set relativenumber
 set number
@@ -66,14 +62,12 @@ nnoremap <leader>x "_x
 
 " replace currently selected text with default register without yanking
 vnoremap p "_dP
-" ???
-" nnoremap <leader>x "_dx
 
-" wtf?????????????????????????????????????????????????????????????????????
+" make vim behave
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
-" ???
+" keep cursor at position when trying to join lines
 nnoremap <leader>J mzJ`z
 " break undo sequence using punctuation marks
 " TODO fix bug
@@ -91,61 +85,79 @@ vnoremap > >gv
 
 " IDEA SPECIFIC settings (refactored from nvim)
 " splits
-nnoremap sh <Action>(PrevSplitter)
-nnoremap sl <Action>(NextSplitter)
-nnoremap sv <Action>(SplitVertically)
-nnoremap ss <Action>(SplitHorizontally)
+nmap sh <Action>(PrevSplitter)
+nmap sl <Action>(NextSplitter)
+nmap sv <Action>(SplitVertically)
+nmap ss <Action>(SplitHorizontally)
+
+nmap <leader><A-1> :action SetHarpoon1<cr>
+nmap <leader><A-2> :action SetHarpoon2<cr>
+nmap <leader><A-3> :action SetHarpoon3<cr>
+nmap <leader><A-4> :action SetHarpoon4<cr>
+nmap <leader><A-5> :action SetHarpoon5<cr>
+
+nmap <A-1> <Action>(GotoHarpoon1)<cr>
+nmap <A-2> <Action>(GotoHarpoon2)<cr>
+nmap <A-3> <Action>(GotoHarpoon3)<cr>
+nmap <A-4> <Action>(GotoHarpoon4)<cr>
+nmap <A-5> <Action>(GotoHarpoon5)<cr>
+
+nmap <leader>hs :action ShowHarpoon<cr>
+nmap <leader>ha :action AddToHarpoon<cr>
 
 " navigate buffer
-nnoremap <tab> <Action>(NextTab)
-" nnoremap <tab> <Action>(Forward)
-nnoremap <s-tab> <Action>(PreviousTab)
-" nnoremap <s-tab> <Action>(Back)
+nmap <tab> <Action>(NextTab)
+" nmap <tab> <Action>(Forward)
+nmap <s-tab> <Action>(PreviousTab)
+" nmap <s-tab> <Action>(Back)
 
-" nnoremap :bd <Action>(CloseContent)
-" nnoremap :term <Action>(ActivateTerminalToolWindow)
+" nmap :bd <Action>(CloseContent)
+" nmap :term <Action>(ActivateTerminalToolWindow)
 
 
 
 " diagnostics
-nnoremap <leader>e <Action>(ShowErrorDescription)
-nnoremap [d <Action>(GotoPreviousError)
-nnoremap ]d <Action>(GotoNextError)
+nmap <leader>e <Action>(ShowErrorDescription)
+nmap [d <Action>(GotoPreviousError)
+nmap ]d <Action>(GotoNextError)
+" use motions to exit diff preview when navigating to a new change
+nmap [c <Action>(VcsShowPrevChangeMarker)jk
+nmap ]c <Action>(VcsShowNextChangeMarker)jk
 " vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 " Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 " Telescope | dl -> diagnostics list | fa -> find all
-nnoremap <leader>ff <Action>(GotoFile)
+nmap <leader>ff <Action>(GotoFile)
 " SearchEverywhere
-nnoremap <leader>fg <Action>(FindInPath)
-nnoremap <leader>fb <Action>(RecentFiles)
+nmap <leader>fg <Action>(FindInPath)
+nmap <leader>fb <Action>(RecentFiles)
 " map('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-nnoremap <leader>fd <Action>(ActivateProblemsViewToolWindow)
-nnoremap <leader>fa <Action>(FindUsages)
+nmap <leader>fd <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>fa <Action>(FindUsages)
 
 " " lsp.lua
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-nnoremap gd <Action>(GotoDeclaration)
-nnoremap gD <Action>(GotoDeclaration)
+nmap gd <Action>(GotoDeclaration)
+nmap gD <Action>(GotoDeclaration)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-nnoremap gt <Action>(GotoTypeDeclaration)
-nnoremap gi <Action>(GotoImplementation)
+nmap gt <Action>(GotoTypeDeclaration)
+nmap gi <Action>(GotoImplementation)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-nnoremap <leader>R <Action>(RenameElement)
-nnoremap <leader>ca <Action>(ShowIntentionActions)
-nnoremap <leader>fm <Action>(ShowReformatFileDialog)
+nmap <leader>R <Action>(RenameElement)
+nmap <leader>ca <Action>(ShowIntentionActions)
+nmap <leader>fm <Action>(ShowReformatFileDialog)
 vmap <leader>fm <Action>(ShowReformatFileDialog)
-nnoremap <leader>fi <Action>(OptimizeImports)
-nnoremap <leader>fsv <Action>(Toolkit.GotoService)
-nnoremap <F1> <Action>(ShowReformatFileDialog)
+nmap <leader>fi <Action>(OptimizeImports)
+nmap <leader>fsv <Action>(Toolkit.GotoService)
+nmap <F1> <Action>(ShowReformatFileDialog)
 
 nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
 xnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>tc :action RunCoverage<CR>
-nnoremap <leader>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
-nnoremap <leader>fc :action HideAllWindows<CR>
-nnoremap <leader>gb :action Annotate<CR>
+nmap <leader>tc :action RunCoverage<CR>
+nmap <leader>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
+nmap <leader>fc :action HideAllWindows<CR>
+nmap <leader>gb :action Annotate<CR>
 xmap <leader>gb :action Annotate<CR>
 
 
