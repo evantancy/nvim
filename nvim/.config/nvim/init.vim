@@ -76,6 +76,7 @@ Plug 'lukas-reineke/indent-blankline.nvim',
 Plug 'sindrets/diffview.nvim',
 " Git in signcolumn
 Plug 'lewis6991/gitsigns.nvim',
+Plug 'airblade/vim-gitgutter'
 " Comments
 Plug 'numToStr/Comment.nvim',
 " Highlighter
