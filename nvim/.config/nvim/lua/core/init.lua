@@ -20,12 +20,12 @@ augroup end
 ]])
 
 -- Autoformat see `null-ls.lua`
--- vim.cmd([[
--- augroup LspFormatBeforeWrite
---   autocmd! * <buffer>
---   autocmd BufWritePre * lua vim.lsp.buf.format()
--- augroup end
--- ]])
+vim.cmd([[
+augroup LspFormatBeforeWrite
+  autocmd! * <buffer>
+  autocmd BufWritePre * lua vim.lsp.buf.format()
+augroup end
+]])
 
 -- Show diagnostics on hover
 -- vim.cmd([[

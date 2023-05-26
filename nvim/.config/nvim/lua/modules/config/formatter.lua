@@ -35,7 +35,9 @@ null_ls.setup({
         }),
         format.black.with({ extra_args = { '--fast' } }),
         format.gofmt,
-        format.shfmt,
+        format.shfmt.with({
+            extra_args = { '-i', '2', '-sr', '-s', '-ci' },
+        }),
         format.clang_format,
         format.cmake_format,
         format.stylua,
