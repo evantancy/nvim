@@ -29,18 +29,6 @@ local on_attach = function(client, bufnr)
     end
     require('illuminate').on_attach(client)
 
-    if client.name == 'tsserver' then
-        local status, ts_utils = pcall(require, 'nvim-lsp-ts-utils')
-        if not status then
-            return
-        end
-        ts_utils.setup({
-            update_imports_on_move = false,
-            enable_imports_on_completion = true,
-        })
-        ts_utils.setup_client(client)
-    end
-
     local nmap = function(keys, func, desc)
         if desc then
             desc = 'LSP: ' .. desc
@@ -165,7 +153,7 @@ mason_lspconfig.setup_handlers({
         lspconfig.tsserver.setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+            filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact'},
             settings = {
                 completions = {
                     completeFunctionCalls = true,

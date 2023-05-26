@@ -48,7 +48,7 @@ Plug 'onsails/lspkind-nvim',
 " Solidity
 Plug 'TovarishFin/vim-solidity',
 " TODO use typescript.nvim
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils',
+Plug 'jose-elias-alvarez/typescript.nvim'
 " LSP colors
 Plug 'folke/lsp-colors.nvim',
 " Highlighting current symbol
