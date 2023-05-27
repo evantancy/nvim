@@ -3,3 +3,5 @@
 *.zcompdump*
 *.zsh_sessions/
 .env
+.DS_Store
+
