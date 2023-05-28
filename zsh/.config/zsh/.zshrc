@@ -176,6 +176,7 @@ source "$ZDOTDIR/zsh-functions"
 export NVM_DIR="$HOME/.nvm"
 export NVM_COMPLETION=true #significant slows zsh
 export NVM_LAZY_LOAD=true
+[ -f $NVIM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh
 
 # plugins
 zsh_add_plugin "Aloxaf/fzf-tab" # must be loaded FIRST!!! also unstable
@@ -343,9 +344,6 @@ gdf() {
 curbranch() {
     git rev-parse --abbrev-ref HEAD
 }
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 export PATH="$(python3 -m site --user-base)/bin:$PATH"
 export PATH="$PATH:/Users/evan/.config/.foundry/bin"
