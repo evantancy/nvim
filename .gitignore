@@ -4,4 +4,4 @@
 *.zsh_sessions/
 .env
 .DS_Store
-
+*/karabiner/automatic_backups/*
