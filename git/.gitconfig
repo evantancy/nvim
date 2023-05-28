@@ -1,7 +1,3 @@
-# BEGIN GIT SETTINGS - ANSIBLE MANAGED BLOCK
-[includeIf "gitdir/i:~/.dotfiles/"]
-    path = ~/.dotfiles/.gitconfig-personal
-
 [alias]
     # launch fzf, use Tab or Shift-Tab to select multiple files
     a = "!git status --short | fzf --multi | awk '{print $2}' | xargs git add"
@@ -9,7 +5,7 @@
     sw = switch
     co = checkout
     ci = commit
-    ca = commit --all
+    cia = commit --all
     deepclean = "!git reset --hard HEAD && git clean -fd"
     ps = "!git push origin $(git rev-parse --abbrev-ref HEAD)"
     psinit = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
@@ -21,7 +17,7 @@
     brd = "!git push -d origin \"$1\" && git branch -d \"$1\" #"
     brD = "!git push -d origin \"$1\" && git branch -D \"$1\" #"
     bm = branch --merged
-    bn = branch --no-merged
+    bnm = branch --no-merged
     df = "!git hist | fzf | awk '{print $2}' | xargs -I {} git diff {}^ {}"
     hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
     # git log including which files have been changed
@@ -41,8 +37,6 @@
     lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
 	count-lines = "! git log --no-merges --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
 	count-files = "! git log --no-merges --author=\"$1\" --pretty= --name-only | sort -u | wc -l #"
-# END GIT SETTINGS - ANSIBLE MANAGED BLOCK
-
 [user]
         email = 36868915+evantancy@users.noreply.github.com
         name = Evan Tan
@@ -66,7 +60,6 @@
     ff = no
 [diff]
     colorMoved = default
-
 [pretty]
     reflog = %C(cyan)%cs %C(auto)%h %<|(17)%C(red)%gd %C(reset) %gs (%s)
 [color]
