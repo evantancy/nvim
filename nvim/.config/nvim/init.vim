@@ -47,7 +47,6 @@ Plug 'onsails/lspkind-nvim',
 " Language specific LSP plugins
 " Solidity
 Plug 'TovarishFin/vim-solidity',
-" TODO use typescript.nvim
 Plug 'jose-elias-alvarez/typescript.nvim'
 " LSP colors
 Plug 'folke/lsp-colors.nvim',
@@ -103,7 +102,6 @@ Plug 'rmagatti/auto-session'
 
 call plug#end()
 
-lua require('utils')
 lua require('core')
 lua require('modules')
 

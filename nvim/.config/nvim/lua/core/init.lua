@@ -86,8 +86,6 @@ local expr_opts = { noremap = true, expr = true }
 vim.keymap.set({ 'n', 'x' }, '<leader>s', 'zt<Plug>Sneak_s')
 vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
 
--- inside vim
-
 -- allow single line travel when lines visually wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)

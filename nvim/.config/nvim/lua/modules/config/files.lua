@@ -3,7 +3,7 @@ if not status then
     return
 end
 
-local auto_session = safe_require('auto-session')
+local _, auto_session = pcall(require, 'auto-session')
 if auto_session then
     require('auto-session').setup({
         log_level = 'error',
@@ -168,6 +168,12 @@ if not status then
 end
 
 local theme = require('alpha.themes.startify')
+
+function info()
+    local version = vim.version()
+    local nvim_version_info = ' v' .. version.major .. '.' .. version.minor .. '.' .. version.patch
+    return nvim_version_info
+end
 
 theme.section.header.val = {
     [[NEOVIM]] .. info(),
