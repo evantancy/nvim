@@ -56,12 +56,12 @@ local on_attach = function(client, bufnr)
     nmap('K', vim.lsp.buf.hover, ' Hover documentation')
     nmap('gd', vim.lsp.buf.definition, ' [G]oto [d]efinition')
     nmap('gD', vim.lsp.buf.declaration, ' [G]oto [D]eclaration')
-    nmap('gt', vim.lsp.buf.type_definition, ' [G]oto [T]ype definition')
-    nmap('gI', vim.lsp.buf.implementation, ' [G]oto [I]mplementation')
+    nmap('gt', vim.lsp.buf.type_definition, ' [G]oto [t]ype definition')
+    nmap('gi', vim.lsp.buf.implementation, ' [G]oto [i]mplementation')
     nmap('<c-h>', vim.lsp.buf.signature_help, ' Show signature [h]elp')
-    nmap('<space>rn', vim.lsp.buf.rename, ' [R]e[n]ame')
-    nmap('<space>ca', vim.lsp.buf.code_action, ' [C]ode [A]ctions')
-    nmap('<space>f', vim.lsp.buf.format, ' [F]ormat')
+    nmap('<space>rn', vim.lsp.buf.rename, ' [r]e[n]ame')
+    nmap('<space>ca', vim.lsp.buf.code_action, ' [c]ode [a]ctions')
+    nmap('<space>f', vim.lsp.buf.format, ' [f]ormat')
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
