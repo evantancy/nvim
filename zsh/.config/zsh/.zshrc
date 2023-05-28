@@ -303,6 +303,8 @@ export PATH=$PATH:~/go/bin
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='--multi --inline-info'
 export FZF_DEFAULT_OPS='--multi --inline-info'
+export FZF_DEFAULT_COMMAND="rg --files --hidden -g !.git/"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # tldr
 [ -f ~/bin/tldr ] && compctl -k "($( tldr 2>/dev/null --list))" tldr
@@ -345,6 +347,5 @@ curbranch() {
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-export FZF_DEFAULT_COMMAND="rg --files --hidden -g !.git/"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
+export PATH="$(python3 -m site --user-base)/bin:$PATH"
+export PATH="$PATH:/Users/evan/.config/.foundry/bin"
