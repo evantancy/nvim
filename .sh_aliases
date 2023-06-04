@@ -31,8 +31,6 @@ alias load_conda='export PATH="$HOME/miniconda3/bin:$PATH" && source $HOME/minic
 
 # copying and pasting to clipboard
 # e.g. to copy use `pbcopy < hello.py`
-alias pbcopy="xclip -sel clip"
-alias pbpaste="xclip -sel clip -o"
 
 # misc
 alias nvim="$HOME/opt/nvim-macos/bin/nvim"
