@@ -67,7 +67,7 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-    'pyright',
+    'pylsp',
     'lua_ls',
     'tsserver',
     'clangd',
@@ -153,7 +153,7 @@ mason_lspconfig.setup_handlers({
         lspconfig.tsserver.setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact'},
+            filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
             settings = {
                 completions = {
                     completeFunctionCalls = true,
@@ -171,6 +171,32 @@ mason_lspconfig.setup_handlers({
             capabilities = capabilities,
             flags = {
                 debounce_text_changes = 150,
+            },
+        })
+    end,
+    ['pylsp'] = function()
+        lspconfig.pylsp.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+                pylsp = {
+                    -- see https://github.com/python-lsp/python-lsp-server#configuration
+                    configurationSources = { 'flake8' },
+                    plugins = {
+                        flake8 = { enabled = true, ignore = { 'E501', 'E302', 'E303', 'W391' } },
+                        -- jedi_completion = { enabled = true },
+                        -- jedi_definition = { enabled = true },
+                        -- jedi_hover = { enabled = true },
+                        -- jedi_references = { enabled = true },
+                        -- -- jedi_signature_help = { enabled = true },
+                        -- jedi_symbols = { enabled = true, all_scopes = true },
+                        mccabe = { enabled = false },
+                        pycodestyle = { enabled = false },
+                        pyflakes = { enabled = false },
+                        -- yapf = { enabled = false },
+                        -- mypy = { enabled = false },
+                    },
+                },
             },
         })
     end,
