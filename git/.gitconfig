@@ -41,7 +41,7 @@
         email = 36868915+evantancy@users.noreply.github.com
         name = Evan Tan
 [commit]
-        gpgsign = true
+        gpgsign = false
 [gpg]
         program = gpg
 [pull]
@@ -50,6 +50,7 @@
         defaultBranch = main
 [core]
         pager = delta
+	editor = $(which nvim)
 [interactive]
         diffFilter = delta --color-only
 [delta]
