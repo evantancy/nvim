@@ -357,8 +357,8 @@ opt.smartcase = true
 -- ]])
 
 -- Speed
-opt.updatetime = 50 -- Faster autocomplete
-opt.timeoutlen = 500 -- Reduce timeoutlen
+opt.updatetime = 750 -- Faster autocomplete
+opt.timeoutlen = 750 -- Reduce timeoutlen
 
 -- -- Shortmess
 opt.shortmess = opt.shortmess
