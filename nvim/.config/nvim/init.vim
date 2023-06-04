@@ -99,6 +99,8 @@ Plug 'junegunn/vim-easy-align'
 " latex preview
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'rmagatti/auto-session'
+" diagnostics
+Plug 'folke/trouble.nvim'
 
 call plug#end()
 
