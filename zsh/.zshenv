@@ -43,6 +43,8 @@ export PATH=$M2:$PATH
 
 # java setup
 export JAVA_HOME=$(/usr/libexec/java_home -v1.8.0)
+export PATH=$PATH:$(npm config --global get prefix)/bin
+export WINEPREFIX=~/Games/battle-net
 
 # clean and reinstall symlinks according to env
 # cd $DYNAMIC_HOME/.dotfiles/

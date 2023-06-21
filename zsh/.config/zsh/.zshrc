@@ -175,7 +175,8 @@ source "$ZDOTDIR/zsh-functions"
 # node version manager
 export NVM_DIR="$HOME/.nvm"
 export NVM_COMPLETION=true #significant slows zsh
-export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD=false
+export PATH=$PATH:$(npm config --global get prefix)/bin
 [ -f $NVIM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh
 
 # plugins

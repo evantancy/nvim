@@ -9,7 +9,6 @@ alias lt="ls --human-readable --size -1 -S --classify"
 alias py3="python3"
 alias py2="python2"
 alias python="python3"
-alias pip="pip3"
 alias pip3="python3 -m pip"
 alias pip2="python2 -m pip"
 alias jlab="jupyter-lab"
@@ -31,6 +30,8 @@ alias load_conda='export PATH="$HOME/miniconda3/bin:$PATH" && source $HOME/minic
 
 # copying and pasting to clipboard
 # e.g. to copy use `pbcopy < hello.py`
+# alias pbcopy="xclip -sel clip"
+# alias pbpaste="xclip -sel clip -o"
 
 # misc
 alias nvim="$HOME/opt/nvim-macos/bin/nvim"
