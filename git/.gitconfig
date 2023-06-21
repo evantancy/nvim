@@ -12,7 +12,7 @@
     pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
     st = status
     br = branch
-    bra = "!git branch --all | fzf"
+    bra = "!git branch --all | fzf | xargs git checkout"
     brr = branch --remotes
     brd = "!git push -d origin \"$1\" && git branch -d \"$1\" #"
     brD = "!git push -d origin \"$1\" && git branch -D \"$1\" #"
@@ -50,7 +50,7 @@
         defaultBranch = main
 [core]
         pager = delta
-	editor = $(which nvim)
+	editor = vim
 [interactive]
         diffFilter = delta --color-only
 [delta]
