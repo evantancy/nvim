@@ -24,11 +24,13 @@ Plug 'folke/which-key.nvim',
 " Telescope and deps
 Plug 'nvim-lua/plenary.nvim',
 Plug 'nvim-telescope/telescope-fzf-native.nvim',  { 'do': 'make' }
-Plug 'nvim-telescope/telescope.nvim',
+Plug 'nvim-telescope/telescope.nvim', Cond(!exists('g:vscode')),
 Plug 'nvim-lua/popup.nvim',
 Plug 'nvim-telescope/telescope-media-files.nvim',
 " LSP
 Plug 'VonHeikemen/lsp-zero.nvim',
+" AI Autocomplete
+Plug 'github/copilot.vim', Cond(!exists('g:vscode'))
 Plug 'tzachar/cmp-tabnine',  { 'do': './install.sh' }
 Plug 'neovim/nvim-lspconfig',
 Plug 'williamboman/mason.nvim',
@@ -51,7 +53,7 @@ Plug 'jose-elias-alvarez/typescript.nvim'
 " LSP colors
 Plug 'folke/lsp-colors.nvim',
 " Highlighting current symbol
-Plug 'RRethy/vim-illuminate',
+Plug 'RRethy/vim-illuminate', Cond(!exists('g:vscode'))
 " Formatters
 Plug 'jose-elias-alvarez/null-ls.nvim',  {'branch': 'main'}
 " Autocompletion plugin
@@ -98,10 +100,11 @@ Plug 'luochen1990/rainbow'
 Plug 'junegunn/vim-easy-align'
 " latex preview
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-Plug 'rmagatti/auto-session'
+Plug 'rmagatti/auto-session', Cond(!exists('g:vscode'))
 " diagnostics
 Plug 'folke/trouble.nvim'
-
+Plug 'folke/todo-comments.nvim'
+" Plug 'ThePrimeagen/refactoring.nvim'
 call plug#end()
 
 lua require('core')
@@ -133,3 +136,5 @@ command! SnapshotPugins PlugSnapshot! $DOTFILES/nvim/snapshots/plug.snapshot
 " Quick fix stuff
 command! QuickFixClear call setqflist([],'r')
 command! QuickFixUndo cdo :norm! u
+command! FormatBuffer :lua vim.lsp.buf.format()
+command! PyLspPostSetup :PylspInstall pylsp-rope

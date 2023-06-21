@@ -20,15 +20,17 @@ local actions = require('telescope.actions')
 local sorters = require('telescope.sorters')
 telescope.setup({
     defaults = {
+        dynamic_preview_title = true,
         history = false,
+        layout_strategy = 'horizontal',
         layout_config = {
             scroll_speed = 10,
             horizontal = {
-                height = 0.9,
-                preview_cutoff = 60,
-                preview_width = 120,
+                height = 0.98,
+                preview_cutoff = 80,
+                preview_width = 0.5,
                 prompt_position = 'top',
-                width = 0.9,
+                width = 0.98,
             },
         },
         vimgrep_arguments = {
@@ -45,7 +47,7 @@ telescope.setup({
         selection_caret = '>> ',
         color_devicons = true,
         path_display = {
-            shorten = { len = 3, exclude = { 1, -1 } },
+            shorten = { len = 2, exclude = { 1, -1 } },
         },
         file_ignore_patterns = { 'node_modules/.*', '%.git/.*', '%.idea/.*', '%.vscode/.*' },
         sorting_strategy = 'ascending',

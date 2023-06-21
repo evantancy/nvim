@@ -39,13 +39,14 @@ vim.cmd([[
 ]])
 
 -- Only enable highlights during search
-vim.cmd([[
-augroup HighlightDuringIncsearch
-    autocmd!
-    autocmd CmdlineEnter /,\? :set hlsearch
-    autocmd CmdlineLeave /,\? :set nohlsearch
-augroup END
-]])
+-- vim.cmd([[
+-- augroup HighlightDuringIncsearch
+--     autocmd!
+--     autocmd CmdlineEnter /,\? :set hlsearch
+--     autocmd CmdlineLeave /,\? :set nohlsearch
+-- augroup END
+-- ]])
+
 -- Automatically change working directory
 -- vim.cmd([[
 --   autocmd BufEnter * silent! lcd %:p:h
@@ -80,6 +81,10 @@ vim.cmd([[
 -- Leader
 vim.g.mapleader = ' '
 
+function map(mode, shortcut, action, opts)
+    vim.api.nvim_set_keymap(mode, shortcut, action, opts or { silent = False })
+end
+
 local opts = { noremap = true }
 local expr_opts = { noremap = true, expr = true }
 
@@ -87,8 +92,13 @@ vim.keymap.set({ 'n', 'x' }, '<leader>s', 'zt<Plug>Sneak_s')
 vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
 
 -- allow single line travel when lines visually wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
+if vim.g.vscode then
+    map('n', 'k', 'gk')
+    map('n', 'j', 'gj')
+else
+    vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
+    vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
+end
 
 -- navigate buffer
 vim.keymap.set('n', '<tab>', '<cmd>bnext<cr>', opts)
@@ -108,6 +118,8 @@ vim.keymap.set('x', '<c-bslash>', function()
     require('Comment.api').toggle.blockwise(vim.fn.visualmode())
 end, { desc = 'visual only block comment' })
 
+-- prompt for a refactor to apply when the remap is triggered
+-- vim.api.nvim_set_keymap('v', '<leader>rr', ":lua require('refactoring').select_refactor()<CR>", { noremap = true, silent = true, expr = false })
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
 
@@ -125,6 +137,8 @@ vim.keymap.set('n', '<leader>vrg', function()
     })
 end)
 
+-- FIXME why format not working
+-- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
 vim.keymap.set('n', '<leader>ff', function()
     require('telescope.builtin').find_files({ hidden = true })
 end)
@@ -153,9 +167,14 @@ vim.keymap.set('n', '<leader>/', function()
     }))
 end, { desc = '[/] Fuzzily search in current buffer' })
 
--- split window
-vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true })
-vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true })
+-- navigate TODO items
+vim.keymap.set('n', ']t', function()
+    require('todo-comments').jump_next()
+end, { desc = 'Next todo comment' })
+
+vim.keymap.set('n', '[t', function()
+    require('todo-comments').jump_prev()
+end, { desc = 'Previous todo comment' })
 
 -- diagnostics
 vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open [E]rror in float' })
@@ -172,6 +191,7 @@ vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opt
 -- move hightlighted text up/down
 vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
 vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
+-- FIXME possibly causes some bug inside vscode, see https://github.com/vscode-neovim/vscode-neovim/issues/1187
 vim.keymap.set('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
 vim.keymap.set('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
@@ -216,9 +236,10 @@ vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
 -- Harpoon
-vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<cr>", {desc = "[h]arpoon [a]dd"})
-vim.keymap.set('n', '<leader>hs', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", {desc = "[h]arpoon [s]how"})
-vim.keymap.set('n', '<leader>tc', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>")
+vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = '[h]arpoon [a]dd' })
+vim.keymap.set('n', '<leader>hs', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [s]how' })
+-- not really sure what this does atm
+-- vim.keymap.set('n', '<leader>ht', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [t]oggle' })
 vim.keymap.set('n', '<A-1>', "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
 vim.keymap.set('n', '<A-2>', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
 vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
@@ -226,9 +247,10 @@ vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
 -- undotree
 vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>')
 
--- split window
-vim.keymap.set('n', 'ss', ':split<CR><C-w>w')
-vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w')
+-- split window management
+vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true, desc = '[s]plit s??' })
+vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true, desc = '[s]plit [v]ertically' })
+vim.keymap.set('n', 'sc', '<c-w>o<cr>', { silent = true, desc = '[s]plit [c]lose, all other splits but active split' })
 
 -- split navigation
 vim.keymap.set('n', 'sh', '<C-w>h', opts)
@@ -291,7 +313,6 @@ vim.cmd([[
     set undofile
 ]])
 
-api.nvim_set_hl(0, 'CursorLine', { underline = true })
 -- Aesthetics
 opt.title = true
 opt.signcolumn = 'yes' -- Keep gutter even without LSP screaming
@@ -302,8 +323,8 @@ opt.pumblend = 20 -- Popup menu transparency
 opt.cmdheight = 1
 opt.wrap = true -- Wrap lines
 opt.wrapmargin = 0 -- Margin space when wrapping
-opt.textwidth = 100 -- Wrap lines at column 80
-opt.colorcolumn = '100' -- Show column
+opt.textwidth = 80 -- Wrap lines at column 80
+opt.colorcolumn = '80' -- Show column
 opt.linebreak = true -- Break by word, not character
 opt.ruler = true
 opt.number = true -- Line numbers
@@ -314,7 +335,7 @@ opt.splitright = true -- Vertical splits will automatically be to the right
 vim.cmd([[set scroll=10]])
 opt.scrolloff = 10 -- Keep X lines above/below cursor when scrolling
 opt.cursorline = true -- Show cursor position all the time
-opt.cursorlineopt = 'number,screenline' -- disable highlighting the entire line
+-- opt.cursorlineopt = 'number,screenline' -- disable highlighting the entire line
 -- Backups
 opt.swapfile = false
 opt.writebackup = false

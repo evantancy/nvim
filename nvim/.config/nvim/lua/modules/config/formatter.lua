@@ -58,7 +58,8 @@ null_ls.setup({
                 'graphql',
             },
         }),
-        format.black.with({ extra_args = { '--fast' } }),
+        format.black.with({ extra_args = { '--fast', '--line-length 80' } }),
+        format.isort,
         format.gofmt,
         format.shfmt.with({
             extra_args = { '-i', '2', '-sr', '-s', '-ci' },
@@ -67,9 +68,7 @@ null_ls.setup({
         format.clang_format,
         format.cmake_format,
         format.stylua,
-        format.isort,
         diagnostics.tsc,
-        diagnostics.flake8,
         diagnostics.shellcheck,
         --        diagnostics.sqlfluff.with({
         -- 	extra_args = {"--dialect", "postgres"} -- change to your dialect

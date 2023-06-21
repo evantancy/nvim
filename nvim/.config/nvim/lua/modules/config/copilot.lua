@@ -8,4 +8,5 @@ vim.g.copilot_filetypes = {
     ['*'] = true,
     gitcommit = false,
     NeogitCommitMessage = false,
+    NvimTree = false
 }

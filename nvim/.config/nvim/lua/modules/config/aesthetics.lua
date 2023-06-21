@@ -12,6 +12,12 @@ if not vim.g.vscode then
         " colorscheme night-owl
         ]])
 end
+-- set underline due to colorscheme doing some funny stuff
+vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
+vim.cmd([[
+:hi Search    gui=NONE guifg=black guibg=yellow
+:hi IncSearch    gui=NONE guifg=black guibg=yellow
+]])
 
 local status, illuminate = pcall(require, 'illuminate')
 if not status then
