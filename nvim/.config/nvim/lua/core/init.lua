@@ -98,13 +98,21 @@ if vim.g.vscode then
 else
     vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
     vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
-end
+    -- navigate buffer
+    vim.keymap.set('n', '<tab>', '<cmd>bnext<cr>', opts)
+    vim.keymap.set('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
 
--- navigate buffer
-vim.keymap.set('n', '<tab>', '<cmd>bnext<cr>', opts)
-vim.keymap.set('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
--- nvim-tree
-vim.keymap.set('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
+    -- nvim-tree
+    vim.keymap.set('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
+
+    -- replace currently selected text with default register without yanking
+    vim.keymap.set('v', 'p', '"_dP', opts)
+    -- TODO fix somehow causing some error in vscode
+    vim.keymap.set('n', '<leader>D', '"_D', opts)
+    vim.keymap.set('n', '<leader>C', '"_C', opts)
+    vim.keymap.set('n', '<leader>c', '"_c', opts)
+    vim.keymap.set('n', '<leader>x', '"_x', opts)
+end
 
 -- Comment.nvim
 -- ctrl+/ or ctrl+\ to line/block comment
@@ -205,13 +213,6 @@ vim.keymap.set('i', 'kj', '<esc>', opts)
 vim.keymap.set('i', 'jk', '<esc>', opts)
 -- delete without yanking
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
-vim.keymap.set('n', '<leader>D', '"_D', opts)
-vim.keymap.set('n', '<leader>C', '"_C', opts)
-vim.keymap.set('n', '<leader>c', '"_c', opts)
-vim.keymap.set('n', '<leader>x', '"_x', opts)
-
--- replace currently selected text with default register without yanking
-vim.keymap.set('v', 'p', '"_dP', opts)
 
 -- make vim behave properly, like c & C, d & D
 vim.keymap.set('n', 'Y', 'y$', opts)
@@ -343,9 +344,9 @@ opt.backup = false
 
 -- Tabs and Indentation
 opt.smarttab = true
-opt.autoindent = true
+-- opt.autoindent = true
 opt.smartcase = true
-opt.smartindent = true
+-- opt.smartindent = true
 opt.breakindent = true
 opt.expandtab = true -- Tabs to spaces
 opt.tabstop = 4 -- Number of spaces for tab

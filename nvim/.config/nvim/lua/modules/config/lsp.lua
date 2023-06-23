@@ -16,6 +16,24 @@ local status, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
 if not status then
     return
 end
+
+local status, copilot = pcall(require, 'copilot')
+if status then
+    copilot.setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        filetypes = {
+            ['*'] = true,
+            gitcommit = false,
+            NeogitCommitMessage = false,
+            NvimTree = false,
+            python = true,
+            javascript = true,
+            javascriptreact = true,
+        },
+        auto_refresh = true,
+    })
+end
 -- local status, refactoring = pcall(require, 'refactoring')
 -- if status then
 --     refactoring.setup({
@@ -155,7 +173,7 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {
-    'pylsp',
+    'pyright',
     'lua_ls',
     'tsserver',
     'clangd',
@@ -271,7 +289,7 @@ mason_lspconfig.setup_handlers({
                     -- see https://github.com/python-lsp/python-lsp-server#configuration
                     configurationSources = { 'flake8' },
                     plugins = {
-                        flake8 = { enabled = true, ignore = { 'E501', 'E302', 'E303', 'W391', 'F401', 'E402' } },
+                        flake8 = { enabled = true, ignore = { 'E501', 'E302', 'E303', 'W391', 'F401', 'E402', 'E265' } },
                         -- jedi_completion = { enabled = true },
                         -- jedi_definition = { enabled = true },
                         -- jedi_hover = { enabled = true },
@@ -299,6 +317,7 @@ end
 local source_mapping = {
     buffer = '[Buf]',
     nvim_lsp = '[LSP]',
+    copilot = '[Copilot]',
     nvim_lua = '[Lua]',
     cmp_tabnine = '[TN]',
     path = '[Path]',
@@ -330,9 +349,10 @@ cmp.setup({
 
     -- order determines the priority
     sources = cmp.config.sources({
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' }, -- only for Lua
-        { name = 'cmp_tabnine' },
+        -- { name = 'cmp_tabnine' },
         { name = 'buffer', keyword_length = 5 },
         { name = 'luasnip' }, -- snippets
         -- { name = "treesitter" },
@@ -346,7 +366,7 @@ cmp.setup({
     },
     experimental = {
         -- preview text to be inserted
-        ghost_text = true,
+        -- ghost_text = true,
     },
 })
 -- Set configuration for specific filetype.

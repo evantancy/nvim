@@ -76,7 +76,9 @@ bindkey -M viins '^[^[[D' backward-word
 bindkey -M vicmd '^[^[[D' backward-word
 
 # enable emacs
-bindkey -e
+# bindkey -e
+# enable vim
+bindkey -v
 
 # history settings
 export HISTSIZE=100000 # maximum events for internal history
