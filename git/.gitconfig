@@ -11,7 +11,7 @@
     psinit = "!git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)"
     pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
     st = status
-    br = branch
+    br = "!git branch | fzf | xargs git checkout"
     bra = "!git branch --all | fzf | xargs git checkout"
     brr = branch --remotes
     brd = "!git push -d origin \"$1\" && git branch -d \"$1\" #"
