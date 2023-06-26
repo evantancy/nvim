@@ -76,7 +76,6 @@ bindkey -M viins '^[^[[D' backward-word
 bindkey -M vicmd '^[^[[D' backward-word
 
 # enable emacs
-# bindkey -e
 # enable vim
 bindkey -v
 
