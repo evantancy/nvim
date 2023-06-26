@@ -56,6 +56,13 @@ end
 --     })
 -- end
 
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false,
+    underline = true,
+})
+
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
 
 local todo_status, todo_comments = pcall(require, 'todo-comments')
