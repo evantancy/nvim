@@ -11,6 +11,7 @@ Plug 'haishanh/night-owl.vim',
 Plug 'folke/tokyonight.nvim', 
 Plug 'loctvl842/monokai-pro.nvim',
 Plug 'navarasu/onedark.nvim',
+Plug 'simrat39/symbols-outline.nvim'
 " Icons
 Plug 'ryanoasis/vim-devicons',                    Cond (!exists('g:vscode')),
 Plug 'kyazdani42/nvim-web-devicons',              Cond (!exists('g:vscode')),
@@ -30,7 +31,7 @@ Plug 'nvim-telescope/telescope-media-files.nvim', Cond (!exists('g:vscode')),
 " LSP
 Plug 'VonHeikemen/lsp-zero.nvim',                 Cond (!exists('g:vscode')),
 " AI Autocomplete
-Plug 'zbirenbaum/copilot.lua',                    Cond (!exists('g:vscode'))
+Plug 'github/copilot.vim',                    Cond (!exists('g:vscode'))
 Plug 'tzachar/cmp-tabnine',                       Cond (!exists('g:vscode'), { 'do': './install.sh' })
 Plug 'zbirenbaum/copilot-cmp',
 Plug 'neovim/nvim-lspconfig',                     Cond (!exists('g:vscode')),
