@@ -145,6 +145,11 @@ vim.keymap.set('n', '<leader>vrg', function()
     })
 end)
 
+-- Trouble
+vim.keymap.set('n', '<leader>t', function()
+    require('trouble').toggle({ auto_preview = false })
+end)
+
 -- FIXME why format not working
 -- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
 vim.keymap.set('n', '<leader>ff', function()
