@@ -1,3 +1,7 @@
+if vim.g.vscode then
+    return
+end
+
 local function conf(name)
     return require(string.format('modules.config.%s', name))
 end

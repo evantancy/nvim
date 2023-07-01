@@ -2,6 +2,11 @@
 --------------------------- AUTO COMMANDS ----------------------------------
 --------------------------- AUTO COMMANDS ----------------------------------
 
+-- ---- Auto indent on empty line.
+-- vim.keymap.set('n', 'i', function()
+--     return string.match(vim.api.nvim_get_current_line(), '%g') == nil and 'cc' or 'i'
+-- end, { expr = true, noremap = true })
+
 -- Recursively source changed .lua files in `&runtimepath` <- this is not a typo
 -- https://stackoverflow.com/questions/71186816/how-to-set-a-vim-autocmd-for-any-file-in-packpath
 -- vim.cmd([[
@@ -116,18 +121,22 @@ end
 
 -- Comment.nvim
 -- ctrl+/ or ctrl+\ to line/block comment
-vim.keymap.set('n', '<c-/>', require('Comment.api').toggle.linewise.current, { desc = 'Normal mode line comment' })
-vim.keymap.set('n', '<c-bslash>', require('Comment.api').toggle.blockwise.current, { desc = 'Normal mode block comment' })
--- VISUAL MODE COMMENTS
-vim.keymap.set('x', '<c-/>', function()
-    require('Comment.api').toggle.linewise(vim.fn.visualmode())
-end, { desc = 'Visual only line comment' })
-vim.keymap.set('x', '<c-bslash>', function()
-    require('Comment.api').toggle.blockwise(vim.fn.visualmode())
-end, { desc = 'visual only block comment' })
+local comment_status, comment = pcall(require, 'Comment')
+if comment_status then
+    vim.keymap.set('n', '<c-/>', require('Comment.api').toggle.linewise.current, { desc = 'Normal mode line comment' })
+    vim.keymap.set('n', '<c-bslash>', require('Comment.api').toggle.blockwise.current, { desc = 'Normal mode block comment' })
+    -- VISUAL MODE COMMENTS
+    vim.keymap.set('x', '<c-/>', function()
+        require('Comment.api').toggle.linewise(vim.fn.visualmode())
+    end, { desc = 'Visual only line comment' })
+    vim.keymap.set('x', '<c-bslash>', function()
+        require('Comment.api').toggle.blockwise(vim.fn.visualmode())
+    end, { desc = 'visual only block comment' })
+end
 
 -- prompt for a refactor to apply when the remap is triggered
 -- vim.api.nvim_set_keymap('v', '<leader>rr', ":lua require('refactoring').select_refactor()<CR>", { noremap = true, silent = true, expr = false })
+
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
 
@@ -153,7 +162,7 @@ end)
 -- FIXME why format not working
 -- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
 vim.keymap.set('n', '<leader>ff', function()
-    require('telescope.builtin').find_files({ hidden = true })
+    require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } })
 end)
 vim.keymap.set('n', '<leader>fo', function()
     require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))
@@ -329,7 +338,7 @@ opt.pumblend = 20 -- Popup menu transparency
 opt.cmdheight = 1
 opt.wrap = true -- Wrap lines
 opt.wrapmargin = 0 -- Margin space when wrapping
-opt.textwidth = 80 -- Wrap lines at column 80
+-- opt.textwidth = 80 -- Wrap lines at column 80
 opt.colorcolumn = '80' -- Show column
 opt.linebreak = true -- Break by word, not character
 opt.ruler = true
@@ -349,9 +358,9 @@ opt.backup = false
 
 -- Tabs and Indentation
 opt.smarttab = true
--- opt.autoindent = true
+opt.autoindent = true
 opt.smartcase = true
--- opt.smartindent = true
+opt.smartindent = true
 opt.breakindent = true
 opt.expandtab = true -- Tabs to spaces
 opt.tabstop = 4 -- Number of spaces for tab

@@ -112,7 +112,7 @@ nvim_tree.setup({
         dotfiles = false,
         -- Files to hide
         custom = { '.git', '.vscode' },
-        -- exclude = { '.env*', '.*rc', '.config' },
+        exclude = { '.env*', '.*rc', '.config' },
     },
     renderer = {
         group_empty = false,

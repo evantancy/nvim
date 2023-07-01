@@ -498,7 +498,7 @@ require('lsp_signature').setup(cfg) -- no need to specify bufnr if you don't use
 require('lsp_signature').on_attach(cfg, bufnr) -- no need to specify bufnr if you don't use toggle_key
 -- Call the setup function to change the default behavior
 require('symbols-outline').setup({
-    highlight_hovered_item = true,
+    highlight_hovered_item = false, -- disable due to high cpu usage
     show_guides = true,
     auto_preview = false,
     position = 'right',

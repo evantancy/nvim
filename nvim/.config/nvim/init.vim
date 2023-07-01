@@ -11,7 +11,7 @@ Plug 'haishanh/night-owl.vim',
 Plug 'folke/tokyonight.nvim', 
 Plug 'loctvl842/monokai-pro.nvim',
 Plug 'navarasu/onedark.nvim',
-Plug 'simrat39/symbols-outline.nvim'
+Plug 'simrat39/symbols-outline.nvim',             Cond (!exists('g:vscode')),
 " Icons
 Plug 'ryanoasis/vim-devicons',                    Cond (!exists('g:vscode')),
 Plug 'kyazdani42/nvim-web-devicons',              Cond (!exists('g:vscode')),
@@ -31,9 +31,9 @@ Plug 'nvim-telescope/telescope-media-files.nvim', Cond (!exists('g:vscode')),
 " LSP
 Plug 'VonHeikemen/lsp-zero.nvim',                 Cond (!exists('g:vscode')),
 " AI Autocomplete
-Plug 'github/copilot.vim',                    Cond (!exists('g:vscode'))
+Plug 'github/copilot.vim',                        Cond (!exists('g:vscode'))
 Plug 'tzachar/cmp-tabnine',                       Cond (!exists('g:vscode'), { 'do': './install.sh' })
-Plug 'zbirenbaum/copilot-cmp',
+Plug 'zbirenbaum/copilot-cmp',                    Cond (!exists('g:vscode')),
 Plug 'neovim/nvim-lspconfig',                     Cond (!exists('g:vscode')),
 Plug 'williamboman/mason.nvim',                   Cond (!exists('g:vscode')),
 Plug 'williamboman/mason-lspconfig.nvim',         Cond (!exists('g:vscode')),
@@ -53,7 +53,7 @@ Plug 'onsails/lspkind-nvim',                      Cond (!exists('g:vscode')),
 Plug 'TovarishFin/vim-solidity',                  Cond (!exists('g:vscode')),
 Plug 'jose-elias-alvarez/typescript.nvim',        Cond (!exists('g:vscode')),
 " LSP colors
-Plug 'folke/lsp-colors.nvim',
+Plug 'folke/lsp-colors.nvim',                     Cond (!exists('g:vscode')),
 " Highlighting current symbol
 Plug 'RRethy/vim-illuminate',                     Cond (!exists('g:vscode')),
 " Formatters
@@ -93,7 +93,7 @@ Plug 'ThePrimeagen/harpoon',                      Cond (!exists('g:vscode')),
 " Visualize undo trees
 Plug 'mbbill/undotree',                           Cond (!exists('g:vscode')),
 " Display hex color codes
-Plug 'RRethy/vim-hexokinase', {'do': 'make hexokinase'}
+Plug 'RRethy/vim-hexokinase',                     Cond (!exists('g:vscode'), {'do': 'make hexokinase'})
 " enhanced cpp highlighting
 Plug 'octol/vim-cpp-enhanced-highlight',          Cond (!exists('g:vscode')),
 " colorize bracket pairs
@@ -106,7 +106,7 @@ Plug 'rmagatti/auto-session',                     Cond (!exists('g:vscode'))
 " diagnostics
 Plug 'folke/trouble.nvim',                        Cond (!exists('g:vscode')),
 Plug 'folke/todo-comments.nvim',                  Cond (!exists('g:vscode')),
-Plug 'ray-x/lsp_signature.nvim'
+Plug 'ray-x/lsp_signature.nvim',                  Cond (!exists('g:vscode')),
 " Plug 'ThePrimeagen/refactoring.nvim'
 call plug#end()
 

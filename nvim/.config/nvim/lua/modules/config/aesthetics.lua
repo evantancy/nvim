@@ -15,8 +15,9 @@ end
 -- set underline due to colorscheme doing some funny stuff
 vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
 vim.cmd([[
-:hi Search    gui=NONE guifg=black guibg=yellow
-:hi IncSearch    gui=NONE guifg=black guibg=yellow
+:hi Search      gui=NONE guifg=black guibg=yellow
+:hi IncSearch   gui=NONE guifg=black guibg=yellow
+:hi ColorColumn ctermbg=235 guibg=#262626
 ]])
 
 local status, illuminate = pcall(require, 'illuminate')
