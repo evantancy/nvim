@@ -95,6 +95,7 @@ local expr_opts = { noremap = true, expr = true }
 
 vim.keymap.set({ 'n', 'x' }, '<leader>s', 'zt<Plug>Sneak_s')
 vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
+vim.keymap.set('n', '<C-c>', '<Esc>')
 
 -- allow single line travel when lines visually wrap
 if vim.g.vscode then
@@ -133,22 +134,27 @@ if vim.g.vscode then
     vim.keymap.set('n', '<leader>ff', '<cmd>call VSCodeNotify("workbench.action.quickOpen")<cr>', { silent = true })
     vim.keymap.set('n', '<leader>fo', '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>', { silent = true })
 
+    -- Comment.nvim
+    vim.keymap.set('n', 'gc', '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>', { desc = 'Normal mode line comment' })
+    vim.keymap.set('x', 'gc', '<cmd>call VSCodeNotifyVisual("editor.action.commentLine", 0)<cr>', { desc = 'Visual mode line comment' })
+    vim.keymap.set('n', 'gbc', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Normal mode block comment' })
+    vim.keymap.set('x', 'gb', '<cmd>call VSCodeNotifyVisual("editor.action.blockComment", 0)<cr>', { desc = 'Visual mode block comment' })
+
     -- EXTRAS
     vim.keymap.set('n', '<leader>', '<Nop>')
     vim.keymap.set('x', '<leader>', '<Nop>')
-    vim.keymap.set('n', '<C-c>', '<Esc>')
-    vim.keymap.set('n', 'Y', 'y$')
 
-    -- comments
-    vim.keymap.set('x', 'gc', '<Plug>VSCodeCommentary', { noremap = false })
-    vim.keymap.set('n', 'gc', '<Plug>VSCodeCommentary', { noremap = false })
-    vim.keymap.set('o', 'gc', '<Plug>VSCodeCommentary', { noremap = false })
-    vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine', { noremap = false })
-
-    -- Comment.nvim
-    -- vim.keymap.set({ 'n', 'x' }, 'gc', '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>', { desc = 'line comment' })
-    -- vim.keymap.set('n', 'gcb', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Normal mode block comment' })
-    -- vim.keymap.set('x', 'gb', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Visual mode block comment' })
+    -- NOTE LSP, see lsp.lua
+    vim.keymap.set('n', 'K', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = 'Show Hover' })
+    vim.keymap.set('n', 'gr', '<cmd>call VSCodeNotify("editor.action.referenceSearch.trigger")<cr>', { desc = '[G]oto [r]eferences' })
+    vim.keymap.set('n', 'gd', '<cmd>call VSCodeNotify("editor.action.peekDefinition")<cr>', { desc = ' [ G]oto [d]efinition' })
+    vim.keymap.set('n', 'gD', '<cmd>call VSCodeNotify("editor.action.peekDeclaration")<cr>', { desc = ' [ G]oto [D]eclaration' })
+    vim.keymap.set('n', 'gt', '<cmd>call VSCodeNotify("editor.action.peekTypeDefinition")<cr>', { desc = ' [ G]oto [t]ype definition' })
+    vim.keymap.set('n', 'gi', '<cmd>call VSCodeNotify("editor.action.peekImplementation")<cr>', { desc = ' [ G]oto [i]mplementation' })
+    -- vim.keymap.set('n', '<c-h>', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = ' Show signature [h]elp' })
+    -- vim.keymap.set('n', '<space>rn', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = ' [ r]e[n]ame' })
+    -- vim.keymap.set({ 'x' }, '<space>ca', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = '[c]ode [a]ctions' })
+    vim.keymap.set('n', '<space>fm', '<cmd>call VSCodeNotifyVisual("editor.action.formatSelection", 0)<cr>', { desc = '[f]or[m]at' })
 else
     -- navigate around wrapped lines
     vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
