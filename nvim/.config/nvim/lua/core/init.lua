@@ -98,48 +98,120 @@ vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
 
 -- allow single line travel when lines visually wrap
 if vim.g.vscode then
-    map('n', 'k', 'gk')
-    map('n', 'j', 'gj')
+    -- navigate around wrapped lines
+    vim.keymap.set('n', 'k', 'gk')
+    vim.keymap.set('n', 'j', 'gj')
+
+    -- navigate buffer
+    vim.keymap.set('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<CR>')
+    vim.keymap.set('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<CR>')
+
+    -- shifting lines in visual mode
+    vim.keymap.set('x', 'K', ":move '<-2<CR>gv-gv")
+    vim.keymap.set('x', 'J', ":move '>+1<CR>gv-gv")
+
+    -- split navigation
+    vim.keymap.set('n', 'sh', '<cmd>call VSCodeNotify("workbench.action.navigateLeft")<CR>')
+    vim.keymap.set('n', 'sj', '<cmd>call VSCodeNotify("workbench.action.navigateDown")<CR>')
+    vim.keymap.set('n', 'sk', '<cmd>call VSCodeNotify("workbench.action.navigateUp")<CR>')
+    vim.keymap.set('n', 'sl', '<cmd>call VSCodeNotify("workbench.action.navigateRight")<CR>')
+
+    -- split window management
+    vim.keymap.set('n', 'ss', '<cmd>call VSCodeNotify("workbench.action.splitEditorDown")<cr>', { silent = true, desc = '[s]plit s??' })
+    vim.keymap.set('n', 'sv', '<cmd>call VSCodeNotify("workbench.action.splitEditorRight")<cr>', { silent = true, desc = '[s]plit [v]ertically' })
+    vim.keymap.set(
+        'n',
+        'sc',
+        '<cmd>call VSCodeNotify("workbench.action.closeEditorsInOtherGroups")<cr>',
+        { silent = true, desc = '[s]plit [c]lose, all other splits but active split' }
+    )
+
+    -- nvim-tree
+    vim.keymap.set('n', '<c-n>', '<cmd>call VSCodeNotify("workbench.action.toggleSidebarVisibility")<cr>', { silent = true })
+
+    -- telescope
+    vim.keymap.set('n', '<leader>ff', '<cmd>call VSCodeNotify("workbench.action.quickOpen")<cr>', { silent = true })
+    vim.keymap.set('n', '<leader>fo', '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>', { silent = true })
+
+    -- EXTRAS
+    vim.keymap.set('n', '<leader>', '<Nop>')
+    vim.keymap.set('x', '<leader>', '<Nop>')
+    vim.keymap.set('n', '<C-c>', '<Esc>')
+    vim.keymap.set('n', 'Y', 'y$')
+
+    -- comments
+    vim.keymap.set('x', 'gc', '<Plug>VSCodeCommentary', { noremap = false })
+    vim.keymap.set('n', 'gc', '<Plug>VSCodeCommentary', { noremap = false })
+    vim.keymap.set('o', 'gc', '<Plug>VSCodeCommentary', { noremap = false })
+    vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine', { noremap = false })
+
+    -- Comment.nvim
+    -- vim.keymap.set({ 'n', 'x' }, 'gc', '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>', { desc = 'line comment' })
+    -- vim.keymap.set('n', 'gcb', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Normal mode block comment' })
+    -- vim.keymap.set('x', 'gb', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Visual mode block comment' })
 else
+    -- navigate around wrapped lines
     vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
     vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
+
     -- navigate buffer
     vim.keymap.set('n', '<tab>', '<cmd>bnext<cr>', opts)
     vim.keymap.set('n', '<s-tab>', '<cmd>bprevious<cr>', opts)
 
+    -- shifting lines in visual mode
+    vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
+    vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
+
+    -- split navigation
+    vim.keymap.set('n', 'sh', '<C-w>h', opts)
+    vim.keymap.set('n', 'sj', '<C-w>j', opts)
+    vim.keymap.set('n', 'sk', '<C-w>k', opts)
+    vim.keymap.set('n', 'sl', '<C-w>l', opts)
+
+    -- split window management
+    vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true, desc = '[s]plit s??' })
+    vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true, desc = '[s]plit [v]ertically' })
+    vim.keymap.set('n', 'sc', '<c-w>o<cr>', { silent = true, desc = '[s]plit [c]lose, all other splits but active split' })
+
     -- nvim-tree
     vim.keymap.set('n', '<c-n>', "<cmd>lua require('nvim-tree').toggle()<cr>", opts)
 
-    -- replace currently selected text with default register without yanking
-    vim.keymap.set('v', 'p', '"_dP', opts)
-    -- TODO fix somehow causing some error in vscode
-    vim.keymap.set('n', '<leader>D', '"_D', opts)
-    vim.keymap.set('n', '<leader>C', '"_C', opts)
-    vim.keymap.set('n', '<leader>c', '"_c', opts)
-    vim.keymap.set('n', '<leader>x', '"_x', opts)
+    -- telescope
+    vim.keymap.set('n', '<leader>ff', function()
+        require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } })
+    end)
+    vim.keymap.set('n', '<leader>fo', function()
+        require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))
+    end)
+
+    -- Comment.nvim
+    -- ctrl+/ or ctrl+\ to line/block comment
+    local comment_status, comment = pcall(require, 'Comment')
+    if comment_status then
+        vim.keymap.set('n', '<c-/>', require('Comment.api').toggle.linewise.current, { desc = 'Normal mode line comment' })
+        vim.keymap.set('n', '<c-bslash>', require('Comment.api').toggle.blockwise.current, { desc = 'Normal mode block comment' })
+        -- VISUAL MODE COMMENTS
+        vim.keymap.set('x', '<c-/>', function()
+            require('Comment.api').toggle.linewise(vim.fn.visualmode())
+        end, { desc = 'Visual only line comment' })
+        vim.keymap.set('x', '<c-bslash>', function()
+            require('Comment.api').toggle.blockwise(vim.fn.visualmode())
+        end, { desc = 'visual only block comment' })
+    end
 end
 
--- Comment.nvim
--- ctrl+/ or ctrl+\ to line/block comment
-local comment_status, comment = pcall(require, 'Comment')
-if comment_status then
-    vim.keymap.set('n', '<c-/>', require('Comment.api').toggle.linewise.current, { desc = 'Normal mode line comment' })
-    vim.keymap.set('n', '<c-bslash>', require('Comment.api').toggle.blockwise.current, { desc = 'Normal mode block comment' })
-    -- VISUAL MODE COMMENTS
-    vim.keymap.set('x', '<c-/>', function()
-        require('Comment.api').toggle.linewise(vim.fn.visualmode())
-    end, { desc = 'Visual only line comment' })
-    vim.keymap.set('x', '<c-bslash>', function()
-        require('Comment.api').toggle.blockwise(vim.fn.visualmode())
-    end, { desc = 'visual only block comment' })
-end
+-- replace currently selected text with default register without yanking
+vim.keymap.set('v', 'p', '"_dP', opts)
+vim.keymap.set('n', '<leader>D', '"_D', opts)
+vim.keymap.set('n', '<leader>C', '"_C', opts)
+vim.keymap.set('n', '<leader>c', '"_c', opts)
+vim.keymap.set('n', '<leader>x', '"_x', opts)
 
 -- prompt for a refactor to apply when the remap is triggered
 -- vim.api.nvim_set_keymap('v', '<leader>rr', ":lua require('refactoring').select_refactor()<CR>", { noremap = true, silent = true, expr = false })
 
 -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 -- Telescope | dl -> diagnostics list | fa -> find all
-
 vim.keymap.set('n', '<leader>vrc', function()
     require('telescope.builtin').find_files({
         prompt_title = '< VimRC Find Files >',
@@ -161,12 +233,6 @@ end)
 
 -- FIXME why format not working
 -- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
-vim.keymap.set('n', '<leader>ff', function()
-    require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } })
-end)
-vim.keymap.set('n', '<leader>fo', function()
-    require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))
-end)
 vim.keymap.set('n', '<leader>fg', function()
     require('telescope.builtin').live_grep()
 end)
@@ -216,8 +282,6 @@ vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
 -- FIXME possibly causes some bug inside vscode, see https://github.com/vscode-neovim/vscode-neovim/issues/1187
 vim.keymap.set('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
 vim.keymap.set('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", opts)
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", opts)
 
 -- toggle ignorecase
 vim.keymap.set('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
@@ -261,17 +325,6 @@ vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
 vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
 -- undotree
 vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>')
-
--- split window management
-vim.keymap.set('n', 'ss', ':split<CR><C-w>w', { silent = true, desc = '[s]plit s??' })
-vim.keymap.set('n', 'sv', ':vsplit<CR><C-w>w', { silent = true, desc = '[s]plit [v]ertically' })
-vim.keymap.set('n', 'sc', '<c-w>o<cr>', { silent = true, desc = '[s]plit [c]lose, all other splits but active split' })
-
--- split navigation
-vim.keymap.set('n', 'sh', '<C-w>h', opts)
-vim.keymap.set('n', 'sj', '<C-w>j', opts)
-vim.keymap.set('n', 'sk', '<C-w>k', opts)
-vim.keymap.set('n', 'sl', '<C-w>l', opts)
 
 -- resize windows
 -- TODO fix for MacOS
