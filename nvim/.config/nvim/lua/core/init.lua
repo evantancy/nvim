@@ -132,6 +132,7 @@ if vim.g.vscode then
 
     -- telescope
     vim.keymap.set('n', '<leader>ff', '<cmd>call VSCodeNotify("workbench.action.quickOpen")<cr>', { silent = true })
+    vim.keymap.set('n', '<leader>fg', '<cmd>call VSCodeNotify("workbench.action.findInFiles")<cr>', { silent = true })
     vim.keymap.set('n', '<leader>fo', '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>', { silent = true })
 
     -- Comment.nvim
@@ -186,6 +187,9 @@ else
     vim.keymap.set('n', '<leader>ff', function()
         require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } })
     end)
+    vim.keymap.set('n', '<leader>fg', function()
+        require('telescope.builtin').live_grep()
+    end)
     vim.keymap.set('n', '<leader>fo', function()
         require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({}))
     end)
@@ -239,9 +243,6 @@ end)
 
 -- FIXME why format not working
 -- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
-vim.keymap.set('n', '<leader>fg', function()
-    require('telescope.builtin').live_grep()
-end)
 vim.keymap.set('n', '<leader>fb', function()
     require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))
 end)
