@@ -132,7 +132,7 @@ if vim.g.vscode then
 
     -- telescope
     vim.keymap.set('n', '<leader>ff', '<cmd>call VSCodeNotify("workbench.action.quickOpen")<cr>', { silent = true })
-    vim.keymap.set('n', '<leader>fg', '<cmd>call VSCodeNotify("workbench.action.findInFiles")<cr>', { silent = true })
+    vim.keymap.set('n', '<leader>fg', '<cmd>call VSCodeNotify("workbench.action.findInFiles", { "query": expand("<cword>")})<cr>', { silent = true })
     vim.keymap.set('n', '<leader>fo', '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>', { silent = true })
 
     -- Comment.nvim
