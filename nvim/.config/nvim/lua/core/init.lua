@@ -160,6 +160,8 @@ if vim.g.vscode then
     -- diagnostics
     vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prev")<cr>', { desc = 'Goto prev [d]iagnostic' })
     vim.keymap.set('n', ']d', '<cmd>call VSCodeNotify("editor.action.marker.next")<cr>', { desc = 'Goto next [d]iagnostic' })
+    vim.keymap.set('n', '[c', '<cmd>call VSCodeNotify("workbench.action.editor.nextChange")<cr>', { desc = 'Goto prev [c]hange' })
+    vim.keymap.set('n', ']c', '<cmd>call VSCodeNotify("workbench.action.editor.previousChange")<cr>', { desc = 'Goto next [c]hange' })
 else
     -- navigate around wrapped lines
     vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
@@ -216,6 +218,12 @@ else
     -- diagnostics
     vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Goto prev [d]iagnostic' })
     vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'Goto next [d]iagnostic' })
+    vim.keymap.set('n', '[c', function()
+        require('gitsigns').prev_hunk()
+    end, { desc = 'Goto prev [c]hange' })
+    vim.keymap.set('n', ']c', function()
+        require('gitsigns').next_hunk()
+    end, { desc = 'Goto next [c]hange' })
 end
 
 -- replace currently selected text with default register without yanking
@@ -281,12 +289,6 @@ end, { desc = 'Previous todo comment' })
 
 -- diagnostics
 vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open [E]rror in float' })
-vim.keymap.set('n', '[c', function()
-    require('gitsigns').prev_hunk()
-end, { desc = 'Goto prev [c]hange' })
-vim.keymap.set('n', ']c', function()
-    require('gitsigns').next_hunk()
-end, { desc = 'Goto next [c]hange' })
 vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 -- move hightlighted text up/down
