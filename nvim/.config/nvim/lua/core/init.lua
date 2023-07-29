@@ -160,8 +160,8 @@ if vim.g.vscode then
     -- diagnostics
     vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prev")<cr>', { desc = 'Goto prev [d]iagnostic' })
     vim.keymap.set('n', ']d', '<cmd>call VSCodeNotify("editor.action.marker.next")<cr>', { desc = 'Goto next [d]iagnostic' })
-    vim.keymap.set('n', '[c', '<cmd>call VSCodeNotify("workbench.action.editor.nextChange")<cr>', { desc = 'Goto prev [c]hange' })
-    vim.keymap.set('n', ']c', '<cmd>call VSCodeNotify("workbench.action.editor.previousChange")<cr>', { desc = 'Goto next [c]hange' })
+    vim.keymap.set('n', '[c', '<cmd>call VSCodeNotify("workbench.action.editor.previousChange")<cr>', { desc = 'Goto prev [c]hange' })
+    vim.keymap.set('n', ']c', '<cmd>call VSCodeNotify("workbench.action.editor.nextChange")<cr>', { desc = 'Goto next [c]hange' })
 else
     -- navigate around wrapped lines
     vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
@@ -224,145 +224,145 @@ else
     vim.keymap.set('n', ']c', function()
         require('gitsigns').next_hunk()
     end, { desc = 'Goto next [c]hange' })
+
+    -- replace currently selected text with default register without yanking
+    vim.keymap.set('v', 'p', '"_dP', opts)
+    vim.keymap.set('n', '<leader>D', '"_D', opts)
+    vim.keymap.set('n', '<leader>C', '"_C', opts)
+    vim.keymap.set('n', '<leader>c', '"_c', opts)
+    vim.keymap.set('n', '<leader>x', '"_x', opts)
+
+    -- prompt for a refactor to apply when the remap is triggered
+    -- vim.api.nvim_set_keymap('v', '<leader>rr', ":lua require('refactoring').select_refactor()<CR>", { noremap = true, silent = true, expr = false })
+
+    -- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
+    -- Telescope | dl -> diagnostics list | fa -> find all
+    vim.keymap.set('n', '<leader>vrc', function()
+        require('telescope.builtin').find_files({
+            prompt_title = '< VimRC Find Files >',
+            cwd = '$DOTFILES',
+            hidden = true,
+        })
+    end)
+    vim.keymap.set('n', '<leader>vrg', function()
+        require('telescope.builtin').live_grep({
+            prompt_title = '< VimRC Live Grep >',
+            cwd = '$DOTFILES',
+        })
+    end)
+
+    -- Trouble
+    vim.keymap.set('n', '<leader>t', function()
+        require('trouble').toggle({ auto_preview = false })
+    end)
+
+    -- FIXME why format not working
+    -- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
+    vim.keymap.set('n', '<leader>fb', function()
+        require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))
+    end)
+    vim.keymap.set('n', '<leader>fh', function()
+        require('telescope.builtin').help_tags()
+    end)
+    vim.keymap.set('n', '<leader>fd', function()
+        require('telescope.builtin').diagnostics()
+    end)
+    vim.keymap.set('n', '<leader>wk', function()
+        require('telescope.builtin').keymaps()
+    end)
+    vim.keymap.set('n', '<leader>/', function()
+        -- You can pass additional configuration to telescope to change theme, layout, etc.
+        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+            previewer = true,
+        }))
+    end, { desc = '[/] Fuzzily search in current buffer' })
+
+    -- navigate TODO items
+    vim.keymap.set('n', ']t', function()
+        require('todo-comments').jump_next()
+    end, { desc = 'Next todo comment' })
+
+    vim.keymap.set('n', '[t', function()
+        require('todo-comments').jump_prev()
+    end, { desc = 'Previous todo comment' })
+
+    -- diagnostics
+    vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open [E]rror in float' })
+    vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+    -- move hightlighted text up/down
+    vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
+    vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
+    -- FIXME possibly causes some bug inside vscode, see https://github.com/vscode-neovim/vscode-neovim/issues/1187
+    vim.keymap.set('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
+    vim.keymap.set('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
+
+    -- toggle ignorecase
+    vim.keymap.set('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
+    vim.keymap.set('n', '<c-c>', '<esc>', opts)
+    -- exit insert mode whenever you type 'jk' or 'kj'
+    vim.keymap.set('i', 'kj', '<esc>', opts)
+    vim.keymap.set('i', 'jk', '<esc>', opts)
+    -- delete without yanking
+    vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
+
+    -- make vim behave properly, like c & C, d & D
+    vim.keymap.set('n', 'Y', 'y$', opts)
+    -- set scroll=10 <- being overridden by something so set 10 manually here
+    vim.keymap.set('n', '<C-d>', '10<C-d>zz')
+    vim.keymap.set('n', '<C-u>', '10<C-u>zz')
+    vim.keymap.set('n', 'n', 'nzzzv', opts)
+    vim.keymap.set('n', 'N', 'Nzzzv', opts)
+    -- maintain cursor at current position when joining lines
+    vim.keymap.set('n', '<leader>J', 'mzJ`z', opts)
+    -- break undo sequence using punctuation marks
+    vim.keymap.set('i', ',', ',<c-g>u', opts)
+    vim.keymap.set('i', '.', '.<c-g>u', opts)
+    vim.keymap.set('i', '!', '!<c-g>u', opts)
+    vim.keymap.set('i', '?', '?<c-g>u', opts)
+
+    -- make vim behave
+    -- D duplicates highlighted text below
+    vim.keymap.set('v', 'D', "y'>p", opts)
+    -- tab while code selected
+    vim.keymap.set('v', '<', '<gv', opts)
+    vim.keymap.set('v', '>', '>gv', opts)
+
+    -- Harpoon
+    vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = '[h]arpoon [a]dd' })
+    vim.keymap.set('n', '<leader>hs', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [s]how' })
+    -- not really sure what this does atm
+    -- vim.keymap.set('n', '<leader>ht', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [t]oggle' })
+    vim.keymap.set('n', '<A-1>', "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
+    vim.keymap.set('n', '<A-2>', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
+    vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
+    vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
+    -- undotree
+    vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>')
+
+    -- resize windows
+    -- TODO fix for MacOS
+    vim.keymap.set('n', '<C-left>', '<C-w><', opts)
+    vim.keymap.set('n', '<C-right>', '<C-w>>', opts)
+    vim.keymap.set('n', '<C-up>', '<C-w>+', opts)
+    vim.keymap.set('n', '<C-down>', '<C-w>-', opts)
+
+    -- moving around in vim commandline
+    vim.keymap.set('c', '<c-h>', '<left>')
+    vim.keymap.set('c', '<c-j>', '<down>')
+    vim.keymap.set('c', '<c-k>', '<up>')
+    vim.keymap.set('c', '<c-l>', '<right>')
+    vim.keymap.set('c', '^', '<home>')
+    vim.keymap.set('c', '$', '<end>')
+
+    -- quickfix list
+    vim.keymap.set('n', ']q', ':cnext<cr>')
+    vim.keymap.set('n', '[q', ':cprev<cr>')
+
+    -- increment/decrement
+    vim.keymap.set('n', '+', '<c-a>')
+    vim.keymap.set('n', '_', '<c-x>')
 end
-
--- replace currently selected text with default register without yanking
-vim.keymap.set('v', 'p', '"_dP', opts)
-vim.keymap.set('n', '<leader>D', '"_D', opts)
-vim.keymap.set('n', '<leader>C', '"_C', opts)
-vim.keymap.set('n', '<leader>c', '"_c', opts)
-vim.keymap.set('n', '<leader>x', '"_x', opts)
-
--- prompt for a refactor to apply when the remap is triggered
--- vim.api.nvim_set_keymap('v', '<leader>rr', ":lua require('refactoring').select_refactor()<CR>", { noremap = true, silent = true, expr = false })
-
--- Telescope | ff -> find file | fg -> find grep | fb -> find buffer
--- Telescope | dl -> diagnostics list | fa -> find all
-vim.keymap.set('n', '<leader>vrc', function()
-    require('telescope.builtin').find_files({
-        prompt_title = '< VimRC Find Files >',
-        cwd = '$DOTFILES',
-        hidden = true,
-    })
-end)
-vim.keymap.set('n', '<leader>vrg', function()
-    require('telescope.builtin').live_grep({
-        prompt_title = '< VimRC Live Grep >',
-        cwd = '$DOTFILES',
-    })
-end)
-
--- Trouble
-vim.keymap.set('n', '<leader>t', function()
-    require('trouble').toggle({ auto_preview = false })
-end)
-
--- FIXME why format not working
--- vim.keymap.set({ 'v'}, '<leader>fm', function() vim.lsp.buf.format() end)
-vim.keymap.set('n', '<leader>fb', function()
-    require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))
-end)
-vim.keymap.set('n', '<leader>fh', function()
-    require('telescope.builtin').help_tags()
-end)
-vim.keymap.set('n', '<leader>fd', function()
-    require('telescope.builtin').diagnostics()
-end)
-vim.keymap.set('n', '<leader>wk', function()
-    require('telescope.builtin').keymaps()
-end)
-vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
-        previewer = true,
-    }))
-end, { desc = '[/] Fuzzily search in current buffer' })
-
--- navigate TODO items
-vim.keymap.set('n', ']t', function()
-    require('todo-comments').jump_next()
-end, { desc = 'Next todo comment' })
-
-vim.keymap.set('n', '[t', function()
-    require('todo-comments').jump_prev()
-end, { desc = 'Previous todo comment' })
-
--- diagnostics
-vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open [E]rror in float' })
-vim.keymap.set('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
--- move hightlighted text up/down
-vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
-vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
--- FIXME possibly causes some bug inside vscode, see https://github.com/vscode-neovim/vscode-neovim/issues/1187
-vim.keymap.set('i', '<c-j>', '<esc>:m .+1<CR>==gi', opts)
-vim.keymap.set('i', '<c-k>', '<esc>:m .-2<CR>==gi', opts)
-
--- toggle ignorecase
-vim.keymap.set('n', '<F2>', '<cmd>set ignorecase! ignorecase?<cr>')
-vim.keymap.set('n', '<c-c>', '<esc>', opts)
--- exit insert mode whenever you type 'jk' or 'kj'
-vim.keymap.set('i', 'kj', '<esc>', opts)
-vim.keymap.set('i', 'jk', '<esc>', opts)
--- delete without yanking
-vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
-
--- make vim behave properly, like c & C, d & D
-vim.keymap.set('n', 'Y', 'y$', opts)
--- set scroll=10 <- being overridden by something so set 10 manually here
-vim.keymap.set('n', '<C-d>', '10<C-d>zz')
-vim.keymap.set('n', '<C-u>', '10<C-u>zz')
-vim.keymap.set('n', 'n', 'nzzzv', opts)
-vim.keymap.set('n', 'N', 'Nzzzv', opts)
--- maintain cursor at current position when joining lines
-vim.keymap.set('n', '<leader>J', 'mzJ`z', opts)
--- break undo sequence using punctuation marks
-vim.keymap.set('i', ',', ',<c-g>u', opts)
-vim.keymap.set('i', '.', '.<c-g>u', opts)
-vim.keymap.set('i', '!', '!<c-g>u', opts)
-vim.keymap.set('i', '?', '?<c-g>u', opts)
-
--- make vim behave
--- D duplicates highlighted text below
-vim.keymap.set('v', 'D', "y'>p", opts)
--- tab while code selected
-vim.keymap.set('v', '<', '<gv', opts)
-vim.keymap.set('v', '>', '>gv', opts)
-
--- Harpoon
-vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = '[h]arpoon [a]dd' })
-vim.keymap.set('n', '<leader>hs', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [s]how' })
--- not really sure what this does atm
--- vim.keymap.set('n', '<leader>ht', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [t]oggle' })
-vim.keymap.set('n', '<A-1>', "<cmd>lua require('harpoon.ui').nav_file(1)<cr>")
-vim.keymap.set('n', '<A-2>', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>")
-vim.keymap.set('n', '<A-3>', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>")
-vim.keymap.set('n', '<A-4>', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>")
--- undotree
-vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<cr>')
-
--- resize windows
--- TODO fix for MacOS
-vim.keymap.set('n', '<C-left>', '<C-w><', opts)
-vim.keymap.set('n', '<C-right>', '<C-w>>', opts)
-vim.keymap.set('n', '<C-up>', '<C-w>+', opts)
-vim.keymap.set('n', '<C-down>', '<C-w>-', opts)
-
--- moving around in vim commandline
-vim.keymap.set('c', '<c-h>', '<left>')
-vim.keymap.set('c', '<c-j>', '<down>')
-vim.keymap.set('c', '<c-k>', '<up>')
-vim.keymap.set('c', '<c-l>', '<right>')
-vim.keymap.set('c', '^', '<home>')
-vim.keymap.set('c', '$', '<end>')
-
--- quickfix list
-vim.keymap.set('n', ']q', ':cnext<cr>')
-vim.keymap.set('n', '[q', ':cprev<cr>')
-
--- increment/decrement
-vim.keymap.set('n', '+', '<c-a>')
-vim.keymap.set('n', '_', '<c-x>')
 
 -- vim.keymap.set('n', 's')
 
