@@ -34,7 +34,7 @@ case $(uname) in
 	;;
 "Darwin")
     # homebrew
-    # eval "$(/opt/homebrew/bin/brew shellenv)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
     # # dircolors is a GNU utility that's not on macOS by default. With this not
     # # being used on macOS it means zsh's complete menu won't have colors.
@@ -76,8 +76,9 @@ bindkey -M viins '^[^[[D' backward-word
 bindkey -M vicmd '^[^[[D' backward-word
 
 # enable emacs
+bindkey -e
 # enable vim
-bindkey -v
+# bindkey -v
 
 # history settings
 export HISTSIZE=100000 # maximum events for internal history

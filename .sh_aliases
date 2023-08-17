@@ -20,6 +20,7 @@ alias mvn="mvnd"
 # git
 alias g="git"
 alias lgit="lazygit"
+alias lzd="lazydocker"
 
 # conda
 alias ae="activate"

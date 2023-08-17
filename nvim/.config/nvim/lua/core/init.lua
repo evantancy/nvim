@@ -97,6 +97,9 @@ vim.keymap.set({ 'n', 'x' }, '<leader>s', 'zt<Plug>Sneak_s')
 vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
 vim.keymap.set('n', '<C-c>', '<Esc>')
 
+-- navigate around wrapped lines
+vim.keymap.set('n', 'k', 'gk')
+vim.keymap.set('n', 'j', 'gj')
 -- allow single line travel when lines visually wrap
 if vim.g.vscode then
     -- navigate around wrapped lines
