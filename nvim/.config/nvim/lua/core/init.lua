@@ -324,13 +324,6 @@ else
     vim.keymap.set('i', '!', '!<c-g>u', opts)
     vim.keymap.set('i', '?', '?<c-g>u', opts)
 
-    -- make vim behave
-    -- D duplicates highlighted text below
-    vim.keymap.set('v', 'D', "y'>p", opts)
-    -- tab while code selected
-    vim.keymap.set('v', '<', '<gv', opts)
-    vim.keymap.set('v', '>', '>gv', opts)
-
     -- Harpoon
     vim.keymap.set('n', '<leader>ha', "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = '[h]arpoon [a]dd' })
     vim.keymap.set('n', '<leader>hs', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [s]how' })
@@ -367,6 +360,12 @@ else
     vim.keymap.set('n', '_', '<c-x>')
 end
 
+-- make vim behave
+-- D duplicates highlighted text below
+vim.keymap.set('v', 'D', "y'>p", opts)
+-- tab while code selected
+vim.keymap.set('v', '<', '<gv', opts)
+vim.keymap.set('v', '>', '>gv', opts)
 -- vim.keymap.set('n', 's')
 
 --------------------------- REMAPS ----------------------------------
