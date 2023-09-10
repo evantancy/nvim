@@ -12,6 +12,8 @@
     pl = "!git pull origin $(git rev-parse --abbrev-ref HEAD)"
     st = status
     br = "!git branch --all | sed -e 's#remotes/origin/##g' | sort | uniq | awk '!/HEAD/' | fzf | xargs git checkout"
+    sl = stash list
+    sp = stash push
     bra = "!git branch --all | fzf | xargs git checkout"
     brr = branch --remotes
     brd = "!git push -d origin \"$1\" && git branch -d \"$1\" #"
