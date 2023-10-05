@@ -140,9 +140,9 @@ if vim.g.vscode then
 
     -- Comment.nvim
     vim.keymap.set('n', 'gc', '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>', { desc = 'Normal mode line comment' })
-    vim.keymap.set('x', 'gc', '<cmd>call VSCodeNotifyVisual("editor.action.commentLine", 0)<cr>', { desc = 'Visual mode line comment' })
+    vim.keymap.set('x', 'gc', '<cmd>call VsCodeNotify("editor.action.commentLine", 0)<cr>', { desc = 'Visual mode line comment' })
     vim.keymap.set('n', 'gbc', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Normal mode block comment' })
-    vim.keymap.set('x', 'gb', '<cmd>call VSCodeNotifyVisual("editor.action.blockComment", 0)<cr>', { desc = 'Visual mode block comment' })
+    vim.keymap.set('x', 'gb', '<cmd>call VsCodeNotify("editor.action.blockComment", 0)<cr>', { desc = 'Visual mode block comment' })
 
     -- EXTRAS
     vim.keymap.set('n', '<leader>', '<Nop>')
@@ -158,7 +158,7 @@ if vim.g.vscode then
     -- vim.keymap.set('n', '<c-h>', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = ' Show signature [h]elp' })
     -- vim.keymap.set('n', '<space>rn', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = ' [ r]e[n]ame' })
     -- vim.keymap.set({ 'x' }, '<space>ca', '<cmd>call VSCodeNotify("editor.action.showHover")<cr>', { desc = '[c]ode [a]ctions' })
-    vim.keymap.set('n', '<space>fm', '<cmd>call VSCodeNotifyVisual("editor.action.formatSelection", 0)<cr>', { desc = '[f]or[m]at' })
+    vim.keymap.set('n', '<space>fm', '<cmd>call VsCodeNotify("editor.action.formatSelection", 0)<cr>', { desc = '[f]or[m]at' })
 
     -- diagnostics
     vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prev")<cr>', { desc = 'Goto prev [d]iagnostic' })
