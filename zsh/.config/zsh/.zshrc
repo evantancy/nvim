@@ -366,3 +366,6 @@ curbranch() {
 
 export PATH="$(python3 -m site --user-base)/bin:$PATH"
 export PATH="$PATH:/Users/evan/.config/.foundry/bin"
+
+# # add homebrew bin for postgresql@15
+export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@15/bin
