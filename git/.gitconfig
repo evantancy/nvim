@@ -47,7 +47,7 @@
         email = 36868915+evantancy@users.noreply.github.com
         name = Evan Tan
 [commit]
-        gpgsign = true
+        gpgsign = false
 [gpg]
         program = gpg
 [pull]
