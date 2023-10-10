@@ -27,7 +27,7 @@ case $(uname) in
       autoload -U down-line-or-beginning-search
       zle -N down-line-or-beginning-search
       bindkey -M emacs "${terminfo[kcud1]}" down-line-or-beginning-search
-      bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
+    bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
       bindkey -M vicmd "${terminfo[kcud1]}" down-line-or-beginning-search
     fi
 
@@ -77,6 +77,8 @@ bindkey -M vicmd '^[^[[D' backward-word
 
 # enable emacs
 bindkey -e
+# enable vim
+# bindkey -v
 
 # history settings
 export HISTSIZE=100000 # maximum events for internal history
@@ -162,8 +164,24 @@ git_info() {
   echo "${(j: :)GIT_INFO}"
 }
 
-# from nick janetakis
-PROMPT='%{$fg[cyan]%}%* %{$fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
+
+git_prompt() {
+    local branch="$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3-)"
+    local branch_truncated="${branch:0:30}"
+    if (( ${#branch} > ${#branch_truncated} )); then
+        branch="${branch_truncated}..."
+    fi
+
+    [ -n "${branch}" ] && echo " (${branch})"
+}
+setopt PROMPT_SUBST
+# Prompt. Using single quotes around the PROMPT is very important, otherwise
+# the git branch will always be empty. Using single quotes delays the
+# evaluation of the prompt. Also PROMPT is an alias to PS1.
+PROMPT='%B%{$fg[cyan]%} %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
+# TODO: refactor current prompt because current, TOO SLOW DO NOT USE
+# PROMPT='%{$fg[cyan]%}%* %{$fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
+
 # some paths
 export DOTFILES="$HOME/.dotfiles"
 export PATH=$PATH:~/bin
@@ -174,8 +192,10 @@ source "$ZDOTDIR/zsh-functions"
 
 # node version manager
 export NVM_DIR="$HOME/.nvm"
-export NVM_COMPLETION=true #significant slows zsh
+export NVM_COMPLETION=false #significant slows zsh
 export NVM_LAZY_LOAD=true
+# export PATH=$PATH:$(npm config --global get prefix)/bin
+# [ -f $NVIM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh
 
 # plugins
 zsh_add_plugin "Aloxaf/fzf-tab" # must be loaded FIRST!!! also unstable
@@ -267,17 +287,17 @@ source $DOTFILES/.sh_aliases
 # aliases ripped off Bash
 # enable color support of ls and also add handy aliases
 # miniconda
-export PATH="$HOME/miniconda3/bin:$PATH"
+# export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/evan/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/evan/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/evan/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/evan/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/evan/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/evan/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/evan/miniconda3/bin:$PATH"
+        export PATH="/Users/evan/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -316,7 +336,7 @@ export SUMO_HOME="/usr/share/sumo"
 export PATH="$PATH:$HOME/.foundry/bin"
 
 # diff-so-fancy
-export EDITOR="vim"
+export EDITOR="$(which nvim)"
 export GPG_TTY=$(tty)
 
 # rust
@@ -343,9 +363,9 @@ gdf() {
 curbranch() {
     git rev-parse --abbrev-ref HEAD
 }
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 export PATH="$(python3 -m site --user-base)/bin:$PATH"
 export PATH="$PATH:/Users/evan/.config/.foundry/bin"
+
+# # add homebrew bin for postgresql@15
+export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@15/bin

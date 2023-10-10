@@ -1,3 +1,4 @@
+let mapleader = " "
 " IDEAVim Specific settings
 set visualbell
 set ideajoin
@@ -19,11 +20,6 @@ nnoremap ]] :action MethodDown<CR>zz
 " Disable automatic comment insertion
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-
-
-" options
-let mapleader = " "
-
 set relativenumber
 set number
 set clipboard+=unnamedplus
@@ -41,8 +37,8 @@ set iskeyword+=- " Treat dash separated words as a word text object
 " nnoremap j gj
 " nnoremap k gk
 " move hightlighted text up/down in different modes
-nnoremap <space>j :m .+1<CR>==
-nnoremap <space>k :m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
 inoremap <c-j> <esc>:m .+1<CR>==gi
 inoremap <c-k> <esc>:m .-2<CR>==gi
 xmap J <Action>(MoveLineDown)
@@ -57,24 +53,22 @@ inoremap kj <esc>
 inoremap jk <esc>
 
 " delete without yanking
-nnoremap <space>d "_d
-vnoremap <space>d "_d
-nnoremap <space>D "_D
-nnoremap <space>C "_C
-nnoremap <space>c "_c
-nnoremap <space>x "_x
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+nnoremap <leader>D "_D
+nnoremap <leader>C "_C
+nnoremap <leader>c "_c
+nnoremap <leader>x "_x
 
 " replace currently selected text with default register without yanking
 vnoremap p "_dP
-" ???
-" nnoremap <space>x "_dx
 
-" wtf?????????????????????????????????????????????????????????????????????
+" make vim behave
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
-" ???
-nnoremap <space>J mzJ`z
+" keep cursor at position when trying to join lines
+nnoremap <leader>J mzJ`z
 " break undo sequence using punctuation marks
 " TODO fix bug
 " inoremap , ,<c-g>u
@@ -91,10 +85,25 @@ vnoremap > >gv
 
 " IDEA SPECIFIC settings (refactored from nvim)
 " splits
-nmap <c-h> <Action>(PrevSplitter)
-" map('n', '<c-j>', '<c-w>j')
-" map('n', '<c-k>', '<c-w>k')
-nmap <c-l> <Action>(NextSplitter)
+nmap sh <Action>(PrevSplitter)
+nmap sl <Action>(NextSplitter)
+nmap sv <Action>(SplitVertically)
+nmap ss <Action>(SplitHorizontally)
+
+nmap <leader><A-1> :action SetHarpoon1<cr>
+nmap <leader><A-2> :action SetHarpoon2<cr>
+nmap <leader><A-3> :action SetHarpoon3<cr>
+nmap <leader><A-4> :action SetHarpoon4<cr>
+nmap <leader><A-5> :action SetHarpoon5<cr>
+
+nmap <A-1> <Action>(GotoHarpoon1)<cr>
+nmap <A-2> <Action>(GotoHarpoon2)<cr>
+nmap <A-3> <Action>(GotoHarpoon3)<cr>
+nmap <A-4> <Action>(GotoHarpoon4)<cr>
+nmap <A-5> <Action>(GotoHarpoon5)<cr>
+
+nmap <leader>hs :action ShowHarpoon<cr>
+nmap <leader>ha :action AddToHarpoon<cr>
 
 " navigate buffer
 nmap <tab> <Action>(NextTab)
@@ -108,20 +117,23 @@ nmap <s-tab> <Action>(PreviousTab)
 
 
 " diagnostics
-nmap <space>e <Action>(ShowErrorDescription)
+nmap <leader>e <Action>(ShowErrorDescription)
 nmap [d <Action>(GotoPreviousError)
 nmap ]d <Action>(GotoNextError)
-" vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+" use motions to exit diff preview when navigating to a new change
+nmap [c <Action>(VcsShowPrevChangeMarker)jk
+nmap ]c <Action>(VcsShowNextChangeMarker)jk
+" vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
 " Telescope | ff -> find file | fg -> find grep | fb -> find buffer
 " Telescope | dl -> diagnostics list | fa -> find all
-nmap <space>ff <Action>(GotoFile)
+nmap <leader>ff <Action>(GotoFile)
 " SearchEverywhere
-nmap <space>fg <Action>(FindInPath)
-nmap <space>fb <Action>(RecentFiles)
-" map('n', '<space>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
-nmap <space>fd <Action>(ActivateProblemsViewToolWindow)
-nmap <space>fa <Action>(FindUsages)
+nmap <leader>fg <Action>(FindInPath)
+nmap <leader>fb <Action>(RecentFiles)
+" map('n', '<leader>fh', "<cmd>lua require('telescope.builtin').help_tags()<cr>", opts)
+nmap <leader>fd <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>fa <Action>(FindUsages)
 
 " " lsp.lua
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -132,21 +144,21 @@ nmap gt <Action>(GotoTypeDeclaration)
 nmap gi <Action>(GotoImplementation)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 " vim.api.nvim_buf_set_keymap(bufnr, 'n', '<c-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-nmap <space>R <Action>(RenameElement)
-nmap <space>ca <Action>(ShowIntentionActions)
-nmap <space>fm <Action>(ShowReformatFileDialog)
-vmap <space>fm <Action>(ShowReformatFileDialog)
-nmap <space>fi <Action>(OptimizeImports)
-nmap <space>fsv <Action>(Toolkit.GotoService)
+nmap <leader>R <Action>(RenameElement)
+nmap <leader>ca <Action>(ShowIntentionActions)
+nmap <leader>fm <Action>(ShowReformatFileDialog)
+vmap <leader>fm <Action>(ShowReformatFileDialog)
+nmap <leader>fi <Action>(OptimizeImports)
+nmap <leader>fsv <Action>(Toolkit.GotoService)
 nmap <F1> <Action>(ShowReformatFileDialog)
 
-nnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
-xnoremap <space>r :action Refactorings.QuickListPopupAction<CR>
-nmap <space>tc :action RunCoverage<CR>
-nmap <space>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
-nmap <space>fc :action HideAllWindows<CR>
-nmap <space>gb :action Annotate<CR>
-xmap <space>gb :action Annotate<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+xnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nmap <leader>tc :action RunCoverage<CR>
+nmap <leader>tC gg:action MethodDown<CR>zz:action RunCoverage<CR>
+nmap <leader>fc :action HideAllWindows<CR>
+nmap <leader>gb :action Annotate<CR>
+xmap <leader>gb :action Annotate<CR>
 
 
 " plugins
@@ -155,6 +167,5 @@ Plug 'tpope/vim-commentary'
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 50 " time in milliseconds
 let g:highlightedyank_highlight_color = "rgba(255, 195, 0, 100)"
-Plug 'easymotion/vim-easymotion'
 Plug 'dbakker/vim-paragraph-motion'
 

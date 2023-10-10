@@ -1,5 +1,5 @@
-local neogit = safe_require('neogit')
-if not neogit then
+local status, neogit = pcall(require, 'neogit')
+if not status then
     return
 end
 

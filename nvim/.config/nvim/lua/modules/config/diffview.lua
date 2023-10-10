@@ -1,5 +1,5 @@
-local diffview = safe_require('diffview')
-if not diffview then
+local status, diffview = pcall(require, 'diffview')
+if not status then
     return
 end
 -- Lua

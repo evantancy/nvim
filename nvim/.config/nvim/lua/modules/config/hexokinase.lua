@@ -1,5 +1,5 @@
-local hexokinase = safe_require('hexokinase')
-if not hexokinase then
+local status, hexokinase = pcall(require, 'hexokinase')
+if not status then
     return
 end
 vim.g.Hexokinase_highlighers = { 'virtual ' }
@@ -23,4 +23,5 @@ vim.g.Hexokinase_ftEnabled = {
     'yaml',
     'markdown',
     'solidity',
+    'lua',
 }

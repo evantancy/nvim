@@ -2,11 +2,12 @@ local gitsigns = require('gitsigns')
 if not gitsigns then
     return
 end
--- define colors
+-- define colors, following Intellij Git colors
+-- https://www.jetbrains.com/help/idea/file-status-highlights.html
 vim.cmd([[
-    highlight GitSignsAdd    guifg=#2ecc71
-    highlight GitSignsChange guifg=#f1c40f
-    highlight GitSignsDelete guifg=#e74c3c
+    highlight GitSignsAdd    guifg=#0EAA00
+    highlight GitSignsChange guifg=#0047E4
+    highlight GitSignsDelete guifg=#FF0000
     ]])
 gitsigns.setup({
     signs = {

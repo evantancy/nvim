@@ -2,7 +2,7 @@ local tabnine = require('cmp_tabnine.config')
 if not tabnine then
     return
 end
-tabnine:setup({
+tabnine.setup({
     max_lines = 1000,
     max_num_results = 3,
     sort = true,

@@ -1,82 +1,12 @@
+if vim.g.vscode then
+    return
+end
+
 local function conf(name)
     return require(string.format('modules.config.%s', name))
 end
 
 local plugins = {
-    { 'rebelot/kanagawa.nvim' },
-    { 'ellisonleao/gruvbox.nvim' },
-    { 'haishanh/night-owl.vim' },
-    { -- Colorschemes
-        'folke/tokyonight.nvim',
-        requires = { 'folke/lsp-colors.nvim' },
-        config = conf('colors'),
-    },
-    { -- LSP colors
-        'folke/lsp-colors.nvim',
-    },
-    { -- Icons
-        'ryanoasis/vim-devicons',
-        'kyazdani42/nvim-web-devicons',
-    },
-    { -- File tree
-        'kyazdani42/nvim-tree.lua',
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-        },
-        config = conf('nvim-tree'),
-    },
-    { -- Startup screen
-        'goolord/alpha-nvim',
-        config = conf('alpha-nvim'),
-    },
-    { -- Jump around quickly
-        'easymotion/vim-easymotion',
-    },
-    { -- whichkey
-        'folke/which-key.nvim',
-    },
-    { -- Finder
-        'nvim-telescope/telescope.nvim',
-        config = conf('telescope'),
-        requires = {
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            { 'nvim-lua/popup.nvim' },
-            { 'nvim-telescope/telescope-media-files.nvim' },
-        },
-    },
-    { -- Solidity
-        'TovarishFin/vim-solidity',
-    },
-    { -- LSP
-        'neovim/nvim-lspconfig',
-        config = conf('lsp'),
-        requires = {
-            'williamboman/nvim-lsp-installer',
-            'jose-elias-alvarez/null-ls.nvim',
-            { 'jose-elias-alvarez/nvim-lsp-ts-utils', branch = 'main' },
-            'RRethy/vim-illuminate',
-        },
-    },
-    { -- Formatters
-        'jose-elias-alvarez/null-ls.nvim',
-        branch = 'main',
-        config = conf('null-ls'),
-    },
-    { -- Autocompletion plugin
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-            'onsails/lspkind-nvim',
-        },
-    },
     { -- AI Autocompletion
         'tzachar/cmp-tabnine',
         config = conf('tabnine'),
@@ -125,11 +55,8 @@ local plugins = {
     },
     { -- Highlighter
         'nvim-treesitter/nvim-treesitter',
+        requires = { 'windwp/nvim-ts-autotag' },
         config = conf('nvim-treesitter'),
-    },
-    { -- Bufferline
-        'akinsho/nvim-bufferline.lua',
-        config = conf('bufferline'),
     },
     { -- Statusline
         'nvim-lualine/lualine.nvim',
@@ -138,11 +65,6 @@ local plugins = {
     { -- Speed
         'ThePrimeagen/harpoon',
         requires = { 'nvim-lua/plenary.nvim' },
-    },
-    { -- Markdown
-        'iamcco/markdown-preview.nvim',
-        run = 'cd app && yarn install',
-        config = conf('markdown-preview'),
     },
     { -- Visualize undo trees
         'mbbill/undotree',
@@ -154,28 +76,28 @@ local plugins = {
     },
 }
 
-for _, plugin in ipairs(plugins) do
-    if plugin['config'] == nil then
-        return
-    else
-        use(plugin['config'])
+conf('aesthetics')
+conf('files')
+conf('lsp')
+conf('formatter')
+
+-- Packer Bootstrap config
+local ensure_packer = function()
+    local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+        vim.fn.system({
+            'git',
+            'clone',
+            '--depth',
+            '1',
+            'https://github.com/wbthomason/packer.nvim',
+            install_path,
+        })
+        vim.cmd('packadd packer.nvim')
     end
 end
 
--- Packer config
-
--- local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
--- if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
---     vim.fn.system({
---         'git',
---         'clone',
---         '--depth',
---         '1',
---         'https://github.com/wbthomason/packer.nvim',
---         install_path,
---     })
---     vim.cmd('packadd packer.nvim')
--- end
+-- local packer_bootstrap = ensure_packer()
 
 -- local packer = require('packer')
 -- if packer then
