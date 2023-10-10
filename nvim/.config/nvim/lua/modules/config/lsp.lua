@@ -175,14 +175,15 @@ local on_attach = function(client, bufnr)
     nmap('<c-h>', vim.lsp.buf.signature_help, ' Show signature [h]elp')
     nmap('<space>rn', vim.lsp.buf.rename, ' [r]e[n]ame')
     vim.keymap.set({ 'x' }, '<space>ca', vim.lsp.buf.code_action, { desc = '[c]ode [a]ctions' })
-    nmap('<space>fm', vim.lsp.buf.format, ' [f]or[m]at')
+    nmap('<space>fm', vim.lsp.buf.format, '[f]or[m]at')
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
+
+-- 'pylsp',
 local servers = {
     'pyright',
-    'pylsp',
     'lua_ls',
     'tsserver',
     'clangd',
