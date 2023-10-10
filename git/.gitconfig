@@ -67,3 +67,8 @@
     reflog = %C(cyan)%cs %C(auto)%h %<|(17)%C(red)%gd %C(reset) %gs (%s)
 [color]
 	ui = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
