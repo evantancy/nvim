@@ -368,4 +368,10 @@ export PATH="$(python3 -m site --user-base)/bin:$PATH"
 export PATH="$PATH:/Users/evan/.config/.foundry/bin"
 
 # # add homebrew bin for postgresql@15
-export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@15/bin
+use_pg16(){
+    export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@16/bin
+}
+use_pg15(){
+    export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@15/bin
+}
+
