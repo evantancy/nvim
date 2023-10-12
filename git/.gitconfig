@@ -53,6 +53,7 @@
 [core]
         pager = delta
 	editor = vim
+	longpaths = true
 [interactive]
         diffFilter = delta --color-only
 [delta]
