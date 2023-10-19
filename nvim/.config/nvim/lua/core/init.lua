@@ -102,10 +102,16 @@ vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('n', 'j', 'gj')
 -- allow single line travel when lines visually wrap
 if vim.g.vscode then
-    -- navigate around wrapped lines
-    vim.keymap.set('n', 'k', 'gk')
-    vim.keymap.set('n', 'j', 'gj')
+    vim.keymap.set('n', 'n', 'nzzzv', opts)
+    vim.keymap.set('n', 'N', 'Nzzzv', opts)
+    -- navigate around wrapped lines ALWAYS
+    vim.keymap.set('n', 'k', "<Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count1 })<CR>")
+    vim.keymap.set('n', 'j', "<Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count1 })<CR>")
 
+    -- navigate classes / methods
+    -- NOTE for some reason can't really get same "[[", "]]" behaviour from ideavim
+    vim.keymap.set('n', '<c-]>', '<cmd>call VSCodeNotify("gotoNextPreviousMember.nextMember")<CR>')
+    vim.keymap.set('n', '<c-[>', '<cmd>call VSCodeNotify("gotoNextPreviousMember.previousMember")<CR>')
     -- navigate buffer
     vim.keymap.set('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<CR>')
     vim.keymap.set('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<CR>')
@@ -139,7 +145,7 @@ if vim.g.vscode then
     vim.keymap.set('n', '<leader>fo', '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>', { silent = true })
 
     -- Comment.nvim
-    vim.keymap.set('n', 'gc', '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>', { desc = 'Normal mode line comment' })
+    vim.keymap.set('n', 'gcc', '<cmd>call VSCodeNotify("editor.action.commentLine")<cr>', { desc = 'Normal mode line comment' })
     vim.keymap.set('x', 'gc', '<cmd>call VSCodeNotify("editor.action.commentLine", 0)<cr>', { desc = 'Visual mode line comment' })
     vim.keymap.set('n', 'gbc', '<cmd>call VSCodeNotify("editor.action.blockComment")<cr>', { desc = 'Normal mode block comment' })
     vim.keymap.set('x', 'gb', '<cmd>call VSCodeNotify("editor.action.blockComment", 0)<cr>', { desc = 'Visual mode block comment' })
