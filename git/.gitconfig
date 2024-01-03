@@ -40,8 +40,7 @@
 	count-lines = "! git log --no-merges --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
 	count-files = "! git log --no-merges --author=\"$1\" --pretty= --name-only | sort -u | wc -l #"
 [user]
-        email = 36868915+evantancy@users.noreply.github.com
-        name = Evan Tan
+        useConfigOnly = true
 [commit]
         gpgsign = false
 [gpg]
