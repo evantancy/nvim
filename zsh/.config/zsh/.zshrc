@@ -326,7 +326,7 @@ export FZF_DEFAULT_OPS='--multi --inline-info'
 export FZF_DEFAULT_COMMAND="rg --files --hidden -g !.git/"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # TODO disabling CTRL-T for now since i use tmux alot
-bindkey -r '^T'
+# bindkey -r '^T'
 
 # tldr
 [ -f ~/bin/tldr ] && compctl -k "($( tldr 2>/dev/null --list))" tldr

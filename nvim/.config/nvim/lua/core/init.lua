@@ -95,7 +95,8 @@ local expr_opts = { noremap = true, expr = true }
 
 vim.keymap.set({ 'n', 'x' }, '<leader>s', 'zt<Plug>Sneak_s')
 vim.keymap.set({ 'n', 'x' }, '<leader>S', 'zb<Plug>Sneak_S')
-vim.keymap.set('n', '<C-c>', '<Esc>')
+vim.keymap.set({ 'n', 'x', 'i' }, '<C-c>', '<Esc>', opts)
+-- vim.keymap.set({ 'n', 'x', 'i' }, '<c-[>', '<Nop>')
 
 -- navigate around wrapped lines
 vim.keymap.set('n', 'k', 'gk')
@@ -104,14 +105,18 @@ vim.keymap.set('n', 'j', 'gj')
 if vim.g.vscode then
     vim.keymap.set('n', 'n', 'nzzzv', opts)
     vim.keymap.set('n', 'N', 'Nzzzv', opts)
+
+    -- move hightlighted text up/down
+    vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
+    vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
     -- navigate around wrapped lines ALWAYS
     vim.keymap.set('n', 'k', "<Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count1 })<CR>")
     vim.keymap.set('n', 'j', "<Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count1 })<CR>")
 
     -- navigate classes / methods
     -- NOTE for some reason can't really get same "[[", "]]" behaviour from ideavim
-    vim.keymap.set('n', '<c-]>', '<cmd>call VSCodeNotify("gotoNextPreviousMember.nextMember")<CR>')
-    vim.keymap.set('n', '<c-[>', '<cmd>call VSCodeNotify("gotoNextPreviousMember.previousMember")<CR>')
+    vim.keymap.set('n', "<c-'>", '<cmd>call VSCodeNotify("gotoNextPreviousMember.nextMember")<CR>')
+    vim.keymap.set('n', '<c-;>', '<cmd>call VSCodeNotify("gotoNextPreviousMember.previousMember")<CR>')
     -- navigate buffer
     vim.keymap.set('n', '<tab>', '<cmd>call VSCodeNotify("workbench.action.nextEditor")<CR>')
     vim.keymap.set('n', '<s-tab>', '<cmd>call VSCodeNotify("workbench.action.previousEditor")<CR>')
@@ -141,7 +146,7 @@ if vim.g.vscode then
 
     -- telescope
     vim.keymap.set('n', '<leader>ff', '<cmd>call VSCodeNotify("workbench.action.quickOpen")<cr>', { silent = true })
-    vim.keymap.set('n', '<leader>fg', '<cmd>call VSCodeNotify("workbench.action.findInFiles", { "query": expand("<cword>")})<cr>', { silent = true })
+    vim.keymap.set('n', '<leader>fg', '<cmd>call VSCodeNotify("search.action.openEditor", { "query": expand("<cword>")})<cr>', { silent = true })
     vim.keymap.set('n', '<leader>fo', '<cmd>call VSCodeNotify("workbench.action.openRecent")<cr>', { silent = true })
 
     -- Comment.nvim
@@ -167,8 +172,8 @@ if vim.g.vscode then
     vim.keymap.set('n', '<space>fm', '<cmd>call VSCodeNotify("editor.action.formatSelection", 0)<cr>', { desc = '[f]or[m]at' })
 
     -- diagnostics
-    vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prev")<cr>', { desc = 'Goto prev [d]iagnostic' })
-    vim.keymap.set('n', ']d', '<cmd>call VSCodeNotify("editor.action.marker.next")<cr>', { desc = 'Goto next [d]iagnostic' })
+    vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prevInFiles")<cr>', { desc = 'Goto prev [d]iagnostic' })
+    vim.keymap.set('n', ']d', '<cmd>call VSCodeNotify("editor.action.marker.nextInFiles")<cr>', { desc = 'Goto next [d]iagnostic' })
     vim.keymap.set('n', '[c', '<cmd>call VSCodeNotify("workbench.action.editor.previousChange")<cr>', { desc = 'Goto prev [c]hange' })
     vim.keymap.set('n', ']c', '<cmd>call VSCodeNotify("workbench.action.editor.nextChange")<cr>', { desc = 'Goto next [c]hange' })
 else
