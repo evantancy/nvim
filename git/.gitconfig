@@ -24,7 +24,8 @@
     hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
     # git log including which files have been changed
     llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
-    open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' | xargs open -a 'Google Chrome'"
+    ; open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' -e \"s#\.git#/-/tree/$(curbranch)#\" | xargs open -a 'Google Chrome'"
+    open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' | xargs open -a 'Google Chrome'"
     rt = reset
     rb = rebase
     rl = reflog --pretty=reflog
