@@ -172,10 +172,30 @@ if vim.g.vscode then
     vim.keymap.set('n', '<space>fm', '<cmd>call VSCodeNotify("editor.action.formatSelection", 0)<cr>', { desc = '[f]or[m]at' })
 
     -- diagnostics
-    vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prevInFiles")<cr>', { desc = 'Goto prev [d]iagnostic' })
-    vim.keymap.set('n', ']d', '<cmd>call VSCodeNotify("editor.action.marker.nextInFiles")<cr>', { desc = 'Goto next [d]iagnostic' })
+    vim.keymap.set('n', '[d', '<cmd>call VSCodeNotify("editor.action.marker.prev")<cr>', { desc = 'Goto prev [d]iagnostic' })
+    vim.keymap.set('n', ']d', '<cmd>call VSCodeNotify("editor.action.marker.next")<cr>', { desc = 'Goto next [d]iagnostic' })
     vim.keymap.set('n', '[c', '<cmd>call VSCodeNotify("workbench.action.editor.previousChange")<cr>', { desc = 'Goto prev [c]hange' })
     vim.keymap.set('n', ']c', '<cmd>call VSCodeNotify("workbench.action.editor.nextChange")<cr>', { desc = 'Goto next [c]hange' })
+
+    -- Trouble
+    vim.keymap.set('n', '<leader>t', '<cmd>call VSCodeNotify("workbench.action.problems.focus")<cr>', { desc = 'Focus on problems' })
+
+    -- FIXME why format not working
+    vim.keymap.set('n', '<leader>fm', '<cmd>call VSCodeNotify("editor.action.formatSelection")<cr>', { desc = '[F]or[m]at selection' })
+    vim.keymap.set('n', '<leader>fb', '<cmd>call VSCodeNotify("workbench.action.showAllEditors")<cr>', { desc = 'Show all open editors' })
+    -- vim.keymap.set('n', '<leader>fh', function()
+    --     require('telescope.builtin').help_tags()
+    -- end)
+    vim.keymap.set('n', '<leader>fd', '<cmd>call VSCodeNotify("workbench.action.problems.focus")<cr>', { desc = 'Focus on problems' })
+    -- vim.keymap.set('n', '<leader>/', function()
+    --     require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+    --         previewer = true,
+    --     }))
+    -- end, { desc = '[/] Fuzzily search in current buffer' })
+
+    -- navigate TODO items
+    vim.keymap.set('n', ']t', '<cmd>call VSCodeNotify("todo-tree.goToNext")<cr>', { desc = 'Goto next [T]ODO' })
+    vim.keymap.set('n', '[t', '<cmd>call VSCodeNotify("todo-tree.goToPrevious")<cr>', { desc = 'Goto previous [T]ODO' })
 else
     -- navigate around wrapped lines
     vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
