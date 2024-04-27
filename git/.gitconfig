@@ -25,7 +25,7 @@
     # git log including which files have been changed
     llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
     ; open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' -e \"s#\.git#/-/tree/$(curbranch)#\" | xargs open -a 'Google Chrome'"
-    open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' | xargs open -a 'Google Chrome'"
+    open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' | xargs open -a 'Arc'"
     rt = reset
     rb = rebase
     rl = reflog --pretty=reflog
@@ -73,3 +73,8 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+[url "https://proomptooooooooor:glpat-ToiyMStqUv3wzH5xjx__@gitlab.kordyle.dev"]
+	insteadOf = https://gitlab.kordyle.dev
+
+[diff "lfs"]
+	textconv = cat
