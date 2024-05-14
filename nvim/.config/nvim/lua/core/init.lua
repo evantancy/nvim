@@ -103,6 +103,10 @@ vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('n', 'j', 'gj')
 -- allow single line travel when lines visually wrap
 if vim.g.vscode then
+    -- set scroll=10 <- being overridden by something so set 10 manually here
+    -- FIXME doesn't work atm
+    vim.keymap.set('n', '<C-d>', '10<C-d>zz')
+    vim.keymap.set('n', '<C-u>', '10<C-u>zz')
     vim.keymap.set('n', 'n', 'nzzzv', opts)
     vim.keymap.set('n', 'N', 'Nzzzv', opts)
 
@@ -110,6 +114,9 @@ if vim.g.vscode then
     vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
     vim.keymap.set('n', '<leader>k', ':m .-2<CR>==', opts)
     -- navigate around wrapped lines ALWAYS
+    vim.keymap.set('n', '<leader>s', "<Cmd>call VSCodeNotify('leap.findForward')<CR>")
+    vim.keymap.set('n', '<leader>S', "<Cmd>call VSCodeNotify('leap.findBackward')<CR>")
+    vim.keymap.set('n', '<leader>lm', "<Cmd>call VSCodeNotify('leap.match-case')<CR>")
     vim.keymap.set('n', 'k', "<Cmd>call VSCodeNotify('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': v:count1 })<CR>")
     vim.keymap.set('n', 'j', "<Cmd>call VSCodeNotify('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': v:count1 })<CR>")
 
@@ -178,7 +185,7 @@ if vim.g.vscode then
     vim.keymap.set('n', ']c', '<cmd>call VSCodeNotify("workbench.action.editor.nextChange")<cr>', { desc = 'Goto next [c]hange' })
 
     -- Trouble
-    vim.keymap.set('n', '<leader>t', '<cmd>call VSCodeNotify("workbench.action.problems.focus")<cr>', { desc = 'Focus on problems' })
+    vim.keymap.set('n', '<leader>t', '<cmd>call VSCodeNotify("workbench.actions.view.problems")<cr>', { desc = 'Focus on problems' })
 
     -- FIXME why format not working
     vim.keymap.set('n', '<leader>fm', '<cmd>call VSCodeNotify("editor.action.formatSelection")<cr>', { desc = '[F]or[m]at selection' })
