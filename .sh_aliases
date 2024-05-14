@@ -50,5 +50,5 @@ alias findlink='fd --hidden --glob --type=link $*'
 
 # display what key you're pressing
 alias whichkey='read -n c && printf "%s" "$c"'
-
+alias timestamp='date "+%s" | pbcopy'
 # ANSIBLE MANAGED FILE
