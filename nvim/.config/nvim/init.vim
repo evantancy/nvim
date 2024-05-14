@@ -32,7 +32,7 @@ Plug 'nvim-telescope/telescope-media-files.nvim', Cond (!exists('g:vscode')),
 Plug 'VonHeikemen/lsp-zero.nvim',                 Cond (!exists('g:vscode')),
 " AI Autocomplete
 Plug 'github/copilot.vim',                        Cond (!exists('g:vscode'))
-Plug 'tzachar/cmp-tabnine',                       Cond (!exists('g:vscode'), { 'do': './install.sh' })
+" Plug 'tzachar/cmp-tabnine',                       Cond (!exists('g:vscode'), { 'do': './install.sh' })
 Plug 'zbirenbaum/copilot-cmp',                    Cond (!exists('g:vscode')),
 Plug 'neovim/nvim-lspconfig',                     Cond (!exists('g:vscode')),
 Plug 'williamboman/mason.nvim',                   Cond (!exists('g:vscode')),
