@@ -109,6 +109,16 @@ if vim.g.vscode then
     vim.keymap.set('n', '<C-u>', '10<C-u>zz')
     vim.keymap.set('n', 'n', 'nzzzv', opts)
     vim.keymap.set('n', 'N', 'Nzzzv', opts)
+    -- Harpoon
+    vim.keymap.set('n', '<leader>ha', "<Cmd>call VSCodeNotify('vscode-harpoon.addEditor')<CR>", { desc = '[h]arpoon [a]dd' })
+    vim.keymap.set('n', '<leader>hs', "<Cmd>call VSCodeNotify('vscode-harpoon.editorQuickPick')<CR>", { desc = '[h]arpoon [s]how' })
+    vim.keymap.set('n', '<leader>he', "<Cmd>call VSCodeNotify('vscode-harpoon.editEditors')<CR>", { desc = '[h]arpoon [e]dit' })
+    -- not really sure what this does atm
+    -- vim.keymap.set('n', '<leader>ht', "<cmd>lua require('harpoon.cmd-ui').toggle_quick_menu()<cr>", { desc = '[h]arpoon [t]oggle' })
+    vim.keymap.set('n', '<A-1>', "<Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor1')<CR>")
+    vim.keymap.set('n', '<A-2>', "<Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor2')<CR>")
+    vim.keymap.set('n', '<A-3>', "<Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor3')<CR>")
+    vim.keymap.set('n', '<A-4>', "<Cmd>call VSCodeNotify('vscode-harpoon.gotoEditor4')<CR>")
 
     -- move hightlighted text up/down
     vim.keymap.set('n', '<leader>j', ':m .+1<CR>==', opts)
