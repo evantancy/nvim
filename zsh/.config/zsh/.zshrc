@@ -379,3 +379,9 @@ use_pg15(){
 
 eval "$(direnv hook zsh)"
 use_pg16
+conda_remove() {
+    for env in "$@"
+    do
+        conda env remove -n "$env"
+    done
+}
