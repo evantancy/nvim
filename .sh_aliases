@@ -52,3 +52,4 @@ alias findlink='fd --hidden --glob --type=link $*'
 alias whichkey='read -n c && printf "%s" "$c"'
 alias timestamp='date "+%s" | pbcopy'
 # ANSIBLE MANAGED FILE
+alias gpgreset='gpg-connect-agent killagent /bye; gpg-connect-agent updatestartuptty /bye; gpg-connect-agent /bye'
