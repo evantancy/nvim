@@ -5,10 +5,15 @@ set -euxo pipefail
 
 BIN_DIR="$HOME/bin"
 # change default shell to zsh
-chsh -s $(command -v zsh)
+[ "$(echo $0)" != "zsh" ] && chsh -s $(command -v zsh)
+
 
 # install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! command -v brew &> /dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    echo "Homebrew is already installed"
+fi
 
 if [ -f "brew_cmds.txt" ]; then
     while IFS= read -r cmd; do
