@@ -24,6 +24,63 @@ else
     exit 1
 fi
 
+brew_packages=(
+    awscli
+    coreutils
+    direnv
+    go
+    jq
+    lazygit
+    lazydocker
+    medis
+    ncdu
+    pinentry-mac
+    postgresql@16
+    docker
+    pre-commit
+    ruff
+    spotify
+    stats
+    telnet
+    universal-ctags
+    xclip
+    ykman
+    openssh
+    wget
+    bat
+    fd
+    ripgrep
+    git-delta
+    git-filter-repo
+    tmux
+    node@18
+    karabiner-elements
+)
+for package in "${brew_packages[@]}"; do
+    brew install "$package"
+done
+
+brew_casks=(
+    raycast
+    alt-tab
+    dbeaver-community
+    iterm2
+    keycastr
+    another-redis-desktop-manager
+    monodraw
+    ngrok
+    obsidian
+    notion
+    postman
+    insomnia
+    rectangle
+    stats
+)
+for cask in "${brew_casks[@]}"; do
+    brew install --cask "$cask"
+done
+
+
 # vim-plug
 VIMPLUG_DIR="$HOME/.local/share/nvim/site/autoload"
 if ! [ -d "$VIMPLUG_DIR/plug.vim" ]; then
