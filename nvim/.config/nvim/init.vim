@@ -102,7 +102,7 @@ Plug 'luochen1990/rainbow',                       Cond (!exists('g:vscode')),
 Plug 'junegunn/vim-easy-align',                   Cond (!exists('g:vscode')),
 " latex preview
 Plug 'xuhdev/vim-latex-live-preview',             Cond (!exists('g:vscode'), { 'for': 'tex' })
-Plug 'rmagatti/auto-session',                     Cond (!exists('g:vscode'))
+" Plug 'rmagatti/auto-session',                     Cond (!exists('g:vscode'))
 " diagnostics
 Plug 'folke/trouble.nvim',                        Cond (!exists('g:vscode')),
 Plug 'folke/todo-comments.nvim',                  Cond (!exists('g:vscode')),

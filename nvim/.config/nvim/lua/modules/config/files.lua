@@ -3,8 +3,8 @@ if not status then
     return
 end
 
-local _, auto_session = pcall(require, 'auto-session')
-if auto_session then
+local session_status, auto_session = pcall(require, 'auto-session')
+if session_status then
     require('auto-session').setup({
         log_level = 'error',
 

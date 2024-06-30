@@ -6,7 +6,6 @@
 silent! let g:plugs['Comment.nvim'].commit = '6821b3ae27a57f1f3cf8ed030e4a55d70d0c4e43'
 silent! let g:plugs['LuaSnip'].commit = '58236e8b2f20de23ff35106dace9212b41d78860'
 silent! let g:plugs['alpha-nvim'].commit = '4b0ba68022d8612b04b26844f1ce5e708c0d23b0'
-silent! let g:plugs['auto-session'].commit = 'ac22fb5a0d10d206d2ea8b347a76152c0f184640'
 silent! let g:plugs['cmp-buffer'].commit = '3022dbc9166796b644a841a02de8dd1cc1d311fa'
 silent! let g:plugs['cmp-cmdline'].commit = '8fcc934a52af96120fe26358985c10c035984b53'
 silent! let g:plugs['cmp-nvim-lsp'].commit = '0e6b2ed705ddcff9738ec4ea838141654f12eeef'
