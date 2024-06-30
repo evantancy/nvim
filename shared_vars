@@ -2,7 +2,7 @@
 
 # environment variables
 if [[ -z $STOW_FOLDERS ]]; then
-	STOW_FOLDERS=("alacritty" "firefox" "nvim" "tmux" "i3" "ideavim" "dunst" "bash" "zsh" "git")
+	STOW_FOLDERS=("iterm" "nvim" "tmux" "karabiner" "ideavim" "zsh" "git" "gpg")
 fi
 
 if [[ -z $DOTFILES ]]; then
