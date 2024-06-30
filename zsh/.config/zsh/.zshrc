@@ -378,3 +378,8 @@ ssh-add -l 2>/dev/null >/dev/null
 
 # if not valid, then start ssh-agent using $SSH_AUTH_SOCK
 [ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
+
+fz() {
+    local dir
+    dir=$(awk -F"|" '{print $1}' "$_Z_DATA" | fzf) && cd "$dir"
+}
