@@ -27,7 +27,7 @@ case $(uname) in
       autoload -U down-line-or-beginning-search
       zle -N down-line-or-beginning-search
       bindkey -M emacs "${terminfo[kcud1]}" down-line-or-beginning-search
-    bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
+      bindkey -M viins "${terminfo[kcud1]}" down-line-or-beginning-search
       bindkey -M vicmd "${terminfo[kcud1]}" down-line-or-beginning-search
     fi
 
@@ -85,7 +85,7 @@ export HISTSIZE=100000 # maximum events for internal history
 export SAVEHIST=$HISTSIZE # maximum events in history file
 export HISTFILE="$HOME/.zsh_history"
 setopt EXTENDED_HISTORY # Write the history file in the ':start:elapsed;command' format.
-# setopt SHARE_HISTORY # Share history between all sessions.
+setopt SHARE_HISTORY # Share history between all sessions.
 setopt INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST # Expire a duplicate event first when trimming history.
 setopt HIST_IGNORE_DUPS # Do not record an event that was just recorded again.
@@ -182,10 +182,6 @@ PROMPT='%B%{$fg[cyan]%} %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_colo
 # TODO: refactor current prompt because current, TOO SLOW DO NOT USE
 # PROMPT='%{$fg[cyan]%}%* %{$fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 
-# some paths
-export DOTFILES="$HOME/.dotfiles"
-export PATH=$PATH:~/bin
-export PATH=$PATH:~/.local/bin
 
 # zsh
 source "$ZDOTDIR/zsh-functions"
@@ -204,12 +200,12 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242,underline,bold'
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 ZSH_AUTOSUGGEST_MAX_BUFFER_SIZE=20
 zsh_add_plugin "zdharma-continuum/fast-syntax-highlighting"
-zsh_add_plugin "lukechilds/zsh-nvm"
+# zsh_add_plugin "lukechilds/zsh-nvm"
 zsh_add_plugin "rupa/z"
-zsh_add_plugin "changyuheng/fz"
 zsh_add_plugin "sharkdp/fd"
 FD_COMPLETION_DIR="$ZDOTDIR/plugins/fd/contrib/completion"
 [ -d $FD_COMPLETION_DIR ] && fpath+=$FD_COMPLETION_DIR
+zsh_add_plugin "conda-incubator/conda-zsh-completion"
 
 # autocompletion
 [ -d $ZDOTDIR/completions ] && fpath+="$ZDOTDIR/completions/"
@@ -232,10 +228,10 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-
 # git completions
 zstyle ':completion:*:*:git:*' script $ZDOTDIR/plugins/git/contrib/completion/git-completion.bash
 export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
+
 ######################## fzf-tab settings ####################################
 # trigger continuous completion, useful for completion long paths
 # default value, but we use '/' in branch names a lot
@@ -243,49 +239,25 @@ export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 zstyle ':fzf-tab:*' continuous-trigger '\'
 # show completion colors (like Bash's `set colored-completion-prefix on`)
 zstyle ':completion:*' list-colors ${(@s.:.)LS_COLORS}
-# preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
 # disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:git-checkout:*' sort true
 
-# eval "`pip completion --zsh`"
+which pip &> /dev/null && eval "`pip completion --zsh`"
 # case insensitive autocompletion
 zstyle ':completion:*' matcher-list '' '+m:{a-zA-Z}={A-Za-z}' '+r:|[._-]=* r:|=*' '+l:|=* r:|=*'
 # whether to show dirs ./ and ../
 zstyle ':completion:*' special-dirs false
-# TODO: fix clash with fzf
-# autocorrect any spelling errors, i.e. Bash's `shopt -s dirspell`
-# autocorrect() {
-#   zle .spell-word
-#   zle .$WIDGET
-# }
-# zle -N accept-line autocorrect
-# zle -N magic-space autocorrect
-# bindkey '\t' magic-space
 _comp_options+=(globdots)
-# zstyle ':completion:*' menu select=2
-# zstyle ':completion:*' auto-description 'specify: %d'
-# zstyle ':completion:*' completer _expand _complete _correct _approximate
-# zstyle ':completion:*' format 'Completing %d'
-# zstyle ':completion:*' group-name ''
-# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-# zstyle ':completion:*' list-colors ''
-# zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-# zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-# zstyle ':completion:*' use-compctl false
-# zstyle ':completion:*' verbose true
-#
 compinit -i
 
 
 # aliases
 source $DOTFILES/.sh_aliases
 
-# aliases ripped off Bash
-# enable color support of ls and also add handy aliases
 # miniconda
 # export PATH="$HOME/miniconda3/bin:$PATH"  # commented out by conda initialize
 # >>> conda initialize >>>
@@ -302,6 +274,10 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+conda activate base_env
+
+# aliases ripped off Bash
+# enable color support of ls and also add handy aliases
 alias ls='ls --color=auto -hp'
 alias dir='dir --color=auto -h'
 alias vdir='vdir --color=auto -h'
@@ -314,9 +290,6 @@ alias ll='ls -alFh'
 alias la='ls -Aph'
 alias l='ls -CFph'
 
-# golang
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:~/go/bin
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -376,12 +349,32 @@ use_pg16(){
 use_pg15(){
     export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@15/bin
 }
+use_pg16
 
 eval "$(direnv hook zsh)"
-use_pg16
 conda_remove() {
     for env in "$@"
     do
         conda env remove -n "$env"
     done
 }
+
+# # Start SSH agent
+# if [ -z "$SSH_AUTH_SOCK" ]; then
+#     # Check for a currently running instance of the agent
+#     if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#         # Start a new instance of the agent
+#         ssh-agent -s > "$HOME/.ssh/ssh-agent"
+#     fi
+#     if [[ -f "$HOME/.ssh/ssh-agent" ]]; then
+#         eval "$(<"$HOME/.ssh/ssh-agent")" > /dev/null
+#     fi
+# fi
+# set SSH_AUTH_SOCK env var to a fixed value
+export SSH_AUTH_SOCK=~/.ssh/ssh-agent.sock
+
+# test whether $SSH_AUTH_SOCK is valid
+ssh-add -l 2>/dev/null >/dev/null
+
+# if not valid, then start ssh-agent using $SSH_AUTH_SOCK
+[ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
