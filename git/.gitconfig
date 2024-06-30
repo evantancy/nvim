@@ -1,4 +1,5 @@
 [alias]
+    authors = "!git shortlog -sne --all"
     # launch fzf, use Tab or Shift-Tab to select multiple files
     a = "!git status --short | fzf --multi | awk '{print $2}' | xargs git add"
     d = diff
@@ -24,7 +25,6 @@
     hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
     # git log including which files have been changed
     llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
-    ; open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' -e \"s#\.git#/-/tree/$(curbranch)#\" | xargs open -a 'Google Chrome'"
     open = "!git config --get remote.origin.url | sed -Ee 's#(git@|git://)#https://#' -e 's#com:#com/#' -e 's#dev:#dev/#' | xargs open -a 'Arc'"
     rt = reset
     rb = rebase
@@ -38,24 +38,26 @@
     lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
     lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
-	count-lines = "! git log --no-merges --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
-	count-files = "! git log --no-merges --author=\"$1\" --pretty= --name-only | sort -u | wc -l #"
+    count-lines = "! git log --no-merges --author=\"$1\" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' #"
+    count-files = "! git log --no-merges --author=\"$1\" --pretty= --name-only | sort -u | wc -l #"
 [user]
-        useConfigOnly = true
-[commit]
-        gpgsign = false
+    useConfigOnly = true
+    name =
+    email =
 [gpg]
-        program = gpg
+    program = gpg
+    format = ssh
 [pull]
-        ff = only
+    ff = only
 [init]
-        defaultBranch = main
+    defaultBranch = main
 [core]
-        pager = delta
-	editor = vim
-	longpaths = true
+    pager = delta
+    editor = vim
+    longpaths = true
+    excludesfile = ~/.gitignore_global
 [interactive]
-        diffFilter = delta --color-only
+    diffFilter = delta --color-only
 [delta]
     navigate = true # use n and N to move between diff sections
     light = false
@@ -67,14 +69,11 @@
 [pretty]
     reflog = %C(cyan)%cs %C(auto)%h %<|(17)%C(red)%gd %C(reset) %gs (%s)
 [color]
-	ui = true
+    ui = true
 [filter "lfs"]
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-[url "https://proomptooooooooor:glpat-ToiyMStqUv3wzH5xjx__@gitlab.kordyle.dev"]
-	insteadOf = https://gitlab.kordyle.dev
-
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
 [diff "lfs"]
-	textconv = cat
+    textconv = cat
