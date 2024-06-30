@@ -1,16 +1,8 @@
 # .dotfiles
 
-# Dependencies
-
-- GNU Stow
-
-# Setup
+# how it works
 
 Place this repo in **$HOME**.
-Install using the `install` script.
-Uninstall using the `clean-env` script.
-
-# Resources
-
-- https://thevaluable.dev/zsh-install-configure-mouseless/
-
+Run the `bootstrap.sh` script to download dependencies.
+Install using the `install` script to use stow to place dotfiles into the relevant places, based on shared_vars.
+Remove dotfiles using the `clean-env` script.
