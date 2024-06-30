@@ -3,9 +3,11 @@
 # remove x to disable printing of commands
 set -euxo pipefail
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 BIN_DIR="$HOME/bin"
 # change default shell to zsh
-[ "$(echo $0)" != "zsh" ] && chsh -s $(command -v zsh)
+[ "$(basename "$SHELL")" != "zsh" ] && chsh -s $(command -v zsh)
 
 
 # install homebrew
@@ -15,14 +17,14 @@ else
     echo "Homebrew is already installed"
 fi
 
-if [ -f "brew_cmds.txt" ]; then
-    while IFS= read -r cmd; do
-        eval "$cmd"
-    done < "brew_cmds.txt"
-else
-    echo "brew_cmds.txt not found"
-    exit 1
-fi
+# if [ -f "brew_cmds.txt" ]; then
+#     while IFS= read -r cmd; do
+#         eval "$cmd"
+#     done < "brew_cmds.txt"
+# else
+#     echo "brew_cmds.txt not found"
+#     exit 1
+# fi
 
 brew_packages=(
     awscli
@@ -92,12 +94,18 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/bin/fzf &&
 	~/bin/fzf/install --key-bindings --completion --no-update-rc
 
 # miniconda
-mkdir -p ~/miniconda3
-curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-rm -rf ~/miniconda3/miniconda.sh
+if [ ! -d "$HOME/miniconda3" ]; then
+    mkdir -p ~/miniconda3
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+    rm -rf ~/miniconda3/miniconda.sh
+fi
 
 # macos settings
 defaults write -g NSWindowShouldDragOnGesture -bool true
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+
+# run ssh setup
+pkill ssh-agent
+pkill gpg-agent
