@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source ./ubuntu
+source ./shared_vars
 
 for loc in "${STOW_FOLDERS[@]}"; do
 	stow -vD $loc
