@@ -7,6 +7,7 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set ignorecase
 nnoremap Y y$
 vnoremap Y y$
 syntax on
