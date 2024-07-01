@@ -296,8 +296,7 @@ export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='--multi --inline-info --border'
 export FZF_DEFAULT_OPS='--multi --inline-info --border'
 export FZF_DEFAULT_COMMAND="rg --files --hidden $(test -d .git && echo '-g !.git')"
-export FZF_CTRL_T_COMMAND=""
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_COMMAND="fd --type file --follow --hidden --exclude .git --strip-cwd-prefix"
 # TODO disabling CTRL-T for now since i use tmux alot
 # bindkey -r '^T'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
