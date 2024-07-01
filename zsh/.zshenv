@@ -19,8 +19,11 @@ SHELL_SESSIONS_DISABLE=1
 # export JAVA_HOME=$(/usr/libexec/java_home -v1.8.0)
 # export PATH=$PATH:$(npm config --global get prefix)/bin
 
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 export DOTFILES="$HOME/.dotfiles"
+[ ! -d "$HOME/bin" ] && mkdir -p "$HOME/bin"
+[ ! -d "$HOME/.local/bin" ] && mkdir -p "$HOME/.local/bin"
+
 export PATH=$PATH:~/bin
 export PATH=$PATH:~/.local/bin
 
