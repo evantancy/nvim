@@ -400,3 +400,59 @@ fi
 
 # Where should I put you?
 bindkey -s ^f "tmux-sessionizer\n"
+
+# Function to parse the line and search for matching Host entries in ~/.ssh/config
+parse_and_search_ssh_config() {
+    local line="$@"
+    local hostname=$(echo $line | sed -E 's#git@([^:]+):.*#\1#')
+
+    # echo "Searching for matching Host entries in ~/.ssh/config for hostname: $hostname"
+
+    # Create an array of SSH config objects
+    local -a arr
+    arr=("${(@f)$(cat ~/.ssh/config)}")
+
+    # Process the array
+    local -a host_blocks
+    local current_block=""
+    for line in "${arr[@]}"; do
+        if [[ $line =~ ^Host ]]; then
+            if [[ -n $current_block ]]; then
+                host_blocks+=("$current_block")
+            fi
+            current_block="$line"
+        elif [[ -n $current_block ]]; then
+            current_block+=$'\n'"$line"
+        fi
+    done
+
+    if [[ -n $current_block ]]; then
+        host_blocks+=("$current_block")
+    fi
+
+    # Array to store matches
+    local -a matches
+
+    for block in "${host_blocks[@]}"; do
+        if echo "$block" | grep -q "Hostname $hostname"; then
+            local host_alias=$(echo "$block" | awk '/^Host / {print $2}')
+            matches+=("$hostname<>$host_alias")
+        fi
+    done
+
+    echo "${matches[@]}"
+    return 0
+}
+
+_ssh()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=$(grep '^Host' ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null | grep -v '[?*]' | cut -d ' ' -f 2-)
+
+    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
+    return 0
+}
+complete -F _ssh ssh
