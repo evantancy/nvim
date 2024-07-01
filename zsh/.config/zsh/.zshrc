@@ -292,14 +292,15 @@ alias l='ls -CFph'
 
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_TRIGGER='**'
-export FZF_COMPLETION_OPTS='--multi --inline-info'
-export FZF_DEFAULT_OPS='--multi --inline-info'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_COMPLETION_OPTS='--multi --inline-info --border'
+export FZF_DEFAULT_OPS='--multi --inline-info --border'
 export FZF_DEFAULT_COMMAND="rg --files --hidden $(test -d .git && echo '-g !.git')"
+export FZF_CTRL_T_COMMAND=""
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # TODO disabling CTRL-T for now since i use tmux alot
 # bindkey -r '^T'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # tldr
 [ -f ~/bin/tldr ] && compctl -k "($( tldr 2>/dev/null --list))" tldr
@@ -379,7 +380,7 @@ ssh-add -l 2>/dev/null >/dev/null
 # if not valid, then start ssh-agent using $SSH_AUTH_SOCK
 [ $? -ge 2 ] && ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
 
-fz() {
+zf() {
     local dir
     dir=$(awk -F"|" '{print $1}' "$_Z_DATA" | fzf) && cd "$dir"
 }
@@ -395,5 +396,7 @@ if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
     export GPG_AGENT_INFO
 else
     eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
-fi# Where should I put you?
+fi
+
+# Where should I put you?
 bindkey -s ^f "tmux-sessionizer\n"
