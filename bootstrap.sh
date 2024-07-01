@@ -125,12 +125,14 @@ defaults write -g NSWindowShouldDragOnGesture -bool true
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 defaults write -g ApplePressAndHoldEnabled -bool false # disable accents popping up
+defaults -currentHost write -globalDomain NSStatusItemSpacing 2
+defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -1
 # echo "Changing macOS defaults..."
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
-# defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 # defaults write com.apple.spaces spans-displays -bool false
-# defaults write com.apple.dock autohide -bool true
-# defaults write com.apple.dock "mru-spaces" -bool "false"
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock "mru-spaces" -bool "false"
 # defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
 # defaults write com.apple.LaunchServices LSQuarantine -bool false
 # defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
