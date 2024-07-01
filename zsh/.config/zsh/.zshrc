@@ -296,8 +296,8 @@ alias l='ls -CFph'
 export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='--multi --inline-info'
 export FZF_DEFAULT_OPS='--multi --inline-info'
-export FZF_DEFAULT_COMMAND="rg --files --hidden -g !.git/"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_COMMAND="rg --files --hidden $(test -d .git && echo '-g !.git')"
 # TODO disabling CTRL-T for now since i use tmux alot
 # bindkey -r '^T'
 
