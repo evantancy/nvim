@@ -67,10 +67,17 @@ for package in "${brew_packages[@]}"; do
 done
 
 # sketchybar
-brew tap homebrew/cask-fonts
+brew install lua
+brew install switchaudio-osx
+brew install nowplaying-cli
+brew install --cask sf-symbols
+brew install --cask font-sf-mono
+brew install --cask font-sf-pro
 brew install --cask font-hack-nerd-font
+brew install --cask font-jetbrains-mono-nerd-font
 brew install FelixKratz/formulae/sketchybar
 brew services start sketchybar
+(git clone https://github.com/FelixKratz/SbarLua.git ~/tmp/SbarLua && cd ~/tmp/SbarLua/ && make install)
 
 
 brew_casks=(
