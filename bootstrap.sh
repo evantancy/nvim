@@ -88,6 +88,7 @@ brew_casks=(
     insomnia
     rectangle
     stats
+    obsidian
 )
 for cask in "${brew_casks[@]}"; do
     brew install --cask "$cask"
