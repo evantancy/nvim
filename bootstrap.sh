@@ -39,6 +39,7 @@ brew_packages=(
     pinentry-mac
     postgresql@16
     docker
+    docker-compose
     pre-commit
     ruff
     spotify
@@ -57,6 +58,8 @@ brew_packages=(
     tmux
     node@18
     karabiner-elements
+    koekeishiya/formulae/yabai
+    jordanbaird-ice
 )
 for package in "${brew_packages[@]}"; do
     brew install "$package"
