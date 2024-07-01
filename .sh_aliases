@@ -35,9 +35,9 @@ alias load_conda='export PATH="$HOME/miniconda3/bin:$PATH" && source $HOME/minic
 # alias pbpaste="xclip -sel clip -o"
 
 # misc
-alias nvim="$HOME/opt/nvim-macos/bin/nvim"
+alias nvim="$HOME/opt/nvim-macos-arm64/bin/nvim"
 # alias vim="nvim"
-alias rg="rg --hidden $*"
+# alias rg="rg --hidden $*"
 alias fp="fzf --preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null' --bind ctrl-d:preview-page-down,ctrl-u:preview-page-up"
 alias cat="bat --paging=never -pp --theme='gruvbox-dark' $*"
 alias cp="cp -riv"
