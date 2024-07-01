@@ -274,7 +274,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-conda activate base_env
+# conda activate base_env
 
 # aliases ripped off Bash
 # enable color support of ls and also add handy aliases
