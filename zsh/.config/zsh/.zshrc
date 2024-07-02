@@ -174,7 +174,6 @@ git_prompt() {
 
     [ -n "${branch}" ] && echo " (${branch})"
 }
-setopt PROMPT_SUBST
 # Prompt. Using single quotes around the PROMPT is very important, otherwise
 # the git branch will always be empty. Using single quotes delays the
 # evaluation of the prompt. Also PROMPT is an alias to PS1.
@@ -455,3 +454,13 @@ _ssh()
     return 0
 }
 complete -F _ssh ssh
+
+
+
+show_virtual_env() {
+  if [[ -n "$CONDA_DEFAULT_ENV" && -n "$DIRENV_DIR" ]]; then
+    echo "($(basename $CONDA_DEFAULT_ENV))"
+  fi
+}
+
+PS1='$(show_virtual_env)'$PS1
