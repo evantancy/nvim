@@ -389,11 +389,14 @@ zf() {
 # gpg-agent or set up the GPG_AGENT_INFO variable if it's already running.
 
 # Add the following to your shell init to set up gpg-agent automatically for every shell
-if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+if [ -f ~/.gnupg/.gpg-agent-info ] && [ -z "$(pgrep gpg-agent)" ]; then
     source ~/.gnupg/.gpg-agent-info
     export GPG_AGENT_INFO
-else
-    eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+elif [ -z "$(pgrep gpg-agent)" ]; then
+    # deprecated
+    # eval $(gpg-agent --daemon --write-env-file ~/.gnupg/.gpg-agent-info)
+    echo "starting gpg-agent"
+    eval $(gpg-agent --daemon)
 fi
 
 # Where should I put you?
