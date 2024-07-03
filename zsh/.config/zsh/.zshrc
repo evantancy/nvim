@@ -467,3 +467,4 @@ show_virtual_env() {
 }
 
 PS1='$(show_virtual_env)'$PS1
+export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
