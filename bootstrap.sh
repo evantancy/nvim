@@ -27,6 +27,7 @@ fi
 # fi
 
 brew_packages=(
+    eza
     awscli
     coreutils
     direnv
@@ -56,7 +57,8 @@ brew_packages=(
     git-delta
     git-filter-repo
     tmux
-    node@18
+    # node@18
+    fnm
     karabiner-elements
     koekeishiya/formulae/yabai
     # jordanbaird-ice

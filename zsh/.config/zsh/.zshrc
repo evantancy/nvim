@@ -185,12 +185,16 @@ PROMPT='%B%{$fg[cyan]%} %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_colo
 # zsh
 source "$ZDOTDIR/zsh-functions"
 
-# node version manager
-export NVM_DIR="$HOME/.nvm"
-export NVM_COMPLETION=false #significant slows zsh
-export NVM_LAZY_LOAD=true
-# export PATH=$PATH:$(npm config --global get prefix)/bin
-# [ -f $NVIM_DIR/nvm.sh ] && source $NVM_DIR/nvm.sh
+eval "$(fnm env)"
+# FUCK NVM, use fnm
+# # node version manager
+# export NVM_DIR="$HOME/.nvm"
+# export NVM_COMPLETION=false #significant slows zsh
+# export NVM_LAZY_LOAD=true
+# # export PATH=$PATH:$(npm config --global get prefix)/bin
+# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+# [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
 
 # plugins
 zsh_add_plugin "Aloxaf/fzf-tab" # must be loaded FIRST!!! also unstable
