@@ -1,3 +1,4 @@
+ohmyzsh/
 .vscode
 .swp
 *.zcompdump*
@@ -7,3 +8,4 @@
 */karabiner/automatic_backups/*
 automatic_backups/
 .zcompcache/
+
