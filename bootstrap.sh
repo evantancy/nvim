@@ -9,6 +9,7 @@ BIN_DIR="$HOME/bin"
 # change default shell to zsh
 [ "$(basename "$SHELL")" != "zsh" ] && chsh -s $(command -v zsh)
 
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # install homebrew
 if ! command -v brew &> /dev/null; then
