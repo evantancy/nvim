@@ -7,6 +7,11 @@ autoload -U colors && colors
 # setting `TERM = xterm-256color` in alacritty sometimes isn't being read, force
 export TERM="xterm-256color"
 
+plugins=(git)
+ZSH_THEME="robbyrussell"
+source $XDG_CONFIG_HOME/zsh/ohmyzsh/oh-my-zsh.sh
+
+
 case $(uname) in
 "Linux")
     eval $(env TERM=xterm-256color dircolors)
@@ -177,7 +182,7 @@ git_prompt() {
 # Prompt. Using single quotes around the PROMPT is very important, otherwise
 # the git branch will always be empty. Using single quotes delays the
 # evaluation of the prompt. Also PROMPT is an alias to PS1.
-PROMPT='%B%{$fg[cyan]%} %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
+# PROMPT='%B%{$fg[cyan]%} %{$fg[blue]%}%~%{$fg[yellow]%}$(git_prompt)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 # TODO: refactor current prompt because current, TOO SLOW DO NOT USE
 # PROMPT='%{$fg[cyan]%}%* %{$fg[blue]%}%c%{$fg[yellow]%} $(git_info)%{$reset_color%} %(?.$.%{$fg[red]%}$)%b '
 
