@@ -190,7 +190,7 @@ git_prompt() {
 # zsh
 source "$ZDOTDIR/zsh-functions"
 
-eval "$(fnm env)"
+eval "$(fnm env --use-on-cd)"
 # FUCK NVM, use fnm
 # # node version manager
 # export NVM_DIR="$HOME/.nvm"
