@@ -28,6 +28,9 @@ fi
 # fi
 
 brew_packages=(
+    rustup
+    ruff
+    orbstack
     eza
     awscli
     coreutils
@@ -69,6 +72,8 @@ for package in "${brew_packages[@]}"; do
     brew install "$package"
 done
 
+rustup-init
+
 # sketchybar
 brew install lua
 brew install switchaudio-osx
@@ -99,6 +104,7 @@ brew_casks=(
     rectangle
     stats
     obsidian
+    kap
 )
 for cask in "${brew_casks[@]}"; do
     brew install --cask "$cask"
@@ -123,9 +129,12 @@ if [ ! -d "$HOME/miniconda3" ]; then
     rm -rf ~/miniconda3/miniconda.sh
 fi
 
+# prevent duplicate env shown when using both conda activate and direnv together
+conda config --set changeps1 False
+
 # macos settings
 defaults write -g NSWindowShouldDragOnGesture -bool true
-defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
+defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 defaults write -g ApplePressAndHoldEnabled -bool false # disable accents popping up
 defaults -currentHost write -globalDomain NSStatusItemSpacing 2
