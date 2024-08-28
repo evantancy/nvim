@@ -183,7 +183,8 @@ end
 
 -- 'pylsp',
 local servers = {
-    'pyright',
+    'pylsp',
+    -- 'pyright',
     'lua_ls',
     'tsserver',
     'clangd',

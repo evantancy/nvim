@@ -8,7 +8,7 @@ if not vim.g.vscode then
         " colorscheme gruvbox
         " colorscheme kanagawa
         " colorscheme onedark
-        colorscheme monokai-pro
+        " colorscheme monokai-pro
         " colorscheme night-owl
         ]])
 end
