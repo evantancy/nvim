@@ -40,6 +40,7 @@ case $(uname) in
 "Darwin")
     # homebrew
     eval "$(/opt/homebrew/bin/brew shellenv)"
+    export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 
     # # dircolors is a GNU utility that's not on macOS by default. With this not
     # # being used on macOS it means zsh's complete menu won't have colors.
@@ -339,7 +340,7 @@ ROS_SETUP_FILE=/opt/ros/$ROS_VER/setup.zsh
 gdf() {
 	echo 'Commits that exist in '$1' but not in '$2':'
 	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $2..$1
-	echo 'Commits that exist in '$2' but not in '$1':'
+	echo '\n\nCommits that exist in '$2' but not in '$1':'
 	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $1..$2
 }
 
@@ -357,7 +358,7 @@ use_pg16(){
 use_pg15(){
     export PATH=$PATH:$HOMEBREW_PREFIX/opt/postgresql@15/bin
 }
-use_pg16
+# use_pg16
 
 eval "$(direnv hook zsh)"
 conda_remove() {
@@ -407,6 +408,16 @@ elif [ -z "$(pgrep gpg-agent)" ]; then
     echo "starting gpg-agent"
     eval $(gpg-agent --daemon)
 fi
+# for a silent tmux sessionizer experience
+# # Define a custom widget to run tmux-sessionizer
+# tmux_sessionizer_widget() {
+#   zle -I # Clear the input line
+#   tmux-sessionizer
+#   zle reset-prompt # Reset the prompt
+# }
+# # Bind the custom widget to Ctrl+f
+# zle -N tmux_sessionizer_widget
+# bindkey '^f' tmux_sessionizer_widget
 
 # Where should I put you?
 bindkey -s ^f "tmux-sessionizer\n"
