@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# remove x to disable printing of commands
 set -euxo pipefail
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -29,8 +28,8 @@ fi
 
 brew_packages=(
     rustup
-    ruff
-    orbstack
+    # ruff
+    # orbstack
     eza
     awscli
     coreutils
@@ -74,18 +73,19 @@ done
 
 rustup-init
 
-# sketchybar
-brew install lua
-brew install switchaudio-osx
-brew install nowplaying-cli
-brew install --cask sf-symbols
-brew install --cask font-sf-mono
-brew install --cask font-sf-pro
-brew install --cask font-hack-nerd-font
-brew install --cask font-jetbrains-mono-nerd-font
-brew install FelixKratz/formulae/sketchybar
-brew services start sketchybar
-(git clone https://github.com/FelixKratz/SbarLua.git ~/tmp/SbarLua && cd ~/tmp/SbarLua/ && make install)
+# DON'T USE sketchybar for now, simply running a command below to configure the menu bar
+# # sketchybar
+# brew install lua
+# brew install switchaudio-osx
+# brew install nowplaying-cli
+# brew install --cask sf-symbols
+# brew install --cask font-sf-mono
+# brew install --cask font-sf-pro
+# brew install --cask font-hack-nerd-font
+# brew install --cask font-jetbrains-mono-nerd-font
+# brew install FelixKratz/formulae/sketchybar
+# brew services start sketchybar
+# (git clone https://github.com/FelixKratz/SbarLua.git ~/tmp/SbarLua && cd ~/tmp/SbarLua/ && make install)
 
 
 brew_casks=(
@@ -94,7 +94,7 @@ brew_casks=(
     dbeaver-community
     iterm2
     keycastr
-    another-redis-desktop-manager
+    # another-redis-desktop-manager
     monodraw
     ngrok
     obsidian
@@ -105,6 +105,7 @@ brew_casks=(
     stats
     obsidian
     kap
+    tidal
 )
 for cask in "${brew_casks[@]}"; do
     brew install --cask "$cask"
@@ -129,19 +130,21 @@ if [ ! -d "$HOME/miniconda3" ]; then
     rm -rf ~/miniconda3/miniconda.sh
 fi
 
-# prevent duplicate env shown when using both conda activate and direnv together
-conda config --set changeps1 False
+conda config --set changeps1 True
 
 # macos settings
 defaults write -g NSWindowShouldDragOnGesture -bool true
 defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 defaults write -g ApplePressAndHoldEnabled -bool false # disable accents popping up
+# configure menu bar
 defaults -currentHost write -globalDomain NSStatusItemSpacing 2
 defaults -currentHost write -globalDomain NSStatusItemSelectionPadding -1
 # echo "Changing macOS defaults..."
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
 # defaults write com.apple.spaces spans-displays -bool false
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock "mru-spaces" -bool "false"

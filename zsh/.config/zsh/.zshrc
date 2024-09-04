@@ -9,6 +9,7 @@ export TERM="xterm-256color"
 
 plugins=(git)
 ZSH_THEME="robbyrussell"
+DISABLE_AUTO_UPDATE="true" # disable oh-my-zsh auto-update
 source $XDG_CONFIG_HOME/zsh/ohmyzsh/oh-my-zsh.sh
 
 
@@ -337,6 +338,7 @@ export CUDA_ROOT="/usr/local/cuda"
 ROS_SETUP_FILE=/opt/ros/$ROS_VER/setup.zsh
 [ ! -z $ROS_VER ] && [ -f $ROS_SETUP_FILE ] && source $ROS_SETUP_FILE
 
+# git diff in terms of commits...
 gdf() {
 	echo 'Commits that exist in '$1' but not in '$2':'
 	git log --graph --pretty=format:'%Cred%h%Creset %s' --abbrev-commit $2..$1
@@ -345,6 +347,11 @@ gdf() {
 }
 
 curbranch() {
+    git rev-parse --abbrev-ref HEAD
+}
+
+# lol
+cb() {
     git rev-parse --abbrev-ref HEAD
 }
 
@@ -486,5 +493,6 @@ show_virtual_env() {
   fi
 }
 
-PS1='$(show_virtual_env)'$PS1
+# prevent duplicate env shown when using both conda activate and direnv together
+# PS1='$(show_virtual_env)'$PS1
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
