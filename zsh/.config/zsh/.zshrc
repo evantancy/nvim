@@ -416,18 +416,18 @@ elif [ -z "$(pgrep gpg-agent)" ]; then
     eval $(gpg-agent --daemon)
 fi
 # for a silent tmux sessionizer experience
-# # Define a custom widget to run tmux-sessionizer
-# tmux_sessionizer_widget() {
-#   zle -I # Clear the input line
-#   tmux-sessionizer
-#   zle reset-prompt # Reset the prompt
-# }
-# # Bind the custom widget to Ctrl+f
-# zle -N tmux_sessionizer_widget
-# bindkey '^f' tmux_sessionizer_widget
+# Define a custom to run tmux-sessionizer
+tmux_sessionizer_widget() {
+  zle -I # Clear the input line
+  tmux-sessionizer
+  zle reset-prompt # Reset the prompt
+}
+# Bind the custom widget to Ctrl+f
+zle -N tmux_sessionizer_widget
+bindkey '^f' tmux_sessionizer_widget
 
 # Where should I put you?
-bindkey -s ^f "tmux-sessionizer\n"
+# bindkey -s ^f "tmux-sessionizer\n"
 
 # Function to parse the line and search for matching Host entries in ~/.ssh/config
 parse_and_search_ssh_config() {
