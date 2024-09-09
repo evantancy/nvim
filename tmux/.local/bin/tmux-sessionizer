@@ -3,7 +3,11 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/work ~/work/other-subnets ~/personal ~/git-worktrees ~/random-repos -mindepth 1 -maxdepth 1 -type d | fzf)
+    # selected=$(find ~/work ~/work/other-subnets ~/personal ~/git-worktrees ~/random-repos -mindepth 1 -maxdepth 1 -type d | fzf)
+    dirs=($(find ~/work ~/work/other-subnets ~/personal ~/git-worktrees ~/random-repos -mindepth 1 -maxdepth 1 -type d))
+    dirs+=("$HOME/.dotfiles")
+    # selected=$(echo dirs | fzf)
+    selected=$(printf "%s\n" "${dirs[@]}" | fzf)
 fi
 
 if [[ -z $selected ]]; then
