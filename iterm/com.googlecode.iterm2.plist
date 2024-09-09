@@ -2232,13 +2232,13 @@
 			<key>Normal Font</key>
 			<string>JetBrainsMonoNFM-Regular 14</string>
 			<key>Option Key Sends</key>
-			<integer>2</integer>
+			<integer>1</integer>
 			<key>Prompt Before Closing 2</key>
 			<false/>
 			<key>Right Option Key Changeable</key>
 			<false/>
 			<key>Right Option Key Sends</key>
-			<integer>2</integer>
+			<integer>1</integer>
 			<key>Rows</key>
 			<integer>40</integer>
 			<key>Screen</key>

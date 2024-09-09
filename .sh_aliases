@@ -55,3 +55,4 @@ alias timestamp='date "+%s" | pbcopy'
 alias gpgreset='gpg-connect-agent killagent /bye; gpg-connect-agent updatestartuptty /bye; gpg-connect-agent /bye'
 alias fcd='cd $(fd --type directory | fzf)'
 alias fz="cd \$(z | awk '{\$1=\"\"; print \$0}' | sed 's/^ *//' | fzf)"
+alias v="nvim"
