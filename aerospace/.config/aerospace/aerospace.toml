@@ -43,6 +43,7 @@ key-mapping.preset = 'qwerty'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = 'move-mouse window-lazy-center'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -204,3 +205,33 @@ alt-shift-l = ['join-with right', 'mode main']
 1 = ['main', '^built-in retina display$', 1]
 2 = ['secondary', '^24G2W1G4 \(1\)$', 2]
 3 = ['^24G2W1G4 \(2\)$']
+
+[[on-window-detected]]
+if.app-id = "li.zihua.medis2"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.apple.finder"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.apple.systempreferences"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.apple.Notes"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.apple.AppStore"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "at.obdev.littlesnitch"
+check-further-callbacks = true
+run = 'layout floating'
