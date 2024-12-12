@@ -56,3 +56,4 @@ alias gpgreset='gpg-connect-agent killagent /bye; gpg-connect-agent updatestartu
 alias fcd='cd $(fd --type directory | fzf)'
 alias fz="cd \$(z | awk '{\$1=\"\"; print \$0}' | sed 's/^ *//' | fzf)"
 alias v="nvim"
+alias cpl="fc -ln -1 | pbcopy --clipboard"
