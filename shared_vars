@@ -2,7 +2,8 @@
 
 # environment variables
 if [[ -z $STOW_FOLDERS ]]; then
-	STOW_FOLDERS=("nvim" "vim" "tmux" "karabiner" "ideavim" "zsh" "git" "ssh" "gpg" "sketchybar")
+	STOW_FOLDERS=("nvim" "vim" "tmux" "karabiner" "ideavim" "zsh" "git" "ssh" "gpg" "aerospace")
+	# STOW_FOLDERS=("vim" "tmux" "karabiner" "ideavim" "zsh" "git" "ssh" "gpg")
 fi
 
 if [[ -z $DOTFILES ]]; then

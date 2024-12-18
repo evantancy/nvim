@@ -158,7 +158,7 @@ defaults write com.apple.dock "mru-spaces" -bool "false"
 # defaults write NSGlobalDomain AppleHighlightColor -string "0.65098 0.85490 0.58431"
 # defaults write NSGlobalDomain AppleAccentColor -int 1
 # defaults write com.apple.screencapture location -string "$HOME/Desktop"
-# defaults write com.apple.screencapture disable-shadow -bool true
+defaults write com.apple.screencapture disable-shadow -bool true
 # defaults write com.apple.screencapture type -string "png"
 # defaults write com.apple.finder DisableAllAnimations -bool true
 # defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
