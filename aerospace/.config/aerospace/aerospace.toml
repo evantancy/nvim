@@ -202,9 +202,14 @@ alt-shift-l = ['join-with right', 'mode main']
 
 
 [workspace-to-monitor-force-assignment]
-1 = ['main', '^built-in retina display$', 1]
+1 = ['main', '^built-in retina display$', 1, 'HDMI']
+C = ['main', '^built-in retina display$', 1]
 2 = ['secondary', '^24G2W1G4 \(1\)$', 2]
-3 = ['^24G2W1G4 \(2\)$']
+# editor
+E = ['secondary', '^24G2W1G4 \(1\)$', 2]
+3 = ['^24G2W1G4 \(2\)$', 3]
+# browser
+B = ['^24G2W1G4 \(2\)$', 3]
 
 [[on-window-detected]]
 if.app-id = "li.zihua.medis2"
@@ -233,5 +238,20 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = "at.obdev.littlesnitch"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "notion.id"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.bitdefender.antivirusformac"
+check-further-callbacks = true
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = "com.authy"
 check-further-callbacks = true
 run = 'layout floating'
