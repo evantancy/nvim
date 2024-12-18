@@ -495,4 +495,5 @@ show_virtual_env() {
 
 # prevent duplicate env shown when using both conda activate and direnv together
 # PS1='$(show_virtual_env)'$PS1
+PS1='$VIRTUAL_ENV_PROMPT'$PS1
 export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
