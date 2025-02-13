@@ -66,6 +66,7 @@ brew_packages=(
     koekeishiya/formulae/yabai
     # jordanbaird-ice
     commitizen
+    meetingbar
 )
 for package in "${brew_packages[@]}"; do
     brew install "$package"
@@ -105,7 +106,8 @@ brew_casks=(
     stats
     obsidian
     kap
-    tidal
+    # tidal
+    lepton
 )
 for cask in "${brew_casks[@]}"; do
     brew install --cask "$cask"
