@@ -2,6 +2,7 @@
     authors = "!git shortlog -sne --all"
     # launch fzf, use Tab or Shift-Tab to select multiple files
     a = "!git status --short | fzf --multi | awk '{print $2}' | xargs git add"
+    f = "fetch --all"
     d = diff
     sw = switch
     co = checkout
